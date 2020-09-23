@@ -1,0 +1,83 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true    //加上这行即可
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+            dirs '../baselib/libs'
+
+        }
+    }
+}
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: '../baselib/libs', include: ['*.aar'])
+    api rootProject.ext.supportLibs
+    implementation project(':baselib')
+    implementation project(':networklib')
+    implementation project(':recyclerlib')
+    implementation project(':bridgelib')
+    implementation project(':musiclistlib')
+    // ARouter
+    implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
+    kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:${rootProject.ext.dependVersion.glide}"
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    //MagicIndicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+}

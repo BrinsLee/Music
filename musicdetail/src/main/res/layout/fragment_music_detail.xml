@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
+    tools:context=".fragment.MusicDetailFragment">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/base_icon_default_cover"
+        app:layout_constraintDimensionRatio="1:1" />
+
+    <TextView
+        android:id="@+id/tv_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:maxEms="20"
+        android:maxLines="2"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cover" />
+
+    <TextView
+        android:id="@+id/tv_artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white_60"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_music_name" />
+
+    <TextView
+        android:id="@+id/tv_album_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="80dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@color/white_60"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_artist_name" />
+
+    <ImageView
+        android:id="@+id/iv_like"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/base_icon_like_heart"
+        app:layout_constraintBottom_toBottomOf="@id/tv_album_name"
+        app:layout_constraintEnd_toStartOf="@id/iv_comments"
+        app:layout_constraintTop_toTopOf="@id/tv_album_name" />
+
+    <ImageView
+        android:id="@+id/iv_comments"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/base_icon_comments"
+        app:layout_constraintBottom_toBottomOf="@id/tv_album_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_album_name" />
+
+    <TextView
+        android:id="@+id/tv_comments_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:paddingBottom="2dp"
+        android:text="999+"
+        android:textColor="@color/white_60"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_artist_name" />
+
+    <LinearLayout
+        android:id="@+id/layout_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:minHeight="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_album_name">
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/default_duration"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="10000"
+            android:maxHeight="5dp"
+            android:progressDrawable="@drawable/base_bg_10dp_seekbar"
+            android:thumb="@drawable/base_bg_circle"
+            tools:progress="5000" />
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/default_duration"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="03:22" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/layout_progress">
+
+        <ImageView
+            android:id="@+id/iv_play_mode"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toLeftOf="@id/iv_play_last"
+            android:background="@drawable/base_selector_button_click"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_icon_play_cycle" />
+
+        <ImageView
+            android:id="@+id/iv_play_last"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toLeftOf="@id/iv_play_pause"
+            android:background="@drawable/base_selector_button_click"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_icon_last_white_32dp" />
+
+        <ImageView
+            android:id="@+id/iv_play_pause"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/base_selector_button_click"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_icon_play_white_64dp" />
+
+
+        <ImageView
+            android:id="@+id/iv_play_next"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toRightOf="@id/iv_play_pause"
+            android:background="@drawable/base_selector_button_click"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_icon_next_white_32dp" />
+
+        <ImageView
+            android:id="@+id/iv_play_list"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toRightOf="@id/iv_play_next"
+            android:background="@drawable/base_selector_button_click"
+            android:scaleType="centerCrop"
+            android:src="@drawable/base_icon_music_list" />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

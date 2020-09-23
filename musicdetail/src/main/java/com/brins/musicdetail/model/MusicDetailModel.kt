@@ -1,0 +1,20 @@
+package com.brins.musicdetail.model
+
+import com.brins.musicdetail.contract.MusicDetailContract
+import com.brins.networklib.helper.ApiHelper
+import com.brins.networklib.helper.ApiHelper.await
+import com.brins.networklib.model.comment.CommentResult
+import com.brins.networklib.model.music.MusicLrcResult
+
+class MusicDetailModel : MusicDetailContract.Model {
+
+    override suspend fun loadMusicLrc(id: String): MusicLrcResult =
+        ApiHelper.getMusicService().getMusicLrc(id).await()
+
+    override suspend fun loadMusicComment(id: String): CommentResult =
+        ApiHelper.getMusicService().getMusicComment(id).await()
+
+    override fun onDestroy() {
+
+    }
+}

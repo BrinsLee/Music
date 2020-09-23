@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomCenterDialogAnim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_out</item>
+    </style>
+</resources>

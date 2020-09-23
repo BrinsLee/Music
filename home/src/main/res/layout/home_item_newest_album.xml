@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="90dp"
+    android:layout_marginEnd="10dp"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/home_shape_rect_r8_white_background"
+        app:layout_constraintBottom_toBottomOf="@id/vinyl_record"
+        app:layout_constraintTop_toTopOf="@id/vinyl_record" />
+
+    <ImageView
+        android:id="@+id/vinyl_record"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="25dp"
+        android:src="@drawable/home_ic_vinyl_record"
+        app:layout_constraintBottom_toBottomOf="@+id/ri_album_cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ri_album_cover" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ri_album_cover"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/base_icon_default_cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="10dp" />
+
+    <TextView
+        android:id="@+id/tv_name_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:maxEms="20"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/vinyl_record"
+        app:layout_constraintStart_toEndOf="@id/vinyl_record"
+        app:layout_constraintTop_toTopOf="@id/vinyl_record" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
