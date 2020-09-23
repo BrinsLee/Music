@@ -7,11 +7,14 @@ import android.view.View
 import android.widget.SeekBar
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvpFragment
+import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.WeakHandler
+import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.formatDuration
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.musicdetail.R
@@ -19,6 +22,8 @@ import com.brins.musicdetail.activity.MusicDetailActivity
 import com.brins.musicdetail.presenter.MusicDetailPresenter
 import com.brins.playerlib.model.PlayBackService
 import kotlinx.android.synthetic.main.fragment_music_detail.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler.IHandler,
     View.OnClickListener {
@@ -87,6 +92,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             iv_play_next.setOnClickListener(this)
             iv_comments.setOnClickListener(this)
             iv_play_mode.setOnClickListener(this)
+            iv_play_list.setOnClickListener(this)
         }
     }
 
@@ -159,6 +165,24 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             mHandler.removeMessages(MESSAGE_UPDATE_PROGRESS)
             iv_play_pause.setImageDrawable(UIUtils.getDrawable(R.drawable.base_icon_play_white_64dp))
         }
+        when (mPlayer?.getCurrentPlayMode()) {
+            PlayMode.LOOP -> {
+                iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle)
+            }
+
+            PlayMode.SINGLE -> {
+                iv_play_mode.setImageResource(R.drawable.base_icon_play_single)
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateSong(params: EventBusParams) {
+        when (params.key) {
+            EventBusKey.KEY_EVENT_UPDATE_PLAY_MODE -> {
+                upDateButtonStatus(mPlayer?.isPlaying() ?: false)
+            }
+        }
     }
 
     private fun onPlayNext() {
@@ -178,7 +202,12 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             R.id.iv_play_next -> onPlayNext()
             R.id.iv_comments -> openComments()
             R.id.iv_play_mode -> changePlayMode()
+            R.id.iv_play_list -> openPlayList()
         }
+    }
+
+    private fun openPlayList() {
+        ARouterUtils.go(RouterHub.PLAYLISTACTIVITY)
     }
 
     private fun changePlayMode() {

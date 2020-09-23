@@ -85,6 +85,29 @@ open class BasePlayList() : BaseData() {
         numOfSongs = songs.size
     }
 
+    fun delete(music: BaseMusic): Boolean {
+        if (songs.contains(music)) {
+            if (songs.size == 1) {
+                return false
+            }
+            return songs.remove(music)
+        }
+        return false
+    }
+
+    fun deleteAll(): Boolean {
+        val song = getCurrentSong()
+        val iterator: MutableIterator<BaseMusic> = songs.iterator()
+        while (iterator.hasNext()) {
+            val music = iterator.next()
+            if (music != song) {
+                iterator.remove()
+            }
+        }
+        playingIndex = songs.lastIndex
+        return true
+    }
+
     fun prepare(): Boolean {
         if (songs.isEmpty()) return false
         playingIndex = if (playingIndex == NO_POSITION) {
@@ -116,6 +139,8 @@ open class BasePlayList() : BaseData() {
         }
         return true
     }
+
+    fun getSong(): ArrayList<BaseMusic> = songs
 
     @NonNull
     private var id: Int = 0

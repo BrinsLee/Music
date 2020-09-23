@@ -16,6 +16,7 @@ interface RouterHub {
 
         const val COMMENTSACTIVITY = "$MUSIC_DETAIL/CommentsActivity"
 
+        const val PLAYLISTACTIVITY = "$MUSIC_DETAIL/PlayListActivity"
 
         const val MUSICLISTACTIVITY = "$MUSIC_LIST/MusicListActivity"
 

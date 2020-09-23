@@ -3,7 +3,8 @@
     package="com.brins.musicdetail">
 
     <application>
-        <activity android:name=".activity.PlayListActivity"></activity>
+        <activity android:name=".activity.PlayListActivity"
+            android:theme="@style/SongDetailTheme"></activity>
         <activity android:name=".activity.CommentsActivity" />
         <activity android:name=".activity.MusicDetailActivity" />
     </application>

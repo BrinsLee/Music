@@ -268,6 +268,10 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
         TODO("Not yet implemented")
     }
 
+    override fun onMusicDelete() {
+
+    }
+
     override fun showLoading() {
     }
 

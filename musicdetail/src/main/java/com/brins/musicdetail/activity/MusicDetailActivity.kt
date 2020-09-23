@@ -160,6 +160,10 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
         TODO("Not yet implemented")
     }
 
+    override fun onMusicDelete() {
+
+    }
+
     override fun onDestroy() {
         onPlaybackServiceUnbound()
         super.onDestroy()

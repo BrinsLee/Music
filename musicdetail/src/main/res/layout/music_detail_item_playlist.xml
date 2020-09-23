@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_song"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/rl_top">
+
+        <RelativeLayout
+            android:id="@+id/rl_song_play"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toStartOf="@id/iv_del">
+
+            <ImageView
+                android:id="@+id/iv_horn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/base_icon_horn"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_music_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/iv_horn"
+                android:ellipsize="end"
+                android:maxLength="23"
+                android:maxLines="1"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/tv_music_name"
+                android:text="-"
+                android:textColor="#808080"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tv_artist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toEndOf="@id/tv_link"
+                android:textColor="#808080"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_del"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/base_icon_delete" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/rl_song" />
+</RelativeLayout>

@@ -27,6 +27,8 @@ interface PlayerContract {
         fun onSongPause()
 
         fun updatePlayMode(playMode: PlayMode)
+
+        fun onMusicDelete()
     }
 
     abstract class Presenter : BasePresenter<PlayerModel, View>() {
@@ -61,6 +63,26 @@ interface PlayerContract {
          * 解除绑定
          */
         abstract fun unbindPlaybackService()
+
+        /**
+         * 删除音乐
+         *
+         * @param music
+         */
+        abstract fun delete(music: BaseMusic)
+
+        /**
+         * 移除列表
+         *
+         */
+        abstract fun deleteAll()
+
+        /**
+         * 切换播放模式
+         *
+         * @param mode
+         */
+        abstract fun changePlayMode(mode : PlayMode)
     }
 
     interface Model : IModel {

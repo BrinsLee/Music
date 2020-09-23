@@ -157,6 +157,14 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         return mPlayer.getCurrentPlayMode()
     }
 
+    override fun deleteMusic(music: BaseMusic): Boolean {
+        return mPlayer.deleteMusic(music)
+    }
+
+    override fun deleteAll(): Boolean {
+        return mPlayer.deleteAll()
+    }
+
     /**
      * 负责播放器的类
      *
@@ -543,6 +551,14 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
 
         override fun getCurrentPlayMode(): PlayMode {
             return mPlayList.getPlayMode()
+        }
+
+        override fun deleteMusic(music: BaseMusic): Boolean {
+            return mPlayList.delete(music)
+        }
+
+        override fun deleteAll(): Boolean {
+            return mPlayList.deleteAll()
         }
     }
 }

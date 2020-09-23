@@ -149,6 +149,19 @@ interface IPlayback {
      */
     fun getCurrentPlayMode(): PlayMode
 
+    /**
+     * 删除音乐
+     *
+     * @param music
+     */
+    fun deleteMusic(music: BaseMusic): Boolean
+
+    /**
+     * 删除全部音乐
+     *
+     */
+    fun deleteAll(): Boolean
+
     interface Callback {
 
         fun onPlayStatusChanged(isPlaying: Boolean, @Nullable music: BaseMusic?)
