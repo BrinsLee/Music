@@ -3,6 +3,7 @@ package com.brins.networklib.service
 
 import com.brins.baselib.config.BANNER.Companion.BANNER
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_ALBUM
+import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_HIGHTQUALITY
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_MUSIC_LIST
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_NEWEST_ALBUM
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_NEW_MUSIC
@@ -13,6 +14,7 @@ import com.brins.networklib.model.banner.BannerResult
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
 import com.brins.networklib.model.musiclist.MusicList
+import com.brins.networklib.model.musiclist.MusicListsResult
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedResult
@@ -72,4 +74,13 @@ interface PersonalizedService {
         @Query("limit") limit: Int = 10,
         @Query("order") order: String
     ): Call<RecommendResult<MusicList>>
+
+    /**
+     * 获取高品质歌单
+     *
+     * @param limit
+     * @return
+     */
+    @GET(RECOMMEND_HIGHTQUALITY)
+    fun getTopHightQuality(@Query("limit") limit: Int = 20): Call<MusicListsResult>
 }

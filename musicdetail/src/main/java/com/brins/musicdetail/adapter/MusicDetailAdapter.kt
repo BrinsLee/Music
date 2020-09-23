@@ -1,10 +1,8 @@
 package com.brins.musicdetail.adapter
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.PagerAdapter
 import com.brins.musicdetail.fragment.MusicDetailFragment
 import com.brins.musicdetail.fragment.MusicLrcFragment
 

@@ -1,10 +1,13 @@
 package com.brins.home.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.fragment.BaseMvpFragment
+import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
+import com.brins.baselib.route.RouterHub.Companion.MUSICLISTSQUAREACTIVITY
 import com.brins.home.R
 import com.brins.home.adapter.BaseHomeAdapter
 import com.brins.home.contract.HomeContract
@@ -78,7 +81,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
     override fun onPersonalizedMusicLoad(data: PersonalizedResult<PersonalizedMusic>?) {
         data?.let {
             val list = mutableListOf<BaseData>()
-            list.add(SingleTitleMoreData().setTitle("晚霞灿烂，音乐惬意"))
+            list.add(
+                SingleTitleMoreData().setTitle("晚霞灿烂，音乐惬意")
+                    .setListener(View.OnClickListener {
+                        ARouterUtils.go(MUSICLISTSQUAREACTIVITY)
+                    })
+            )
             list.add(it)
             list.add(AlbumResult<NewestAlbum>())
             mAdapter.addData(list)

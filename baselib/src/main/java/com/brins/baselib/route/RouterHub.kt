@@ -9,6 +9,8 @@ interface RouterHub {
         const val MUSIC_LIST = "/musiclist"
         const val MUSIC_DETAIL = "/musicdetail"
         const val BRIDGE = "/bridge"
+        const val MUSIC_SQUARE = "/musicsquare"
+
 
         //    ****************Activity路径配置***************************
 
@@ -21,6 +23,8 @@ interface RouterHub {
         const val MUSICLISTACTIVITY = "$MUSIC_LIST/MusicListActivity"
 
         const val BROWSERACTIVITY = "$BRIDGE/BrowserActivity"
+
+        const val MUSICLISTSQUAREACTIVITY = "$MUSIC_SQUARE/MusicListSquareActivity"
 
 
         //    ****************Fragment路径配置***************************

@@ -47,6 +47,11 @@ interface RECOMMEND {
          * 推荐网友精选
          */
         const val RECOMMEND_ALBUM = "/top/playlist"
+
+        /**
+         * 推荐高品质
+         */
+        const val RECOMMEND_HIGHTQUALITY = "/top/playlist/highquality"
     }
 }
 

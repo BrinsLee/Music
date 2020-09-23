@@ -25,6 +25,8 @@ class MusicList : BaseData() {
 
     var createTime = ""
 
+    var updateTime = ""
+
     var coverImgUrl = ""
 
     var trackCount = 0
@@ -40,6 +42,15 @@ class MusicList : BaseData() {
     var shareCount = 0
 
     var commentCount = 0
+
+    var trackNumberUpdateTime = ""
+
+    var tags: Array<String>? = null
+
+    var copywriter = ""
+
+    var tag = ""
+
 
     var tracks: ArrayList<Track> = arrayListOf()
 
@@ -73,6 +84,7 @@ class MusicList : BaseData() {
 
         var vipType = 0
 
+        var expertTags: Array<String>? = null
 
     }
 
