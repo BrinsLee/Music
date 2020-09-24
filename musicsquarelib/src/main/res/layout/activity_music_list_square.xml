@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.MusicListSquareActivity">
 
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.brins.baselib.widget.CommonHeaderView
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -17,8 +23,9 @@
     <LinearLayout
         android:id="@+id/indicator_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">

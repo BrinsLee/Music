@@ -3,8 +3,7 @@ package com.brins.baselib.utils
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.*
 import android.icu.util.Calendar
 import android.os.Build
 import android.text.format.Time
@@ -128,4 +127,49 @@ fun getCalendarDay(): String {
         time.setToNow()
         time.monthDay.toString()
     }
+}
+
+fun createRadialGradientBitmap(
+    context: Context,
+    darkColor: Int,
+    color: Int
+): Bitmap {
+    val bgColors = IntArray(3)
+    bgColors[0] = color
+    bgColors[1] = setAlpha(0.8f, color)
+    bgColors[2] = Color.WHITE
+    val stop = floatArrayOf(0.2f, 0.2f, 0.9f)
+
+    val bgBitmap =
+        Bitmap.createBitmap(
+            UIUtils.getScreenWidth(context),
+            UIUtils.getScreenHeight(context),
+            Bitmap.Config.RGB_565
+        )
+    val canvas = Canvas()
+    val paint = Paint()
+    canvas.setBitmap(bgBitmap)
+    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+    val gradient = RadialGradient(
+        bgBitmap.width.toFloat() - 100,
+        -bgBitmap.width.toFloat() / 3,
+        bgBitmap.width.toFloat(),
+        bgColors,
+        stop,
+        Shader.TileMode.CLAMP
+    )
+    paint.shader = gradient
+    paint.isAntiAlias = true
+    val rectF = RectF(0f, 0f, bgBitmap.width.toFloat(), bgBitmap.height.toFloat())
+    canvas.drawRoundRect(rectF, 20f, 20f, paint)
+    canvas.drawRect(rectF, paint)
+    return bgBitmap
+}
+
+fun setAlpha(fraction: Float, color: Int): Int {
+    val r = color shr 16 and 0xff
+    val g = color shr 8 and 0xff
+    val b = color and 0xff
+
+    return (256 * fraction).toInt() shl 24 or (r shl 16) or (g shl 8) or b
 }

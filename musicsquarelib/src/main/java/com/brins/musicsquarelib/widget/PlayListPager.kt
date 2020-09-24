@@ -52,12 +52,36 @@ class PlayListPager @JvmOverloads constructor(
     private var mLastX = 0f //每次都要记录一下点击的位置，来判断是否超出最小滑动距离
     private var mLastY = 0f
     private var clickListener: OnPlayListClickListener? = null
+    private var pageChangeListener: OnPageChangeListener? = null
+    private var mCurrentIndex = 2
+        set(value) {
+            field = value
+            pageChangeListener?.onPageChange(value)
+        }
 
     /**
      * 点击事件
      */
     interface OnPlayListClickListener {
         fun onPlayListClick(position: Int)
+    }
+
+    interface OnPageChangeListener {
+        fun onPageChange(position: Int)
+    }
+
+    fun setPageChangeListener(listener: OnPageChangeListener) {
+        this.pageChangeListener = listener
+    }
+
+    fun getCurentIndex(): Int {
+        for (i in 0 until childCount) {
+            val view = getChildAt(i)
+            if ((view.layoutParams as PlayLayoutParams).alpha == 1f) {
+                mCurrentIndex = (view.layoutParams as PlayLayoutParams).index
+            }
+        }
+        return mCurrentIndex
     }
 
     /**
@@ -133,6 +157,7 @@ class PlayListPager @JvmOverloads constructor(
                 bottom + lp.bottomMargin + paddingBottom
             )
         }
+//        pageChangeListener?.onPageChange(getCurentIndex())
     }
 
     /**
@@ -286,10 +311,6 @@ class PlayListPager @JvmOverloads constructor(
                     TAG,
                     "offsetX : $offsetX"
                 )
-                Log.d(
-                    TAG,
-                    "totalOffsetX : $totalOffsetX"
-                )
                 moveItem()
             }
             MotionEvent.ACTION_UP -> {
@@ -404,6 +425,8 @@ class PlayListPager @JvmOverloads constructor(
                             alpha = MIN_ALPHA + (1f - MIN_ALPHA) * offsetPercent
                             scale = MIN_SCALE + (1f - MIN_SCALE) * offsetPercent
                         }
+                        if (abs(offsetPercent) > 0.5f)
+                            mCurrentIndex = lp.index
                     } else if (lp.to == 1) {
                         //将View和低层的View交换
                         exchangeOrder(indexOfChild(getChildAt(i)), 0)
@@ -418,6 +441,8 @@ class PlayListPager @JvmOverloads constructor(
                             alpha = MIN_ALPHA + (1f - MIN_ALPHA) * abs(offsetPercent)
                             scale = MIN_SCALE + (1f - MIN_SCALE) * abs(offsetPercent)
                         }
+                        if (abs(offsetPercent) > 0.5f)
+                            mCurrentIndex = lp.index
                     }
                 }
                 2 -> {
@@ -428,6 +453,7 @@ class PlayListPager @JvmOverloads constructor(
                 }
             }
         }
+        Log.d("TAGG", "$mCurrentIndex")
     }
 
     private fun changeViewLevel() {

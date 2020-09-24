@@ -243,7 +243,8 @@ public class GlideHelper {
         setRoundImageResource(imageView, url, radius, null);
     }
 
-    private static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener) {
+
+    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener) {
         try {
             if (imageView == null) {
                 return;

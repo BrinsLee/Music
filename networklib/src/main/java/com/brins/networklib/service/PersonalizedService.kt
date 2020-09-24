@@ -82,5 +82,5 @@ interface PersonalizedService {
      * @return
      */
     @GET(RECOMMEND_HIGHTQUALITY)
-    fun getTopHightQuality(@Query("limit") limit: Int = 20): Call<MusicListsResult>
+    fun getTopHightQuality(@Query("limit") limit: Int = 21): Call<MusicListsResult>
 }

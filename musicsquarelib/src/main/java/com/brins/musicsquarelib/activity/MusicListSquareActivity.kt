@@ -1,14 +1,17 @@
 package com.brins.musicsquarelib.activity
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.route.RouterHub.Companion.MUSICLISTSQUAREACTIVITY
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.getStatusBarHeight
+import com.brins.baselib.widget.CommonHeaderView
 import com.brins.musicsquarelib.R
 import com.brins.musicsquarelib.adapter.MusicListSquareAdapter
 import com.brins.musicsquarelib.presenter.MusicListSquarePresenter
@@ -36,6 +39,12 @@ class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
         header.setPadding(0, getStatusBarHeight(this), 0, 0)
+        header.setOnBackClickListener(object : CommonHeaderView.OnBackClickListener {
+            override fun onBackClick(view: View) {
+                finish()
+            }
+
+        })
         initViewPager()
 
     }
@@ -79,5 +88,9 @@ class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
         titleContainer.dividerPadding = UIUtil.dip2px(this, 15.0)
         titleContainer.dividerDrawable = UIUtils.getDrawable(R.drawable.base_bg_simple_divider)
         ViewPagerHelper.bind(magic_indicator, vp_music_square)
+    }
+
+    fun setBackground(bitmap: Bitmap) {
+        iv_background.setImageBitmap(bitmap)
     }
 }

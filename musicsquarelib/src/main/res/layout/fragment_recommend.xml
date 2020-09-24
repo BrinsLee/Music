@@ -5,16 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".fragment.RecommendFragment">
 
-    <com.brins.musicsquarelib.widget.PlayListPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.brins.musicsquarelib.widget.PlayListPager>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_music_list"
+    <com.brins.musicsquarelib.widget.PlayListScrollerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/pager" />
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.brins.musicsquarelib.widget.PlayListPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.brins.musicsquarelib.widget.PlayListPager>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_music_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/pager" />
+        </RelativeLayout>
+    </com.brins.musicsquarelib.widget.PlayListScrollerView>
+
+
 </RelativeLayout>

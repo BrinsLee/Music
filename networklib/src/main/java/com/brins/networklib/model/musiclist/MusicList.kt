@@ -1,5 +1,7 @@
 package com.brins.networklib.model.musiclist
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import com.brins.baselib.module.*
 
 class MusicList : BaseData() {
@@ -50,6 +52,10 @@ class MusicList : BaseData() {
     var copywriter = ""
 
     var tag = ""
+
+    var cover: Drawable? = null
+
+    var coverGradientDrawable: Bitmap? = null
 
 
     var tracks: ArrayList<Track> = arrayListOf()
