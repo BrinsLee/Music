@@ -6,8 +6,8 @@ import com.brins.networklib.helper.ApiHelper.await
 
 class MusicListSquareModel : MusicSquareContract.Model {
 
-    override suspend fun loadHightQuality() =
-        ApiHelper.getPersonalizedService().getTopHightQuality().await()
+    override suspend fun loadHightQuality(cat : String) =
+        ApiHelper.getPersonalizedService().getTopHightQuality(cat).await()
 
     override fun onDestroy() {
 

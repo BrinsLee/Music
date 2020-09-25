@@ -45,6 +45,11 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
         launch({ mPresenter?.loadMusicList() }, {})
     }
 
+    override fun onResume() {
+        super.onResume()
+        changeBackground(pager.getCurentIndex())
+    }
+
     override fun onMusicListLoad(result: MusicListsResult?) {
         mResult = result
         result?.playlists?.let {

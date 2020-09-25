@@ -136,7 +136,7 @@ fun createRadialGradientBitmap(
 ): Bitmap {
     val bgColors = IntArray(3)
     bgColors[0] = color
-    bgColors[1] = setAlpha(0.8f, color)
+    bgColors[1] = color
     bgColors[2] = Color.WHITE
     val stop = floatArrayOf(0.2f, 0.2f, 0.9f)
 
@@ -149,7 +149,7 @@ fun createRadialGradientBitmap(
     val canvas = Canvas()
     val paint = Paint()
     canvas.setBitmap(bgBitmap)
-    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+    canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR)
     val gradient = RadialGradient(
         bgBitmap.width.toFloat() - 100,
         -bgBitmap.width.toFloat() / 3,

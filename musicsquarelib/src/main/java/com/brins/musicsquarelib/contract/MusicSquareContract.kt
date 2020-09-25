@@ -13,10 +13,10 @@ interface MusicSquareContract {
     }
 
     abstract class Presenter : BasePresenter<MusicListSquareModel, View>() {
-        abstract suspend fun loadMusicList()
+        abstract suspend fun loadMusicList(cat: String = "全部")
     }
 
     interface Model : IModel {
-        suspend fun loadHightQuality(): MusicListsResult
+        suspend fun loadHightQuality(cat: String = "全部"): MusicListsResult
     }
 }

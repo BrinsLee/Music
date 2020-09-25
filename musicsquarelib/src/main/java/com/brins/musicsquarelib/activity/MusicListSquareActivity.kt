@@ -30,7 +30,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
 
     private var mAdapter: MusicListSquareAdapter? = null
-    private var mTitleList: ArrayList<String> = arrayListOf("推荐", "官方", "精品", "欧美", "流行", "电子")
+    private var mTitleList: ArrayList<String> = arrayListOf("推荐", "华语", "古风 ", "欧美", "流行", "电子")
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_music_list_square

@@ -11,6 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/white_70"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.brins.baselib.widget.CommonHeaderView
         android:id="@+id/header"

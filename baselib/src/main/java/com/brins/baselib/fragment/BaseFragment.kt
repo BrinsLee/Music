@@ -29,9 +29,10 @@ abstract class BaseFragment : Fragment(), IView {
     var mLoadingFragment: LoadingFragment? = null
 
     /*实现懒加载*/
-    protected open var mIsViewBinding: Boolean = false
-    protected open var mIsVisibleToUser: Boolean = false
-    protected open var mHadLoaded = false
+    private var isFirst = true // 是否为第一次加载
+
+    private var isOk = false
+
 
     protected abstract fun getLayoutResID(): Int
     protected abstract fun reLoad()
@@ -39,15 +40,13 @@ abstract class BaseFragment : Fragment(), IView {
 
     @CallSuper
     protected open fun onCreateViewAfterBinding() {
-        mIsViewBinding = true
-        checkLoad()
     }
 
 
     private fun checkLoad() {
-        if (!mHadLoaded && mIsViewBinding && mIsVisibleToUser) {
+        if (isOk && isFirst) {
             onLazyLoad()
-            mHadLoaded = true
+            isFirst = false
         }
     }
 
@@ -55,14 +54,6 @@ abstract class BaseFragment : Fragment(), IView {
     open fun onLazyLoad() {}
 
     protected open fun beforeCreateView() {}
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        mIsVisibleToUser = isVisibleToUser
-        if (isVisibleToUser) {
-            checkLoad()
-        }
-    }
 
 
     override fun onCreateView(
@@ -80,10 +71,14 @@ abstract class BaseFragment : Fragment(), IView {
         createLoadingView()
         if (useEventBus()) EventBus.getDefault().register(this)
         if (useARouter()) ARouter.getInstance().inject(this)
-        val parent = rootView?.parent
+        isOk = true
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkLoad()
+    }
 
     /**
      *
@@ -121,9 +116,7 @@ abstract class BaseFragment : Fragment(), IView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mIsViewBinding = false
-        mIsVisibleToUser = false
-        mHadLoaded = false
+        isFirst = true
         (rootView?.parent as? ViewGroup)?.removeView(rootView)
     }
 
