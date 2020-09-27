@@ -30,7 +30,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
 
     private var mAdapter: MusicListSquareAdapter? = null
-    private var mTitleList: ArrayList<String> = arrayListOf("推荐", "华语", "古风 ", "欧美", "流行", "电子")
+    private var mTitleList: ArrayList<String> = arrayListOf("推荐", "华语", "古风", "欧美", "流行", "电子")
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_music_list_square
@@ -41,7 +41,7 @@ class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
         header.setPadding(0, getStatusBarHeight(this), 0, 0)
         header.setOnBackClickListener(object : CommonHeaderView.OnBackClickListener {
             override fun onBackClick(view: View) {
-                finish()
+                onBackPressed()
             }
 
         })
@@ -52,6 +52,7 @@ class MusicListSquareActivity : BaseMvpActivity<MusicListSquarePresenter>() {
     private fun initViewPager() {
         mAdapter = MusicListSquareAdapter(supportFragmentManager)
         vp_music_square.adapter = mAdapter
+        vp_music_square.offscreenPageLimit = 5
         val commonNavigator = CommonNavigator(this)
         commonNavigator.adapter = object : CommonNavigatorAdapter() {
             override fun getTitleView(context: Context?, index: Int): IPagerTitleView {

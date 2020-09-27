@@ -15,11 +15,11 @@ class MusicListSquareAdapter(manager: FragmentManager) : FragmentPagerAdapter(
 
     init {
         mList.add(RecommendFragment())
-        mList.add(UniversalFragment.newInstance("0", 0))
-/*        mList.add(UniversalFragment.newInstance("1", 1))
-        mList.add(UniversalFragment.newInstance("2", 2))
-        mList.add(UniversalFragment.newInstance("3", 3))
-        mList.add(UniversalFragment.newInstance("4", 4))*/
+        mList.add(UniversalFragment.newInstance("华语", 0))
+        mList.add(UniversalFragment.newInstance("古风", 1))
+        mList.add(UniversalFragment.newInstance("欧美", 2))
+        mList.add(UniversalFragment.newInstance("流行", 3))
+        mList.add(UniversalFragment.newInstance("电子", 4))
 
     }
 
@@ -29,14 +29,5 @@ class MusicListSquareAdapter(manager: FragmentManager) : FragmentPagerAdapter(
 
     override fun getCount(): Int {
         return mList.size
-    }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return ((mList[position] as UniversalFragment).getTitle())
-    }
-
-
-    override fun getItemId(position: Int): Long {
-        return mList[position].id.toLong()
     }
 }

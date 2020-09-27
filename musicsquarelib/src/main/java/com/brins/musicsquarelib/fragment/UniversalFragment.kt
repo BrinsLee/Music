@@ -51,6 +51,9 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
         }
     }
 
+    override fun needParent(): Boolean {
+        return false
+    }
 
     override fun getLayoutResID(): Int {
         return R.layout.fragment_universal
@@ -72,12 +75,19 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
 
     override fun onLazyLoad() {
         super.onLazyLoad()
-        ApiHelper.launch({ mPresenter?.loadMusicList("华语") }, {})
-
+        if (mResult == null) {
+            showLoading()
+            ApiHelper.launch({ mPresenter?.loadMusicList(getTitle()!!) }, {})
+        } else {
+            onMusicListLoad(mResult)
+        }
     }
 
     override fun onMusicListLoad(result: MusicListsResult?) {
-        mResult = result
+        if (mResult == null){
+            mResult = result
+            hideLoading()
+        }
         result?.playlists?.let {
             val list = mutableListOf<BaseData>()
             list.addAll(it)

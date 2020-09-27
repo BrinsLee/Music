@@ -42,7 +42,6 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
         rv_music_list.adapter = mAdapter
         rv_music_list.isNestedScrollingEnabled = false
         rv_music_list.setHasFixedSize(true)
-        launch({ mPresenter?.loadMusicList() }, {})
     }
 
     override fun onResume() {
@@ -50,8 +49,29 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
         changeBackground(pager.getCurentIndex())
     }
 
+    override fun onLazyLoad() {
+        super.onLazyLoad()
+        if (mResult == null) {
+            showLoading()
+            launch({ mPresenter?.loadMusicList() }, {})
+        } else {
+            onMusicListLoad(mResult)
+        }
+    }
+
+    override fun useEventBus(): Boolean {
+        return false
+    }
+
+    override fun needParent(): Boolean {
+        return false
+    }
+
     override fun onMusicListLoad(result: MusicListsResult?) {
-        mResult = result
+        if (mResult == null) {
+            mResult = result
+            hideLoading()
+        }
         result?.playlists?.let {
 
             for (i in 0..min(it.size, 2)) {

@@ -59,6 +59,11 @@ public class GlideHelper {
         setImageResource(imageView, null, resId, true, null);
     }
 
+    public static void setImageResource(ImageView imageView, int resId, RequestOptions options) {
+        Glide.with(imageView.getContext()).load(resId).apply(options).into(imageView);
+
+    }
+
     public static void setImageResource(ImageView view, String imageUrl, int defaultRes) {
         setImageResource(view, imageUrl, defaultRes, true, null);
     }

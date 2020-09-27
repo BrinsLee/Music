@@ -13,10 +13,6 @@ class PlayListViewPager @JvmOverloads constructor(
 
     private var mLastY = 0f
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        return super.dispatchTouchEvent(ev)
-    }
-
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         val currentNum = currentItem
         when (ev.actionMasked) {

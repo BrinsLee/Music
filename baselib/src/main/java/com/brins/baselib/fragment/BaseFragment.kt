@@ -53,26 +53,33 @@ abstract class BaseFragment : Fragment(), IView {
 
     open fun onLazyLoad() {}
 
-    protected open fun beforeCreateView() {}
+    protected open fun needParent(): Boolean {
+        return true
+    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.base_fragment_base, container, false)
-        rootView = view.findViewById(R.id.appbase_fr_root)
         mActivity = activity
         mBundle = arguments
-        val mContentView = inflater.inflate(getLayoutResID(), null)
-        if (mContentView != null) {
-            rootView!!.addView(mContentView)
+        val view: View
+        if (needParent()) {
+            view = inflater.inflate(R.layout.base_fragment_base, container, false)
+            rootView = view.findViewById(R.id.appbase_fr_root)
+            val mContentView = inflater.inflate(getLayoutResID(), null)
+            if (mContentView != null) {
+                rootView!!.addView(mContentView)
+            }
+        } else {
+            view = inflater.inflate(getLayoutResID(), container, false)
         }
         createLoadingView()
         if (useEventBus()) EventBus.getDefault().register(this)
         if (useARouter()) ARouter.getInstance().inject(this)
         isOk = true
-        return rootView
+        return if (needParent()) rootView else view
     }
 
     override fun onResume() {
