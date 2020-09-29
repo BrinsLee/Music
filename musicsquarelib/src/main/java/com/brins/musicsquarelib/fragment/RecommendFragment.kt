@@ -6,8 +6,11 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.GridLayoutManager
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.module.BaseData
+import com.brins.baselib.route.ARouterUtils
+import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.createRadialGradientBitmap
 import com.brins.musicsquarelib.R
 import com.brins.musicsquarelib.activity.MusicListSquareActivity
@@ -97,7 +100,17 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
                     }
 
                 })
-//                pager.setOnClickListener()
+                pager.setPageClickListener(object : PlayListPager.OnPlayListClickListener {
+                    override fun onPlayListClick(position: Int) {
+                        mResult?.playlists?.let { musiclist ->
+                            val bundle = Bundle()
+                            bundle.putString(KEY_ID, musiclist[position].id)
+                            ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                        }
+
+                    }
+
+                })
             }
             if (it.size > 2) {
                 val list = mutableListOf<BaseData>()

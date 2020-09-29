@@ -417,6 +417,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
          *
          */
         override fun stop() {
+            isPaused = false
             mPlayer.stop()
         }
 

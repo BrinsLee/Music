@@ -84,7 +84,7 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
     }
 
     override fun onMusicListLoad(result: MusicListsResult?) {
-        if (mResult == null){
+        if (mResult == null) {
             mResult = result
             hideLoading()
         }
@@ -171,7 +171,8 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
                             return true
                         }
 
-                    })
+                    }, 0
+                )
             } else {
                 (mActivity as MusicListSquareActivity)
                     .setBackground(

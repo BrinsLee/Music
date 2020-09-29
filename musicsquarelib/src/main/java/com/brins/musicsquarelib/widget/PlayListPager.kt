@@ -70,6 +70,10 @@ class PlayListPager @JvmOverloads constructor(
         fun onPageChange(position: Int)
     }
 
+    fun setPageClickListener(listener: OnPlayListClickListener) {
+        this.clickListener = listener
+    }
+
     fun setPageChangeListener(listener: OnPageChangeListener) {
         this.pageChangeListener = listener
     }

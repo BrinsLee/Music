@@ -21,11 +21,6 @@ class HomePresenter @Inject constructor() : HomeContract.Presenter() {
         mView?.onBannerLoad(result)
     }
 
-    override suspend fun loadPersonalizedMusic() {
-        val result = mModel?.loadPersonalizedMusic()
-        mView?.onPersonalizedMusicLoad(result)
-    }
-
     override suspend fun loadHotOrNewRecommend(type: String) {
         val result = mModel?.loadHotOrNewRecommend(type)
         when (type) {

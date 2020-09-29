@@ -31,8 +31,6 @@ interface HomeContract {
 
         fun onBannerLoad(data: BaseData?)
 
-        fun onPersonalizedMusicLoad(data: PersonalizedResult<PersonalizedMusic>?)
-
         fun onNewRecommendLoad(data: RecommendResult<MusicList>?)
 
         fun onHotRecommendLoad(data: RecommendResult<MusicList>?)
@@ -44,8 +42,6 @@ interface HomeContract {
         abstract suspend fun loadPersonalizedMusicList()
 
         abstract suspend fun loadBannerData()
-
-        abstract suspend fun loadPersonalizedMusic()
 
         abstract suspend fun loadHotOrNewRecommend(type: String)
 
@@ -70,5 +66,7 @@ interface HomeContract {
         abstract suspend fun loadNewestAlbum()
 
         abstract suspend fun loadTopMusic(type: Int = 0)
+
+        abstract suspend fun loadPersonalizedMusic()
     }
 }

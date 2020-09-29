@@ -4,6 +4,7 @@ package com.brins.musicdetail.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
@@ -25,6 +26,7 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
 
     private var mPlayer: PlayBackService? = null
     private var mAdapter: PlayListAdapter? = null
+    private var mLayoutManager: LinearLayoutManager? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_play_list
@@ -33,7 +35,8 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
         mAdapter = PlayListAdapter()
-        rv_playlist.layoutManager = LinearLayoutManager(this)
+        mLayoutManager = LinearLayoutManager(this)
+        rv_playlist.layoutManager = mLayoutManager
         rv_playlist.adapter = mAdapter
         mPresenter?.bindPlaybackService()
         view.setOnClickListener(this)
@@ -55,7 +58,21 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
     }
 
     override fun onSongUpdated(song: BaseMusic?) {
-        TODO("Not yet implemented")
+        hideLoading()
+        song?.let {
+            if (mAdapter != null) {
+                for (i in mAdapter!!.data.indices) {
+                    if ((mAdapter!!.data[i] as BaseMusic).id == it.id) {
+                        mLayoutManager?.findViewByPosition(i)
+                            ?.findViewById<ImageView>(R.id.iv_horn)?.visibility = View.VISIBLE
+                    } else {
+                        mLayoutManager?.findViewByPosition(i)
+                            ?.findViewById<ImageView>(R.id.iv_horn)?.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onSongPlay() {
@@ -108,6 +125,10 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
             }
             helper.getView<ImageView>(R.id.iv_del).setOnClickListener {
                 mPresenter?.delete(item)
+            }
+            helper.getView<RelativeLayout>(R.id.rl_song_play).setOnClickListener {
+                showLoading()
+                mPresenter?.play(item)
             }
 
         }

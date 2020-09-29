@@ -27,7 +27,7 @@ class TopSongFragment : BaseMvvmFragment<HomeViewModel>() {
     private var mMusicDataObserver: Observer<MutableList<TopMusic>>? = null
 
     override fun getViewModel(): BaseViewModel<out IModel>? {
-        return HomeViewModel(mActivity!!.application)
+        return HomeViewModel.getInstance(mActivity!!.application)
     }
 
     override fun getLayoutResID(): Int {

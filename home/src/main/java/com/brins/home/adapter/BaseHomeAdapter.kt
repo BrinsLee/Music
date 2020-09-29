@@ -57,6 +57,12 @@ class BaseHomeAdapter(
             ITEM_HOME_MUSIC_LIST -> return DailyRecommendViewHolder(
                 getItemView(R.layout.home_item_daily_recommend, p0)
             )
+            ITEM_HOME_PERSONALIZED_MUSIC -> return PersonalizedMusicViewHolder(
+                getItemView(
+                    R.layout.home_widget_item_music,
+                    p0
+                )
+            )
             else -> throw IllegalStateException("invalid view type")
         }
     }

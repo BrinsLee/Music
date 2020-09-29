@@ -78,21 +78,44 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
         return true
     }
 
+    fun getPlayingSong(): BaseMusic? {
+        return mPlayer?.getPlayingSong()
+    }
+
     @Suppress("UNCHECKED_CAST")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playMusic(params: EventBusParams) {
         when (params.key) {
             EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC -> {
                 val musicList = params.`object` as MutableList<BaseMusic>
-                mPresenter?.setPlayList(musicList)
                 val position = params.extra.toInt()
-                mPresenter?.play(musicList[position])
+                val music = musicList[position]
+                if (mPlayer?.getPlayingSong()?.id == music.id) {
+                    if (mPlayer?.isPlaying()!!) {
+                        mPlayer?.pause()
+                    } else {
+                        mPlayer?.resume()
+                    }
+
+                } else {
+                    mPlayer?.stop()
+                    mPresenter?.setPlayList(musicList)
+                    mPresenter?.play(music)
+                }
             }
+
 
             EventBusKey.KEY_EVENT_BANNER_MUSIC -> {
                 val music = params.`object` as BaseMusic
                 mPresenter?.play(music)
             }
+            EventBusKey.KEY_EVENT_PAUSE_MUSIC -> {
+                mPlayer?.pause()
+            }
+            EventBusKey.KEY_EVENT_RESUME_MUSIC -> {
+                mPlayer?.resume()
+            }
+
         }
     }
 

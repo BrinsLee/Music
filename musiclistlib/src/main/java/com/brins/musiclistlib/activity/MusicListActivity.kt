@@ -59,6 +59,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         })
 //        stickynavlayout.setListener(this)
         if (id.isNotEmpty()) {
+            showLoading()
             launch({
                 mPresenter?.loadMusicListDetail(id)
             }, {})
@@ -70,8 +71,8 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
     }
 
     override fun onMusicDetailLoad(data: MusicListResult?) {
+        hideLoading()
         data?.let {
-
             it.playlist?.let { list ->
                 loadCover(list)
                 description.text = list.description
@@ -174,13 +175,6 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         }
     }
 
-    override fun showLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hideLoading() {
-        TODO("Not yet implemented")
-    }
 
     override fun imageScale(bottom: Float) {
         val b = bottom + dp2px(20f)

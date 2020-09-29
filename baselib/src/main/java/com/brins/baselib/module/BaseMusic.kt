@@ -27,6 +27,7 @@ abstract class BaseMusic : BaseData() {
     @SerializedName("ar")
     var artists: ArrayList<Artist>? = null
 
+    var playStatus : MusicStatus = MusicStatus.FIRST_PLAY
 
     class Song {
         var name: String = ""

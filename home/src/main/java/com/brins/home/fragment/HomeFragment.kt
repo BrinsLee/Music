@@ -17,8 +17,8 @@ import com.brins.networklib.model.album.AlbumResult
 import com.brins.networklib.model.album.NewestAlbum
 import com.brins.networklib.model.daily.DailyData
 import com.brins.networklib.model.musiclist.MusicList
-import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
+import com.brins.networklib.model.personal.PersonalizedMusics
 import com.brins.networklib.model.personal.PersonalizedResult
 import com.brins.networklib.model.recommend.RecommendResult
 import com.brins.networklib.model.title.SingleTitleData
@@ -53,18 +53,34 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
 
     }
 
+    /**
+     * 推荐音乐列表
+     *
+     * @param data
+     */
     override fun onPersonalizedMusicListLoad(data: PersonalizedResult<PersonalizedMusicList>?) {
         data?.let {
             val list = mutableListOf<BaseData>()
             list.add(SingleTitleData().setTitle("根据你喜欢的歌曲推荐"))
             list.add(it)
+            list.add(
+                SingleTitleMoreData().setTitle("晚霞灿烂，音乐惬意")
+                    .setListener(View.OnClickListener {
+                        ARouterUtils.go(MUSICLISTSQUAREACTIVITY)
+                    })
+            )
+            list.add(PersonalizedMusics())
+            list.add(AlbumResult<NewestAlbum>())
             mAdapter.addData(list)
+            launch({ mPresenter?.loadHotOrNewRecommend("hot") }, {})
         }
-        launch({
-            mPresenter?.loadPersonalizedMusic()
-        }, {})
     }
 
+    /**
+     * 横幅广告
+     *
+     * @param data
+     */
     override fun onBannerLoad(data: BaseData?) {
 
         data?.let {
@@ -78,35 +94,29 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
         }, {})
     }
 
-    override fun onPersonalizedMusicLoad(data: PersonalizedResult<PersonalizedMusic>?) {
-        data?.let {
-            val list = mutableListOf<BaseData>()
-            list.add(
-                SingleTitleMoreData().setTitle("晚霞灿烂，音乐惬意")
-                    .setListener(View.OnClickListener {
-                        ARouterUtils.go(MUSICLISTSQUAREACTIVITY)
-                    })
-            )
-            list.add(it)
-            list.add(AlbumResult<NewestAlbum>())
-            mAdapter.addData(list)
-            launch({ mPresenter?.loadHotOrNewRecommend("hot") }, {})
-        }
-    }
-
+    /**
+     * 最新推荐
+     *
+     * @param data
+     */
     override fun onNewRecommendLoad(data: RecommendResult<MusicList>?) {
         data?.let {
             val list = mutableListOf<BaseData>()
-            list.add(SingleTitleMoreData().setTitle("最新推荐"))
+            list.add(SingleTitleData().setTitle("最新推荐"))
             list.add(it)
             mAdapter.addData(list)
         }
     }
 
+    /**
+     * 热门推荐
+     *
+     * @param data
+     */
     override fun onHotRecommendLoad(data: RecommendResult<MusicList>?) {
         data?.let {
             val list = mutableListOf<BaseData>()
-            list.add(SingleTitleMoreData().setTitle("热门推荐"))
+            list.add(SingleTitleData().setTitle("热门推荐"))
             list.add(it)
             mAdapter.addData(list)
         }

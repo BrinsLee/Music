@@ -57,7 +57,7 @@ class NewAlbumFragment : BaseMvvmFragment<HomeViewModel>() {
     }
 
     override fun getViewModel(): BaseViewModel<out IModel>? {
-        return HomeViewModel(mActivity!!.application)
+        return HomeViewModel.getInstance(mActivity!!.application)
     }
 
 

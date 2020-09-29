@@ -1,5 +1,6 @@
 package com.brins.baselib.utils.glidehelper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -243,13 +244,18 @@ public class GlideHelper {
         setBlurImageResource(imageView, null, rid, true, radius, 0, null);
     }
 
-
-    public static void setRoundImageResource(ImageView imageView, String url, int radius) {
-        setRoundImageResource(imageView, url, radius, null);
+    public static void setRoundImageResource(ImageView imageView, String url, int radius, int defaultRes) {
+        setRoundImageResource(imageView, url, radius, null, defaultRes);
     }
 
 
-    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener) {
+    public static void setRoundImageResource(ImageView imageView, String url, int radius) {
+        setRoundImageResource(imageView, url, radius, null, 0);
+    }
+
+
+    @SuppressLint("CheckResult")
+    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener, int def) {
         try {
             if (imageView == null) {
                 return;
@@ -257,6 +263,9 @@ public class GlideHelper {
             Glide.get(imageView.getContext()).setMemoryCategory(MemoryCategory.NORMAL);
             RequestBuilder requestBuilder;
             requestBuilder = Glide.with(imageView.getContext()).load(imageUrl);
+            if (def != 0) {
+                requestBuilder.apply(new RequestOptions().placeholder(def));
+            }
             if (listener != null) {
                 requestBuilder.listener(listener);
             }
