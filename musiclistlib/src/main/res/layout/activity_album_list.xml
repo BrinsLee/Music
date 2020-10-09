@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AlbumListActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/coll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/iv_cover_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@color/black_30"
+                app:layout_collapseMode="parallax" />
+
+            <RelativeLayout
+                android:id="@+id/rl_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
+
+                <RelativeLayout
+                    android:id="@+id/rl_playlist_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="80dp">
+
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_10" />
+
+                    <TextView
+                        android:id="@+id/tv_playlist_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_toEndOf="@id/iv_cover"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:scaleX="1.05"
+                        android:textColor="#e3e4e5"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rl_playlist_info"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/iv_comment"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:scaleX="0.9"
+                            android:scaleY="0.9"
+                            android:src="@drawable/base_icon_album_comment" />
+
+                        <TextView
+                            android:id="@+id/tv_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_comment"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:textColor="#f3f3f3"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_share"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/iv_share"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:scaleX="0.9"
+                            android:scaleY="0.9"
+                            android:src="@drawable/base_icon_album_share" />
+
+                        <TextView
+                            android:id="@+id/tv_share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_share"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:textColor="#f3f3f3"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_download"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/iv_download"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:scaleX="0.9"
+                            android:scaleY="0.9"
+                            android:src="@drawable/base_icon_album_download" />
+
+                        <TextView
+                            android:id="@+id/tv_download"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_download"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:text="@string/download"
+                            android:textColor="#f3f3f3"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin">
+
+                <com.brins.baselib.widget.CommonHeaderView
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:chv_icon="@drawable/base_icon_back"
+                    app:chv_text_color="@color/white"
+                    app:chv_title="@string/music_list"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </com.brins.baselib.widget.CommonHeaderView>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_play"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_song"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

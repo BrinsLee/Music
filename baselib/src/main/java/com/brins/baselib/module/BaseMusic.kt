@@ -72,5 +72,14 @@ abstract class BaseMusic : BaseData() {
         var publishTime = 0L
 
         var subType = ""
+
+        var info: Info? = null
+
+    }
+
+    class Info {
+
+        var commentCount = 0
+        var shareCount = 0
     }
 }

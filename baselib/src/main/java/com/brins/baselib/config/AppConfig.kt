@@ -34,6 +34,11 @@ interface RECOMMEND {
         const val RECOMMEND_NEWEST_ALBUM = "/album/newest"
 
         /**
+         * 专辑详情
+         */
+        const val RECOMMEND_ALBUM_DETAIL = "/album"
+
+        /**
          * 全部新碟
          */
         const val RECOMMEND_NEW_ALBUM = "/album/new"

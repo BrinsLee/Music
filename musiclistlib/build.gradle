@@ -42,6 +42,8 @@ dependencies {
     implementation project(':bridgelib')
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     kapt  "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -3,7 +3,8 @@
     package="com.brins.musiclistlib">
 
     <application>
-        <activity android:name=".activity.MusicListActivity"></activity>
+        <activity android:name=".activity.AlbumListActivity"></activity>
+        <activity android:name=".activity.MusicListActivity" />
     </application>
 
 </manifest>

@@ -2,15 +2,19 @@ package com.brins.home.fragment
 
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvvmFragment
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_NEWEST_ALBUM
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
+import com.brins.baselib.route.ARouterUtils
+import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.home.R
 import com.brins.home.viewmodel.HomeViewModel
@@ -73,8 +77,13 @@ class NewAlbumFragment : BaseMvvmFragment<HomeViewModel>() {
             GlideHelper.setRoundImageResource(
                 helper.getView<ImageView>(R.id.ri_album_cover),
                 item.picUrl,
-                10
+                10, R.drawable.base_icon_default_cover
             )
+            helper.getView<ConstraintLayout>(R.id.cl_container).setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString(KEY_ID, item.id)
+                ARouterUtils.go(RouterHub.ALBUMLISTACTIVITY, bundle)
+            }
         }
 
         private fun getNameAndArtists(data: NewestAlbum): String {

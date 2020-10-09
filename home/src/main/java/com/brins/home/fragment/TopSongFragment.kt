@@ -72,7 +72,7 @@ class TopSongFragment : BaseMvvmFragment<HomeViewModel>() {
             GlideHelper.setRoundImageResource(
                 helper.getView<ImageView>(R.id.ri_album_cover),
                 item.song!!.picUrl,
-                10
+                10, R.drawable.base_icon_default_cover
             )
         }
 

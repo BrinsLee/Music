@@ -51,6 +51,9 @@ class CommonHeaderView @JvmOverloads constructor(
         headBack.setImageResource(icon)
     }
 
+    fun setTitleAlpha(alpha: Float) {
+        headTitle.alpha = alpha
+    }
 
     fun initView(title: String?) {
         headTitle.text = title
