@@ -79,6 +79,7 @@ dependencies {
     implementation project(':baselib')
     implementation project(':bridgelib')
     implementation project(':home')
+    implementation project(':mine')
     implementation project(':playerlib')
     implementation project(':networklib')
     implementation project(':recyclerlib')

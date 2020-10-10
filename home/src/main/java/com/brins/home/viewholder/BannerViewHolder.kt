@@ -13,7 +13,6 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.config.KEY_URL
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
@@ -23,7 +22,6 @@ import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.home.R
 import com.brins.networklib.model.banner.BannerResult
-import com.brins.networklib.model.music.Music
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener

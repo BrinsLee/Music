@@ -10,6 +10,7 @@ interface RouterHub {
         const val MUSIC_DETAIL = "/musicdetail"
         const val BRIDGE = "/bridge"
         const val MUSIC_SQUARE = "/musicsquare"
+        const val MINE = "/mine"
 
 
         //    ****************Activity路径配置***************************
@@ -31,5 +32,7 @@ interface RouterHub {
 
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"
+
+        const val MINEFRAGMENT = "$MINE/MineFragment"
     }
 }

@@ -26,6 +26,7 @@ import com.brins.networklib.model.title.SingleTitleMoreData
 import com.chad.library.adapter.base.model.BaseData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_fragment_home.*
+import java.net.ConnectException
 
 @AndroidEntryPoint
 @Route(path = RouterHub.HOMEFRAGMENT)
@@ -50,7 +51,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
     }
 
     override fun reLoad() {
-
+        loadData()
     }
 
     /**
@@ -126,14 +127,22 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
     override fun onLazyLoad() {
         super.onLazyLoad()
         mAdapter.setOnLoadDataListener { p0, p1, p2 ->
-            mAdapter.clear()
-            launch({
-                mPresenter?.loadBannerData()
-            }, {})
+            loadData()
             p2.onLoadDataFail()
         }
         recommendList.adapter = mAdapter
         recommendList.layoutManager = LinearLayoutManager(getMyContext())
+    }
+
+    private fun loadData() {
+        mAdapter.clear()
+        launch({
+            mPresenter?.loadBannerData()
+        }, {
+            if (it is ConnectException) {
+                showError()
+            }
+        })
     }
 
 }

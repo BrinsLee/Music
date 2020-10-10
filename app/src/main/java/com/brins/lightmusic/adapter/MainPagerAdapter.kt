@@ -15,7 +15,7 @@ class MainPagerAdapter @Inject constructor(fm: FragmentManager) :
         ARouterUtils.getFragment(RouterHub.HOMEFRAGMENT),
         Fragment(),
         Fragment(),
-        Fragment()
+        ARouterUtils.getFragment(RouterHub.MINEFRAGMENT)
     )
 
     override fun getItem(position: Int): Fragment {

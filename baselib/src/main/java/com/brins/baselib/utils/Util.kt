@@ -40,7 +40,7 @@ fun getCurrProcessName(context: Context): String? {
 
 fun handleNum(num: Int): String {
     return if (num > 10000) {
-        "${num / 10000}万"
+        "${num / 10000}"
     } else num.toString()
 }
 

@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.brins.baselib.R
 import com.brins.baselib.mvp.IView
 import com.brins.baselib.utils.eventbus.EventBusParams
+import com.brins.baselib.widget.ErrorStatuView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -134,6 +135,15 @@ abstract class BaseFragment : Fragment(), IView {
 
     override fun hideLoading() {
         mLoadingFragment?.dismiss()
+    }
+
+    protected fun showError() {
+        val error = ErrorStatuView(getMyContext())
+        error.setListener(View.OnClickListener {
+            reLoad()
+            rootView?.removeView(error)
+        })
+        rootView?.addView(error)
     }
 
 
