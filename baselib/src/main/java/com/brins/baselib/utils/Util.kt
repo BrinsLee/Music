@@ -11,6 +11,13 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.collection.SimpleArrayMap
+import io.reactivex.Completable
+import io.reactivex.CompletableObserver
+import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
 import java.lang.ref.WeakReference
 
@@ -172,4 +179,48 @@ fun setAlpha(fraction: Float, color: Int): Int {
     val b = color and 0xff
 
     return (256 * fraction).toInt() shl 24 or (r shl 16) or (g shl 8) or b
+}
+
+fun <T> Single<T>.subscribeDbResult(
+    onSuccess: (data: T) -> Unit,
+    onFailed: (e: Throwable) -> Unit
+) {
+    subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object : SingleObserver<T> {
+            override fun onSuccess(t: T) {
+                onSuccess(t)
+            }
+
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onError(e: Throwable) {
+                onFailed(e)
+            }
+
+
+        })
+}
+
+fun Completable.subscribeDbResult(
+    onSuccess: (data: Boolean) -> Unit,
+    onFailed: (e: Throwable) -> Unit
+) {
+    subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object : CompletableObserver {
+            override fun onComplete() {
+                onSuccess(true)
+            }
+
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onError(e: Throwable) {
+                onFailed(e)
+            }
+
+
+        })
 }

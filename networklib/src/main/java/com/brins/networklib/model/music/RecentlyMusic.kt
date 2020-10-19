@@ -1,13 +1,13 @@
-package com.brins.networklib.login
+package com.brins.networklib.model.music
 
-import com.brins.baselib.module.ITEM_MINE_LIKE
+import com.brins.baselib.module.ITEM_MINE_RECENTLY_MUSIC
 import com.chad.library.adapter.base.model.BaseData
 
 /**
  * Created by lipeilin
- * on 2020/10/15
+ * on 2020/10/19
  */
-class LikeData : BaseData() {
+class RecentlyMusic : BaseData() {
     override fun isValidData(): Boolean {
         return false
     }
@@ -21,6 +21,6 @@ class LikeData : BaseData() {
     }
 
     override fun getItemType(): Int {
-        return ITEM_MINE_LIKE
+        return ITEM_MINE_RECENTLY_MUSIC
     }
 }

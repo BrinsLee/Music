@@ -15,10 +15,12 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.brins.baselib.BaseMvpService
+import com.brins.baselib.database.factory.DataBaseFactory
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.subscribeDbResult
 import com.brins.playerlib.contract.IPlayback
 import com.brins.playerlib.presenter.PlayerPresenter
 import java.util.ArrayList
@@ -253,12 +255,15 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
             if (mPlayOnAudioFocus) {
                 if (isPaused) {
                     mPlayer.start()
-//                    notifyPlayStatusChanged(true)
                     return true
                 }
                 mPlayList.add(music)
                 if (mPlayList.prepare()) {
                     try {
+                        DataBaseFactory.addRecentlyMusic(music)
+                            .subscribeDbResult({},{
+                                Log.d("DataBaseFactory", it.message!!)
+                            })
                         mPlayer.reset()
                         mPlayer.setDataSource(music.musicUrl)
                         mPlayer.prepare()
@@ -286,7 +291,6 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
             if (mPlayOnAudioFocus) {
                 if (isPaused) {
                     mPlayer.start()
-//                    notifyPlayStatusChanged(true)
                     return true
                 }
                 if (mPlayList.prepare()) {
@@ -297,6 +301,10 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                             return false
                         }
                         try {
+                            DataBaseFactory.addRecentlyMusic(music)
+                                .subscribeDbResult({},{
+                                    Log.d("DataBaseFactory", it.message!!)
+                                })
                             mPlayer.reset()
                             mPlayer.setDataSource(it.musicUrl)
                             mPlayer.prepare()
@@ -331,6 +339,12 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                 }
                 if (mPlayList.prepare()) {
                     try {
+                        mPlayList.getCurrentSong()?.let {
+                            DataBaseFactory.addRecentlyMusic(it)
+                                .subscribeDbResult({},{
+                                    Log.d("DataBaseFactory", it.message!!)
+                                })
+                        }
                         mPlayer.reset()
                         mPlayer.setDataSource(url)
                         mPlayer.prepare()

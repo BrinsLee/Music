@@ -40,6 +40,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.aar'])
 
     api rootProject.ext.supportLibs
+    //room
+    implementation rootProject.ext.room.playservice
+    kapt rootProject.ext.room.room
+    annotationProcessor rootProject.ext.room.databinding
+    implementation rootProject.ext.room.roomruntime
+    annotationProcessor rootProject.ext.room.roomcompiler
+    //rxJava
+    api rootProject.ext.rxJavaLibs
     //Glide
     implementation "com.github.bumptech.glide:glide:${rootProject.ext.dependVersion.glide}"
     annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.dependVersion.glide}"

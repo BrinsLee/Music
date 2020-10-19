@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:icon_src="@drawable/base_icon_like_heart_black"
+        app:icon_src="@drawable/base_icon_like_black"
         app:icon_title="@string/like" />
 
     <com.brins.mine.widget.IconTextVerticalView

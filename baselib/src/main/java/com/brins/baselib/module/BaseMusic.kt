@@ -1,33 +1,81 @@
 package com.brins.baselib.module
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.brins.baselib.database.typeconverter.ArtistsConverter
+import com.brins.baselib.database.typeconverter.PlayStatusConverter
+import com.brins.baselib.database.typeconverter.SongConverter
 import com.google.gson.annotations.SerializedName
 
-abstract class BaseMusic : BaseData() {
+@Entity(tableName = "recently_music")
+@TypeConverters(
+    SongConverter::class, ArtistsConverter::class, PlayStatusConverter::class
+)
+open class BaseMusic : BaseData() {
 
+    /**
+     * 音乐Id
+     */
+    @ColumnInfo(name = "ID")
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     var id: String = ""
 
+    /**
+     * 名称
+     */
+    @ColumnInfo(name = "Name")
     @SerializedName("name")
     var name: String = ""
 
+    /**
+     * 时长
+     */
+    @ColumnInfo(name = "Duration")
     @SerializedName("dt", alternate = ["duration"])
     var duration: Int = 0
 
+    /**
+     * 封面图片
+     */
+    @ColumnInfo(name = "Cover")
     var cover: String = ""
 
+    /**
+     * 图片连接
+     */
+    @ColumnInfo(name = "PicUrl")
     @SerializedName("picUrl")
     var picUrl = ""
 
+    /**
+     * 音乐连接
+     */
+    @ColumnInfo(name = "MusicUrl")
     @SerializedName("musicUrl", alternate = ["mp3Url"])
     var musicUrl: String = ""
 
+    /**
+     * 音乐信息
+     */
+    @ColumnInfo(name = "Song")
     @SerializedName("song", alternate = ["album", "al"])
     var song: Song? = null
 
+    /**
+     * 歌手信息
+     */
+    @ColumnInfo(name = "Artists")
     @SerializedName("ar")
     var artists: ArrayList<Artist>? = null
 
-    var playStatus : MusicStatus = MusicStatus.FIRST_PLAY
+    /**
+     * 播放状态
+     */
+    @ColumnInfo(name = "PlayStatus")
+    var playStatus: MusicStatus = MusicStatus.FIRST_PLAY
 
     class Song {
         var name: String = ""
@@ -82,4 +130,7 @@ abstract class BaseMusic : BaseData() {
         var commentCount = 0
         var shareCount = 0
     }
+
+    override val itemType: Int
+        get() = 0
 }
