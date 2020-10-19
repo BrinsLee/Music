@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IconTextVerticalView">
+        <attr name="icon_title" format="string" />
+        <attr name="icon_subtitle" format="string"/>
+        <attr name="icon_title_color" format="color"/>
+        <attr name="icon_subtitle_color" format="color"/>
+        <attr name="icon_src" format="reference"/>
+    </declare-styleable>
+</resources>

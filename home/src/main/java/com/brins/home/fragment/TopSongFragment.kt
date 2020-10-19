@@ -2,6 +2,7 @@ package com.brins.home.fragment
 
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -11,6 +12,8 @@ import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_TOP_MUSIC
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
+import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.home.R
 import com.brins.home.viewmodel.HomeViewModel
@@ -74,6 +77,11 @@ class TopSongFragment : BaseMvvmFragment<HomeViewModel>() {
                 item.song!!.picUrl,
                 10, R.drawable.base_icon_default_cover
             )
+            helper.getView<ConstraintLayout>(R.id.cl_container).setOnClickListener {
+                EventBusManager.post(
+                    EventBusKey.KEY_EVENT_TOP_MUSIC, item
+                )
+            }
         }
 
         private fun getNameAndArtists(data: TopMusic): String {

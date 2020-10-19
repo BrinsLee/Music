@@ -71,6 +71,12 @@ open class BasePlayList() : BaseData() {
 
     fun add(music: BaseMusic) {
         if (!songs.contains(music)) {
+            songs.forEach {
+                if (it.id == music.id) {
+                    playingIndex = songs.indexOf(it)
+                    return
+                }
+            }
             songs.add(music)
             numOfSongs = songs.size
             playingIndex = songs.lastIndex

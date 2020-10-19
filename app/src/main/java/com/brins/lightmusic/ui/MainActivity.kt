@@ -104,7 +104,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
                 }
             }
 
-
+            EventBusKey.KEY_EVENT_TOP_MUSIC,
             EventBusKey.KEY_EVENT_BANNER_MUSIC -> {
                 val music = params.`object` as BaseMusic
                 mPresenter?.play(music)

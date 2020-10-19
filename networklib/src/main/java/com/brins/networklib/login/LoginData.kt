@@ -3,7 +3,7 @@ package com.brins.networklib.login
 import com.brins.baselib.module.ITEM_MINE_UNLOGIN
 import com.chad.library.adapter.base.model.BaseData
 
-class UnLoginData : BaseData() {
+class LoginData : BaseData() {
     override fun isValidData(): Boolean {
         return false
     }

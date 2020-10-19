@@ -114,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:background="@drawable/base_bg_8dp_top"
+            android:background="@drawable/base_bg_20dp_top"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintHorizontal_bias="1.0" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

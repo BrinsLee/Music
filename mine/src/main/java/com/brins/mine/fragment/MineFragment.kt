@@ -1,10 +1,6 @@
 package com.brins.mine.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -13,9 +9,8 @@ import com.brins.baselib.route.RouterHub.Companion.MINEFRAGMENT
 import com.brins.mine.R
 import com.brins.mine.adapter.BaseMineAdapter
 import com.brins.mine.presenter.MinePresenter
-import com.brins.networklib.login.UnLoginData
-import com.chad.library.adapter.base.OnLoadDataCompleteCallback
-import com.chad.library.adapter.base.OnLoadDataListener
+import com.brins.networklib.login.LikeData
+import com.brins.networklib.login.LoginData
 import com.chad.library.adapter.base.model.BaseData
 import kotlinx.android.synthetic.main.fragment_mine.*
 
@@ -51,7 +46,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), NestedScrollView.OnScroll
         mAdapter?.setOnLoadDataListener { p0, p1, p2 ->
             run {
                 val list = mutableListOf<BaseData>()
-                list.add(UnLoginData())
+                list.add(LoginData())
+                list.add(LikeData())
                 p2.onLoadDataSuccess(list)
             }
         }

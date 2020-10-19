@@ -15,6 +15,7 @@ public class EventBusKey {
     public static final String KEY_JSBRIDGE_DATA_SHAREJSAPI_ACTIVITYRESULT = "key_jsbridge_data_sharejsapi_activityresult";
     public static final String KEY_EVENT_PERSONALIZED_MUSIC = "KEY_EVENT_PERSONALIZED_MUSIC";
     public static final String KEY_EVENT_UPDATE_MUSIC = "KEY_EVENT_UPDATE_MUSIC";
+    public static final String KEY_EVENT_TOP_MUSIC = "KEY_EVENT_TOP_MUSIC";
     public static final String KEY_EVENT_BANNER_MUSIC = "KEY_EVENT_BANNER_MUSIC";
     public static final String KEY_EVENT_PAUSE_MUSIC = "KEY_EVENT_PAUSE_MUSIC";
     public static final String KEY_EVENT_RESUME_MUSIC = "KEY_EVENT_RESUME_MUSIC";
