@@ -21,6 +21,7 @@ public class EventBusKey {
     public static final String KEY_EVENT_RESUME_MUSIC = "KEY_EVENT_RESUME_MUSIC";
     public static final String KEY_EVENT_UPDATE_PLAY_MODE = "KEY_EVENT_UPDATE_PLAY_MODE";
     public static final String KEY_EVENT_ALBUM_MUSIC = "KEY_EVENT_ALBUM_MUSIC";
+    public static final String KEY_EVENT_LOGIN_SUCCESS = "KEY_EVENT_LOGIN_SUCCESS";
 
 
 }

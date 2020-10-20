@@ -5,13 +5,10 @@ import android.util.Log
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.brins.baselib.database.factory.DataBaseFactory
 import com.brins.baselib.fragment.BaseMvpFragment
-import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.route.RouterHub.Companion.MINEFRAGMENT
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
-import com.brins.baselib.utils.subscribeDbResult
 import com.brins.mine.R
 import com.brins.mine.adapter.BaseMineAdapter
 import com.brins.mine.presenter.MinePresenter
@@ -60,6 +57,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), NestedScrollView.OnScroll
                 list.add(LikeData())
                 list.add(SingleTitleData().setTitle(getString(R.string.recently_play)))
                 list.add(RecentlyMusic())
+                list.add(SingleTitleData().setTitle(getString(R.string.my_list)))
                 p2.onLoadDataSuccess(list)
             }
         }

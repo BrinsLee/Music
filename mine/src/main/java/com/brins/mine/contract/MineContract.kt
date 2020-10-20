@@ -8,7 +8,6 @@ import com.brins.baselib.mvvm.BaseViewModel
 import com.brins.mine.model.MineModel
 
 
-
 interface MineContract {
 
     interface View : IView {
@@ -19,15 +18,17 @@ interface MineContract {
     abstract class Presenter : BasePresenter<MineModel, View>() {
 
 
-
     }
 
     interface Model : IModel {
 
+        fun emailLogin(email: String, password: String)
+
+        fun getMyMusicLists(id: String)
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<MineModel>(application) {
 
-
+        abstract fun getMyMusicLists(id: String)
     }
 }

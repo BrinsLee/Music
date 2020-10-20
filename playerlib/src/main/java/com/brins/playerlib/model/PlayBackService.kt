@@ -15,7 +15,7 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.brins.baselib.BaseMvpService
-import com.brins.baselib.database.factory.DataBaseFactory
+import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
@@ -260,7 +260,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                 mPlayList.add(music)
                 if (mPlayList.prepare()) {
                     try {
-                        DataBaseFactory.addRecentlyMusic(music)
+                        DatabaseFactory.addRecentlyMusic(music)
                             .subscribeDbResult({},{
                                 Log.d("DataBaseFactory", it.message!!)
                             })
@@ -301,7 +301,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                             return false
                         }
                         try {
-                            DataBaseFactory.addRecentlyMusic(music)
+                            DatabaseFactory.addRecentlyMusic(music)
                                 .subscribeDbResult({},{
                                     Log.d("DataBaseFactory", it.message!!)
                                 })
@@ -340,7 +340,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                 if (mPlayList.prepare()) {
                     try {
                         mPlayList.getCurrentSong()?.let {
-                            DataBaseFactory.addRecentlyMusic(it)
+                            DatabaseFactory.addRecentlyMusic(it)
                                 .subscribeDbResult({},{
                                     Log.d("DataBaseFactory", it.message!!)
                                 })

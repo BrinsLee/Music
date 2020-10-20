@@ -1,6 +1,5 @@
 package com.brins.baselib.config
 
-var isLogin = false
 const val BASEURL = "http://118.31.65.24/"
 
 const val PHONE_NUMBER_LENGTH = 11
@@ -98,5 +97,18 @@ interface MUSIC_COMMENT {
 
     companion object {
         const val MUSIC_COMMENT = "/comment/music"
+    }
+}
+
+
+interface MINE_MUSIC_LIST {
+    companion object {
+        const val MINE_MUSIC_LIST = "/user/playlist"
+    }
+}
+
+interface LOGIN {
+    companion object{
+        const val LOGIN_EMAIL_LOGIN = "/login"
     }
 }

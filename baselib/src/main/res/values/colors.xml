@@ -41,5 +41,6 @@
     <color name="lrc_time_text_color">#809E9E9E</color>
 
     <color name="color_29a2fb">#29a2fb</color>
-
+    <color name="common_blue_eleventh">#58BAFC</color>
+    <color name="common_blue_twelfth">#377DFF</color>
 </resources>

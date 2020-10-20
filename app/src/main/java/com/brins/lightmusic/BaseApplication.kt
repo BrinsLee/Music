@@ -5,13 +5,14 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
-import com.brins.baselib.utils.UIUtils
-import com.brins.baselib.utils.getCurrProcessName
+import com.brins.baselib.cache.login.LoginCache
 import com.brins.bridgelib.BridgeInterface
 import com.brins.bridgelib.factory.Factory
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.baselib.config.MAIN_PROCESS_NAME
-import com.brins.baselib.utils.AppUtils
+import com.brins.baselib.database.factory.DatabaseFactory
+import com.brins.baselib.utils.*
+import com.brins.baselib.utils.SpUtils.*
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
 import dagger.hilt.android.HiltAndroidApp
@@ -44,8 +45,27 @@ class BaseApplication : Application() {
             initUserData()*/
             UIUtils.init(this)
             AppUtils.init(this)
+            initUserData()
             initArouter()
             registerBridge()
+        }
+    }
+
+    private fun initUserData() {
+        LoginCache.isLogin = obtain(SP_USER_INFO, this).getBoolean(KEY_IS_LOGIN, false)
+        LoginCache.UserCookie = obtain(SP_USER_INFO, this).getString(KEY_COOKIE, "")
+        if (LoginCache.isLogin) {
+            DatabaseFactory.getUserInfo().subscribeDbResult({
+                LoginCache.userAccount = it
+            }, {
+                it.printStackTrace()
+            })
+
+            DatabaseFactory.getUserProfile().subscribeDbResult({
+                LoginCache.userProfile = it
+            }, {
+                it.printStackTrace()
+            })
         }
     }
 

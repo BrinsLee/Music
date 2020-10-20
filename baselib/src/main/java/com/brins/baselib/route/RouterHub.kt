@@ -29,6 +29,11 @@ interface RouterHub {
 
         const val ALBUMLISTACTIVITY = "$MUSIC_LIST/AlbumListActivity"
 
+        const val LOGINSELECTACTIVITY = "$LOGIN/LoginSelectActivity"
+
+        const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
+
+
 
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"

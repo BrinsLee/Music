@@ -1,10 +1,9 @@
 package com.brins.mine.viewholder
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.brins.baselib.database.factory.DataBaseFactory
+import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.subscribeDbResult
 import com.brins.mine.R
@@ -22,7 +21,7 @@ class RecentlyMusicViewHolder(view: View) : BaseViewHolder<RecentlyMusic>(view) 
 
     override fun setData(data: RecentlyMusic?) {
         super.setData(data)
-        DataBaseFactory.getRecentlyMusics().subscribeDbResult({
+        DatabaseFactory.getRecentlyMusics().subscribeDbResult({
             val list = it
             if (list.isNotEmpty()) {
                 GlideHelper.setRoundImageResource(mCover, list[list.lastIndex].picUrl, 10)

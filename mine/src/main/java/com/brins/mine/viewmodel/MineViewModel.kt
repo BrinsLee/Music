@@ -25,4 +25,8 @@ class MineViewModel private constructor(application: Application) :
             }
         }
     }
+
+    override fun getMyMusicLists(id: String) {
+        mModel
+    }
 }

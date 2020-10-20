@@ -43,6 +43,7 @@ object ApiHelper {
     private var mMusicService: MusicService? = null
     private var mMusicListService: MusicListService? = null
     private var mAlbumService: AlbumService? = null
+    private var mLoginService: LoginService? = null
 
 
     fun getPersonalizedService(): PersonalizedService {
@@ -81,7 +82,7 @@ object ApiHelper {
                 if (mMusicListService == null) {
                     mMusicListService = RetrofitFactory.newRetrofit(
                         BASEURL,
-                        LOG_TAG_NETWORK_MUSIC
+                        LOG_TAG_NETWORK_PLAYLIST
                     )
                         .create(MusicListService::class.java)
                 }
@@ -103,6 +104,21 @@ object ApiHelper {
             }
         }
         return mAlbumService!!
+    }
+
+    fun getLoginService(): LoginService {
+        if (mLoginService == null) {
+            synchronized(LoginService::class.java) {
+                if (mLoginService == null) {
+                    mLoginService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_LOGIN
+                    )
+                        .create(LoginService::class.java)
+                }
+            }
+        }
+        return mLoginService!!
     }
 
     suspend fun <T> Call<T>.await(): T {
