@@ -65,7 +65,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
                 ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
             }
         }, {
-
+            ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
         })
     }
 

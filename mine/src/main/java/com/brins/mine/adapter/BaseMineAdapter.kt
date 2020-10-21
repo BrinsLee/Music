@@ -2,15 +2,9 @@ package com.brins.mine.adapter
 
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
-import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
-import com.brins.baselib.module.ITEM_MINE_LIKE
-import com.brins.baselib.module.ITEM_MINE_RECENTLY_MUSIC
-import com.brins.baselib.module.ITEM_MINE_UNLOGIN
+import com.brins.baselib.module.*
 import com.brins.mine.R
-import com.brins.mine.viewholder.LikeViewHolder
-import com.brins.mine.viewholder.LoginViewHolder
-import com.brins.mine.viewholder.RecentlyMusicViewHolder
-import com.brins.mine.viewholder.SingleTitleViewHolder
+import com.brins.mine.viewholder.*
 import com.chad.library.adapter.base.BaseNestedScrollViewQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.model.BaseData
@@ -42,6 +36,9 @@ class BaseMineAdapter(
                     R.layout.mine_item_music,
                     p0
                 )
+            )
+            ITEM_MINE_MUSIC_LIST -> return MusicListViewHolder(
+                getItemView(R.layout.mine_item_music_list_view, p0)
             )
             else -> throw IllegalStateException("invalid view type")
         }

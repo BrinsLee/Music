@@ -10,10 +10,11 @@ import com.brins.musiclistlib.R
 import com.brins.networklib.model.album.AlbumListResult
 import com.brins.networklib.model.musiclist.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base2.module.LoadMoreModule
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 
 class MusicListAdapter(data: MutableList<BaseData>) :
-    BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>(data) {
+    BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>(data), LoadMoreModule {
 
     init {
         addItemType(ITEM_MUSIC_LIST_TRACK_MUSIC, R.layout.musiclist_item_music)

@@ -60,6 +60,8 @@ class MusicList : BaseData() {
 
     var tracks: ArrayList<Track> = arrayListOf()
 
+    var trackIds: ArrayList<TrackId> = arrayListOf()
+
     class Subscriber {
 
         var province = 0
@@ -98,6 +100,12 @@ class MusicList : BaseData() {
         override val itemType: Int
             get() = ITEM_MUSIC_LIST_TRACK_MUSIC
 
+    }
+
+    class TrackId {
+        var id = ""
+
+        var at = ""
     }
 
 

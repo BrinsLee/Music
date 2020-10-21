@@ -56,6 +56,11 @@ interface RECOMMEND {
          * 推荐高品质
          */
         const val RECOMMEND_HIGHTQUALITY = "/top/playlist/highquality"
+
+        /**
+         * 每日推荐
+         */
+        const val RECOMMEND_DAILY_MUSIC = "/recommend/songs"
     }
 }
 
@@ -82,7 +87,15 @@ interface MUSIC {
          */
         const val MUSIC_USEABLE = "/check/music"
 
+        /**
+         * 歌词
+         */
         const val MUSIC_LRC = "/lyric"
+
+        /**
+         * 音乐详情
+         */
+        const val MUSIC_DETAIL = "/song/detail"
     }
 }
 
@@ -90,6 +103,8 @@ interface MUSIC_LIST {
 
     companion object {
         const val MUSIC_LIST_DETAIL = "/playlist/detail"
+
+        const val MUSIC_USER_LIST = "/user/playlist"
     }
 }
 

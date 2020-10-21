@@ -6,6 +6,7 @@ import com.brins.networklib.model.comment.CommentResult
 import com.brins.networklib.model.music.MusicLrcResult
 import com.brins.networklib.model.music.MusicUrl
 import com.brins.networklib.model.music.MusicUseable
+import com.brins.networklib.model.musiclist.MoreMusicListResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -51,5 +52,7 @@ interface MusicService {
         @Query("limit") limit: Int = 20
     ): Call<CommentResult>
 
+    @GET(MUSIC.MUSIC_DETAIL)
+    fun getMusicDetail(@Query("ids") ids: String) : Call<MoreMusicListResult>
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -16,6 +17,7 @@ import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
 import com.brins.baselib.route.RouterHub.Companion.MUSICLISTACTIVITY
 import com.brins.baselib.utils.SizeUtils.dp2px
+import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.UIUtils.getScreenWidth
 import com.brins.baselib.utils.glidehelper.GlideHelper
@@ -28,9 +30,11 @@ import com.brins.musiclistlib.contract.MusicListContract
 import com.brins.musiclistlib.presenter.MusicListPresenter
 import com.brins.musiclistlib.widget.StickNavLayout
 import com.brins.networklib.helper.ApiHelper.launch
+import com.brins.networklib.model.musiclist.MoreMusicListResult
 import com.brins.networklib.model.musiclist.MusicList
 import com.brins.networklib.model.musiclist.MusicListResult
 import kotlinx.android.synthetic.main.activity_music_list.*
+import kotlin.math.min
 
 @Route(path = MUSICLISTACTIVITY)
 class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContract.View,
@@ -39,6 +43,8 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
     @Autowired(name = "KEY_ID")
     lateinit var id: String
     private var mAdapter: MusicListAdapter? = null
+
+    private var mCurrentIndex = 0
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_music_list
@@ -144,6 +150,15 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         }
     }
 
+    override fun onMoreMusicDetailLoad(data: MoreMusicListResult?) {
+        val list = mutableListOf<BaseData>()
+        data?.songs?.let {
+            list.addAll(it)
+            mAdapter?.addData(list)
+            mAdapter?.loadMoreModule?.isEnableLoadMore = true
+        }
+    }
+
     private fun loadCover(it: MusicList) {
         GlideHelper.setBlurImageResource(
             cover,
@@ -159,6 +174,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
      */
     private fun bindRecyclerViewAdapter(it: MusicListResult) {
         if (it.playlist?.tracks != null) {
+            mCurrentIndex = it.playlist!!.tracks.size
             val list = mutableListOf<BaseData>()
             list.add(object : BaseData() {
                 override val itemType: Int
@@ -166,12 +182,38 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
             })
             list.addAll(it.playlist?.tracks!!)
             mAdapter = MusicListAdapter(list)
+            mAdapter?.loadMoreModule?.setOnLoadMoreListener {
+                loadMore(it)
+            }
+            mAdapter?.loadMoreModule?.isAutoLoadMore = true
+            mAdapter?.loadMoreModule?.isEnableLoadMoreIfNotFullPage = false
             musicRecycler.adapter = mAdapter
             val manager = LinearLayoutManager(this)
             manager.isSmoothScrollbarEnabled = true
             musicRecycler.setHasFixedSize(true)
             musicRecycler.isNestedScrollingEnabled = true
             musicRecycler.layoutManager = manager
+        }
+    }
+
+    private fun loadMore(it: MusicListResult) {
+        mAdapter?.loadMoreModule?.isEnableLoadMore = false
+        if (it.playlist?.trackCount!! > mCurrentIndex) {
+
+            val loadMore = min(10, it.playlist!!.trackCount - mCurrentIndex)
+            val loadMores = arrayListOf<String>()
+            for (i in 0 until loadMore) {
+                loadMores.add(it.playlist!!.trackIds[mCurrentIndex].id)
+                mCurrentIndex++
+            }
+            launch({
+                mPresenter?.loadMoreMusicListDetail(loadMores)
+            }, {
+                ToastUtils.show("加载失败，请重试", Toast.LENGTH_SHORT)
+                mAdapter?.loadMoreModule?.isEnableLoadMore = true
+            })
+        } else {
+            mAdapter?.loadMoreModule?.isEnableLoadMore = false
         }
     }
 

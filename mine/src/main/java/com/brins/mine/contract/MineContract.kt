@@ -6,6 +6,7 @@ import com.brins.baselib.mvp.IView
 import com.brins.baselib.mvp.p.BasePresenter
 import com.brins.baselib.mvvm.BaseViewModel
 import com.brins.mine.model.MineModel
+import com.brins.networklib.model.musiclist.MusicListsResult
 
 
 interface MineContract {
@@ -22,13 +23,11 @@ interface MineContract {
 
     interface Model : IModel {
 
-        fun emailLogin(email: String, password: String)
-
-        fun getMyMusicLists(id: String)
+        suspend fun getMyMusicLists(id: String) : MusicListsResult
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<MineModel>(application) {
 
-        abstract fun getMyMusicLists(id: String)
+        abstract suspend fun getMyMusicLists(id: String)
     }
 }

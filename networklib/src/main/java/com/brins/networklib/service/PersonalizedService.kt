@@ -3,6 +3,7 @@ package com.brins.networklib.service
 
 import com.brins.baselib.config.BANNER.Companion.BANNER
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_ALBUM
+import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_DAILY_MUSIC
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_HIGHTQUALITY
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_MUSIC_LIST
 import com.brins.baselib.config.RECOMMEND.Companion.RECOMMEND_NEWEST_ALBUM
@@ -86,4 +87,9 @@ interface PersonalizedService {
         @Query("cat") cat: String,
         @Query("limit") limit: Int = 21
     ): Call<MusicListsResult>
+
+    @GET(RECOMMEND_DAILY_MUSIC)
+    fun getDailyMusicRecommend(
+
+    )
 }

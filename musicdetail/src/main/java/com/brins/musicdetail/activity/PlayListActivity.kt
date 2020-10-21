@@ -112,7 +112,7 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
             addItemType(ITEM_HOME_PERSONALIZED_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_HOME_TOP_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_ALBUM_LIST_MUSIC, R.layout.music_detail_item_playlist)
-
+            addItemType(ITEM_MUSIC_LIST_TRACK_MUSIC, R.layout.music_detail_item_playlist)
         }
 
         override fun convert(helper: BaseViewHolder, item: BaseData) {

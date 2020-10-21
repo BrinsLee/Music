@@ -1,11 +1,20 @@
 package com.brins.mine.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import com.brins.mine.contract.MineContract
+import com.brins.networklib.model.musiclist.MusicList
+import com.brins.networklib.model.musiclist.MusicListsResult
 
 class MineViewModel private constructor(application: Application) :
     MineContract.ViewModel(application) {
 
+    private lateinit var mMusicListData: MusicListsResult
+    private val mMusicListLiveData: MutableLiveData<MutableList<MusicList>> = MutableLiveData()
+
+    fun getMutableMusicListData(): MutableLiveData<MutableList<MusicList>> = mMusicListLiveData
+
+    fun getMusicListData(): MusicListsResult = mMusicListData
 
     companion object {
 
@@ -26,7 +35,13 @@ class MineViewModel private constructor(application: Application) :
         }
     }
 
-    override fun getMyMusicLists(id: String) {
-        mModel
+    override suspend fun getMyMusicLists(id: String) {
+        val result = mModel?.getMyMusicLists(id)
+        result?.let {
+            mMusicListData = it
+            val list = mutableListOf<MusicList>()
+            list.addAll(mMusicListData.playlists!!)
+            mMusicListLiveData.value = list
+        }
     }
 }

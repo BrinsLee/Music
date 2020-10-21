@@ -47,10 +47,18 @@ class LoginFragment : BaseMvvmFragment<MineViewModel>(), View.OnClickListener {
         super.init(savedInstanceState)
         if (LoginCache.isLogin && LoginCache.userProfile != null) {
             setUserData(LoginCache.userProfile!!)
+        } else {
+            tv_follows.text = getFollowOrFanNum(UIUtils.getString(R.string.follows), 0)
+            tv_fans.text = getFollowOrFanNum(UIUtils.getString(R.string.fans), 0)
         }
+
+        cl_unlogin.setOnClickListener(this)
+    }
+
+    private fun getFollowOrFanNum(decoration: String, num: Int): SpannableStringBuilder {
         val spannableFollow = SpannableStringBuilder()
-        spannableFollow.append(UIUtils.getString(R.string.follows))
-        spannableFollow.append(": 0")
+        spannableFollow.append(decoration)
+        spannableFollow.append(": $num")
         val relativeSizeSpan = RelativeSizeSpan(0.7f)
         val foreColor = ForegroundColorSpan(Color.GRAY)
         spannableFollow.setSpan(
@@ -62,23 +70,7 @@ class LoginFragment : BaseMvvmFragment<MineViewModel>(), View.OnClickListener {
         spannableFollow.setSpan(
             foreColor, 3, spannableFollow.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE
         )
-        tv_follows.text = spannableFollow
-
-        val spannableFan = SpannableStringBuilder()
-        spannableFan.append(UIUtils.getString(R.string.fans))
-        spannableFan.append(": 0")
-        val relativeSizeSpan2 = RelativeSizeSpan(0.7f)
-        spannableFan.setSpan(
-            relativeSizeSpan2,
-            3,
-            spannableFan.length,
-            Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-        )
-        spannableFan.setSpan(
-            foreColor, 3, spannableFan.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-        )
-        tv_fans.text = spannableFan
-        cl_unlogin.setOnClickListener(this)
+        return spannableFollow
     }
 
     override fun onClick(p0: View) {
@@ -104,5 +96,7 @@ class LoginFragment : BaseMvvmFragment<MineViewModel>(), View.OnClickListener {
     private fun setUserData(it: UserProfileBean) {
         GlideHelper.setRoundImageResource(iv_avatar, it.avatarUrl, 10)
         tv_login.text = it.nickname
+        tv_follows.text = getFollowOrFanNum(UIUtils.getString(R.string.follows), it.follows)
+        tv_fans.text = getFollowOrFanNum(UIUtils.getString(R.string.fans), it.followeds)
     }
 }

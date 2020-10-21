@@ -34,7 +34,6 @@ class LoginSelectActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0.id) {
             R.id.btn_email_login -> {
-                ToastUtils.show("111111111111", Toast.LENGTH_SHORT)
                 ARouterUtils.go(RouterHub.LOGININPUTACTIVITY)
                 finish()
             }
