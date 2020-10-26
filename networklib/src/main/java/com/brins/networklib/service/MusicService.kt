@@ -3,6 +3,7 @@ package com.brins.networklib.service
 import com.brins.baselib.config.MUSIC
 import com.brins.baselib.config.MUSIC_COMMENT
 import com.brins.networklib.model.comment.CommentResult
+import com.brins.networklib.model.like.LikeMusicResult
 import com.brins.networklib.model.music.MusicLrcResult
 import com.brins.networklib.model.music.MusicUrl
 import com.brins.networklib.model.music.MusicUseable
@@ -52,7 +53,26 @@ interface MusicService {
         @Query("limit") limit: Int = 20
     ): Call<CommentResult>
 
+    /**
+     * 获取音乐详情
+     *
+     * @param ids
+     * @return
+     */
     @GET(MUSIC.MUSIC_DETAIL)
-    fun getMusicDetail(@Query("ids") ids: String) : Call<MoreMusicListResult>
+    fun getMusicDetail(@Query("ids") ids: String): Call<MoreMusicListResult>
+
+    /**
+     * 喜欢/不喜欢音乐
+     *
+     * @param id
+     * @param like
+     * @return
+     */
+    @GET(MUSIC.MUSIC_LIKE)
+    fun likeOrUnLikeMusic(
+        @Query("id") id: String,
+        @Query("like") like: Boolean = true
+    ): Call<LikeMusicResult>
 
 }

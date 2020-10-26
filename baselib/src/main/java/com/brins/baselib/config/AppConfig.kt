@@ -96,6 +96,11 @@ interface MUSIC {
          * 音乐详情
          */
         const val MUSIC_DETAIL = "/song/detail"
+
+        /**
+         * 喜欢/不喜欢音乐
+         */
+        const val MUSIC_LIKE = "/like"
     }
 }
 
@@ -105,6 +110,10 @@ interface MUSIC_LIST {
         const val MUSIC_LIST_DETAIL = "/playlist/detail"
 
         const val MUSIC_USER_LIST = "/user/playlist"
+
+        const val MUSIC_LIST_USER_LIKE = "/likelist"
+
+        const val MUSIC_LIST_DAILY_RECOMMEND = "/recommend/resource"
     }
 }
 
@@ -123,7 +132,7 @@ interface MINE_MUSIC_LIST {
 }
 
 interface LOGIN {
-    companion object{
+    companion object {
         const val LOGIN_EMAIL_LOGIN = "/login"
     }
 }

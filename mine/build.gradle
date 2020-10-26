@@ -49,6 +49,7 @@ dependencies {
     api rootProject.ext.supportLibs
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
 
     //Glide

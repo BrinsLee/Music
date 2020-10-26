@@ -13,6 +13,7 @@ public class SpUtils {
     public static String KEY_IS_LOGIN = "key_is_login";
     public static String KEY_AVATAR_STRING = "key_avatar_string";
     public static String KEY_COOKIE = "key_cookie";
+    public static String KEY_USER_LIKE = "key_user_like";
 
     private SharedPreferences mSharedPreferences;
 

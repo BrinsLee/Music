@@ -51,6 +51,12 @@ fun handleNum(num: Int): String {
     } else num.toString()
 }
 
+fun handleNum(num: Long): String {
+    return if (num > 10000) {
+        "${num / 10000}"
+    } else num.toString()
+}
+
 /**
  * 设置状态栏文字颜色
  *

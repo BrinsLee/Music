@@ -17,8 +17,11 @@ class ReceivedCookiesInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
         val stringBuilder = StringBuilder()
-        if (response.headers("Set-Cookie").isNotEmpty()) {
-            response.headers("Set-Cookie").forEach {
+        val cookies = response.headers("Set-Cookie")
+        val path = response.request().url().pathSegments()
+        if (path[0] == "login" && cookies.isNotEmpty()) {
+            cookies.forEach {
+                if (it.contains("MUSIC_U=") || it.startsWith("_"))
                 stringBuilder.append(it)
             }
             UserCookie = stringBuilder.toString()

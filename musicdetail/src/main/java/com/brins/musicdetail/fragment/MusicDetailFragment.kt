@@ -5,28 +5,30 @@ import android.os.Bundle
 import android.os.Message
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
+import com.brins.baselib.cache.login.LoginCache
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvpFragment
-import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
-import com.brins.baselib.utils.UIUtils
-import com.brins.baselib.utils.WeakHandler
+import com.brins.baselib.utils.*
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
-import com.brins.baselib.utils.formatDuration
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.musicdetail.R
 import com.brins.musicdetail.activity.MusicDetailActivity
+import com.brins.musicdetail.contract.MusicDetailContract
 import com.brins.musicdetail.presenter.MusicDetailPresenter
+import com.brins.networklib.helper.ApiHelper.launch
+import com.brins.networklib.model.music.MusicLrc
 import com.brins.playerlib.model.PlayBackService
 import kotlinx.android.synthetic.main.fragment_music_detail.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler.IHandler,
-    View.OnClickListener {
+    View.OnClickListener, MusicDetailContract.View {
 
     private val mHandler: WeakHandler by lazy { WeakHandler(this) }
     private val UPDATE_PROGRESS_INTERVAL: Long = 1000
@@ -65,6 +67,13 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             if (duration == 0) {
                 duration = it.duration
             }
+            LoginCache.likeResult?.ids?.let { list ->
+                if (list.contains(it.id)) {
+                    iv_like.setImageResource(R.drawable.base_icon_like_heart)
+                } else {
+                    iv_like.setImageResource(R.drawable.base_icon_unlike_heart)
+                }
+            }
             tvDuration.text = formatDuration(duration)
             seekBar.progress = initProgress(mPlayer!!.getProgress())
             updateProgressTextWithDuration(mPlayer!!.getProgress())
@@ -93,6 +102,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             iv_comments.setOnClickListener(this)
             iv_play_mode.setOnClickListener(this)
             iv_play_list.setOnClickListener(this)
+            iv_like.setOnClickListener(this)
         }
     }
 
@@ -203,7 +213,35 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             R.id.iv_comments -> openComments()
             R.id.iv_play_mode -> changePlayMode()
             R.id.iv_play_list -> openPlayList()
+            R.id.iv_like -> updateLikeStatus()
         }
+    }
+
+    private fun updateLikeStatus() {
+        mPlayer?.getPlayingSong()?.let {
+            LoginCache.likeResult?.ids?.let { list ->
+                if (list.contains(it.id)) {
+                    launch({
+                        mPresenter?.unLikeMusic(it.id)
+                    }, {
+                        ToastUtils.show(
+                            UIUtils.getString(R.string.network_error),
+                            Toast.LENGTH_SHORT
+                        )
+                    })
+                } else {
+                    launch({
+                        mPresenter?.likeMusic(it.id)
+                    }, {
+                        ToastUtils.show(
+                            UIUtils.getString(R.string.network_error),
+                            Toast.LENGTH_SHORT
+                        )
+                    })
+                }
+            }
+        }
+
     }
 
     private fun openPlayList() {
@@ -230,5 +268,31 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         val bundle = Bundle()
         bundle.putString(KEY_ID, mPlayer?.getPlayingSong()?.id ?: "")
         ARouterUtils.go(RouterHub.COMMENTSACTIVITY, bundle)
+    }
+
+    override fun onLikeMusic(isSuccess: Boolean, id: String) {
+        if (isSuccess) {
+            LoginCache.likeResult?.ids?.add(id)
+            SpUtils.obtain(SpUtils.SP_USER_INFO, context)
+                .save(SpUtils.KEY_USER_LIKE, GsonUtils.toJson(LoginCache.likeResult))
+            iv_like.setImageResource(R.drawable.base_icon_like_heart)
+            ToastUtils.show(getString(R.string.like_success), Toast.LENGTH_SHORT)
+        }
+    }
+
+    override fun onDislikeMusic(isSuccess: Boolean, id: String) {
+        if (isSuccess) {
+            LoginCache.likeResult?.ids?.remove(id)
+            SpUtils.obtain(SpUtils.SP_USER_INFO, context)
+                .save(SpUtils.KEY_USER_LIKE, GsonUtils.toJson(LoginCache.likeResult))
+            iv_like.setImageResource(R.drawable.base_icon_unlike_heart)
+            ToastUtils.show(getString(R.string.dislike_success), Toast.LENGTH_SHORT)
+        }
+    }
+
+    override fun onMusicDetialLoad() {
+    }
+
+    override fun onMusicLyricsLoad(lrc: MusicLrc?) {
     }
 }

@@ -2,10 +2,6 @@ package com.brins.musicdetail.fragment
 
 import android.os.Bundle
 import android.os.Message
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.utils.WeakHandler
 import com.brins.musicdetail.R
@@ -62,11 +58,11 @@ class MusicLrcFragment : BaseMvpFragment<MusicDetailPresenter>(), MusicDetailCon
         }
     }
 
-    override fun onLikeMusic() {
-        TODO("Not yet implemented")
+    override fun onLikeMusic(isSuccess: Boolean, id: String) {
+
     }
 
-    override fun onDislikeMusic() {
+    override fun onDislikeMusic(isSuccess: Boolean, id: String) {
         TODO("Not yet implemented")
     }
 

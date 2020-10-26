@@ -88,8 +88,12 @@ interface PersonalizedService {
         @Query("limit") limit: Int = 21
     ): Call<MusicListsResult>
 
+    /**
+     *
+     *
+     */
     @GET(RECOMMEND_DAILY_MUSIC)
-    fun getDailyMusicRecommend(
+    fun getDailyMusicRecommend() {
 
-    )
+    }
 }

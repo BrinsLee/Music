@@ -1,5 +1,6 @@
 package com.brins.baselib.cache.login
 
+import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.module.userlogin.UserAccountBean
 import com.brins.baselib.module.userlogin.UserProfileBean
 
@@ -20,4 +21,6 @@ object LoginCache {
     var userProfile: UserProfileBean? = null
 
     var UserCookie = ""
+
+    var likeResult: UserLikeMusicResult? = null
 }

@@ -5,8 +5,8 @@
 
 
     <fragment
-        android:id="@+id/fr_music_list"
-        android:name="com.brins.mine.fragment.MyMusicListFragment"
+        android:id="@+id/fr_recommend_music_list"
+        android:name="com.brins.mine.fragment.RecommendMusicListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

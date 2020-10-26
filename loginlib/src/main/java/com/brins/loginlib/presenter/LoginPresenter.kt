@@ -7,7 +7,7 @@ import com.brins.baselib.utils.subscribeDbResult
 import com.brins.loginlib.R
 import com.brins.loginlib.contract.LoginContract
 import com.brins.baselib.module.userlogin.UserLoginResult
-import com.brins.baselib.utils.SpUtils
+import com.brins.networklib.helper.ApiHelper.launch
 
 /**
  * Created by lipeilin
@@ -22,13 +22,25 @@ class LoginPresenter : LoginContract.Presenter() {
         }
     }
 
+    override suspend fun getUseLikeList(loginResult: UserLoginResult) {
+        val result = mModel?.getUserLikeList(loginResult.profile.userId.toString())
+        result?.let {
+            LoginCache.likeResult = it
+            mView?.onLoginSuccess(loginResult)
+        }
+    }
+
     private fun storeUserInfo(result: UserLoginResult) {
         DatabaseFactory.storeUserInfo(result.account)
             .subscribeDbResult({
                 DatabaseFactory.storeUserProfile(result.profile).subscribeDbResult({
                     LoginCache.userAccount = result.account
                     LoginCache.userProfile = result.profile
-                    mView?.onLoginSuccess(result)
+                    launch({
+                        getUseLikeList(result)
+                    }, {
+                        mView?.onLoginFail(UIUtils.getString(R.string.login_fail))
+                    })
                 }, {
                     mView?.onLoginFail(UIUtils.getString(R.string.login_fail))
                 })

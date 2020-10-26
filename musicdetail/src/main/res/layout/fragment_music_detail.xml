@@ -58,7 +58,7 @@
         android:layout_width="30dp"
         android:layout_height="25dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/base_icon_like_heart"
+        android:src="@drawable/base_icon_unlike_heart"
         app:layout_constraintBottom_toBottomOf="@id/tv_album_name"
         app:layout_constraintEnd_toStartOf="@id/iv_comments"
         app:layout_constraintTop_toTopOf="@id/tv_album_name" />

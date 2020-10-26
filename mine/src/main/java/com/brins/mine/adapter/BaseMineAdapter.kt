@@ -40,6 +40,9 @@ class BaseMineAdapter(
             ITEM_MINE_MUSIC_LIST -> return MusicListViewHolder(
                 getItemView(R.layout.mine_item_music_list_view, p0)
             )
+            ITEM_HOME_MUSIC_LIST -> return MusicListViewHolder(
+                getItemView(R.layout.mine_item_recommend_music_list_view, p0)
+            )
             else -> throw IllegalStateException("invalid view type")
         }
     }

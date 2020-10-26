@@ -1,7 +1,6 @@
 package com.brins.mine.fragment
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,21 +19,20 @@ import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
-import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_MUSIC_LIST
+import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_RECOMMEND_MUSIC_LIST
 import com.brins.networklib.helper.ApiHelper
 import com.brins.networklib.model.musiclist.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
-import kotlinx.android.synthetic.main.fragment_my_music_list.*
+import kotlinx.android.synthetic.main.fragment_recommend_music_list.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
+class RecommendMusicListFragment : BaseMvvmFragment<MineViewModel>() {
 
     private var mAdapter: BaseQuickAdapter<BaseData, BaseViewHolder>? = null
-    private var mMusicListDataObserver: Observer<MutableList<MusicList>>? = null
-
+    private var mRecommendMusicListDataObserver: Observer<MutableList<MusicList>>? = null
 
     override fun getViewModel(): BaseViewModel<out IModel>? {
         return MineViewModel.getInstance(mActivity!!.application)
@@ -42,7 +40,7 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
     }
 
     override fun getLayoutResID(): Int {
-        return R.layout.fragment_my_music_list
+        return R.layout.fragment_recommend_music_list
     }
 
     override fun reLoad() {
@@ -50,24 +48,29 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
 
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
-        mMusicListDataObserver = Observer {
+        mRecommendMusicListDataObserver = Observer {
             val list = mutableListOf<BaseData>()
             list.addAll(it)
-            mAdapter = MyMusicListAdapter()
-            mAdapter!!.animationEnable = true
-            mAdapter!!.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
-            rv_my_list.adapter = mAdapter
-            rv_my_list.layoutManager =
-                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            mAdapter!!.setNewData(list)
+            mAdapter = RecommendMusicListAdapter()
+            rv_recommend_list.apply {
+                adapter = mAdapter
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            }
+            mAdapter?.apply {
+                animationEnable = true
+                setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
+                setNewData(list)
+            }
         }
-        mViewModel?.getMutableMusicListData()?.observe(this, mMusicListDataObserver!!)
+        mViewModel?.getRecommendMutableMusicListData()
+            ?.observe(this, mRecommendMusicListDataObserver!!)
+
         if (LoginCache.isLogin && LoginCache.userProfile != null) {
             ApiHelper.launch({
-                mViewModel?.getMyMusicLists(LoginCache.userProfile!!.userId.toString())
+                mViewModel?.getRecommendMusicLists()
             }, {})
         } else {
-            mViewModel?.createDefaultRecommend(TYPE_MUSIC_LIST)
+            mViewModel?.createDefaultRecommend(TYPE_RECOMMEND_MUSIC_LIST)
         }
     }
 
@@ -81,7 +84,7 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
             EventBusKey.KEY_EVENT_LOGIN_SUCCESS -> {
                 LoginCache.userProfile?.let {
                     ApiHelper.launch({
-                        mViewModel?.getMyMusicLists(LoginCache.userProfile!!.userId.toString())
+                        mViewModel?.getRecommendMusicLists()
                     }, {})
                 }
             }
@@ -89,15 +92,17 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
         }
     }
 
-    class MyMusicListAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
+    class RecommendMusicListAdapter :
+        BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
         init {
             addItemType(ITEM_HOME_TOP_RECOMMEND, R.layout.mine_item_music)
         }
 
         override fun convert(helper: BaseViewHolder, item: BaseData) {
-
             helper.setText(R.id.name, (item as MusicList).name)
+            helper.setVisible(R.id.playCount, true)
+            helper.setText(R.id.playCount, "${item.playCount}")
             if (item.coverImgUrl.isNotEmpty()) {
                 GlideHelper.setRoundImageResource(
                     helper.getView(R.id.cover),
@@ -105,7 +110,6 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
                 )
             }
 
-            helper.setVisible(R.id.iv_play, true)
             helper.getView<ConstraintLayout>(R.id.rootLayout).setOnClickListener {
 
                 if (item.id.isNotEmpty()) {
@@ -115,9 +119,7 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
                 } else {
                     ARouterUtils.go(RouterHub.LOGINSELECTACTIVITY)
                 }
-
             }
         }
-
     }
 }

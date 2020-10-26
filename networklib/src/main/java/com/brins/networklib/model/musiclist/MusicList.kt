@@ -3,6 +3,7 @@ package com.brins.networklib.model.musiclist
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import com.brins.baselib.module.*
+import com.google.gson.annotations.SerializedName
 
 class MusicList : BaseData() {
 
@@ -29,11 +30,12 @@ class MusicList : BaseData() {
 
     var updateTime = ""
 
+    @SerializedName("coverImgUrl", alternate = ["picUrl"])
     var coverImgUrl = ""
 
     var trackCount = 0
 
-    var playCount = 0
+    var playCount: Long = 0
 
     var description = ""
 

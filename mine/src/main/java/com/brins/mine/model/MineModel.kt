@@ -11,6 +11,9 @@ class MineModel : MineContract.Model {
     override suspend fun getMyMusicLists(id: String): MusicListsResult =
         ApiHelper.getMusicListService().getUserMusicList(id).await()
 
+    override suspend fun getRecommendMusicList(): MusicListsResult =
+        ApiHelper.getMusicListService().getDailyRecommendMusicList().await()
+
     override fun onDestroy() {
 
     }

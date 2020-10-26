@@ -1,6 +1,7 @@
 package com.brins.loginlib.contract
 
 import android.app.Application
+import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvp.IView
 import com.brins.baselib.mvp.p.BasePresenter
@@ -29,11 +30,15 @@ interface LoginContract {
 
         abstract suspend fun emailLogin(email: String, password: String)
 
+        abstract suspend fun getUseLikeList(id: UserLoginResult)
+
     }
 
     interface Model : IModel {
 
         suspend fun emailLogin(email: String, password: String): UserLoginResult
+
+        suspend fun getUserLikeList(id : String) : UserLikeMusicResult
 
     }
 

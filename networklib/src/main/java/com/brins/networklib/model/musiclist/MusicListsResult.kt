@@ -6,6 +6,6 @@ class MusicListsResult {
 
     var code = 0
 
-    @SerializedName("playlists", alternate = ["playlist"])
+    @SerializedName("playlists", alternate = ["playlist","recommend"])
     var playlists: Array<MusicList>? = null
 }

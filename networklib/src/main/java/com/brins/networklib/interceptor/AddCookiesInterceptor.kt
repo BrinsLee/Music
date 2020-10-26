@@ -9,7 +9,7 @@ import okhttp3.Response
 class AddCookiesInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
-        Log.d("Cookie:", UserCookie)
+        Log.d("addCookie:", UserCookie)
         if (!TextUtils.isEmpty(UserCookie)) {
             builder.addHeader("Cookie", UserCookie)
         }

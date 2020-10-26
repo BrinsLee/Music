@@ -11,6 +11,7 @@ import com.brins.bridgelib.factory.Factory
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.baselib.config.MAIN_PROCESS_NAME
 import com.brins.baselib.database.factory.DatabaseFactory
+import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
 import com.brins.home.bridge.HomeBridge
@@ -54,6 +55,10 @@ class BaseApplication : Application() {
     private fun initUserData() {
         LoginCache.isLogin = obtain(SP_USER_INFO, this).getBoolean(KEY_IS_LOGIN, false)
         LoginCache.UserCookie = obtain(SP_USER_INFO, this).getString(KEY_COOKIE, "")
+        LoginCache.likeResult = GsonUtils.fromJson(
+            obtain(SP_USER_INFO, this).getString(KEY_USER_LIKE, ""),
+            UserLikeMusicResult::class.java
+        )
         if (LoginCache.isLogin) {
             DatabaseFactory.getUserInfo().subscribeDbResult({
                 LoginCache.userAccount = it

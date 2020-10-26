@@ -24,10 +24,14 @@ interface MineContract {
     interface Model : IModel {
 
         suspend fun getMyMusicLists(id: String) : MusicListsResult
+
+        suspend fun getRecommendMusicList() : MusicListsResult
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<MineModel>(application) {
 
         abstract suspend fun getMyMusicLists(id: String)
+
+        abstract suspend fun getRecommendMusicLists()
     }
 }

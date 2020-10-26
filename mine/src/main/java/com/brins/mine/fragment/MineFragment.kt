@@ -14,6 +14,7 @@ import com.brins.mine.adapter.BaseMineAdapter
 import com.brins.mine.presenter.MinePresenter
 import com.brins.networklib.login.LikeData
 import com.brins.networklib.login.LoginData
+import com.brins.networklib.model.daily.DailyData
 import com.brins.networklib.model.music.RecentlyMusic
 import com.brins.networklib.model.musiclist.MusicListData
 import com.brins.networklib.model.title.SingleTitleData
@@ -60,6 +61,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), NestedScrollView.OnScroll
                 list.add(RecentlyMusic())
                 list.add(SingleTitleData().setTitle(getString(R.string.my_list)))
                 list.add(MusicListData())
+                list.add(SingleTitleData().setTitle(getString(R.string.may_like)))
+                list.add(DailyData())
                 p2.onLoadDataSuccess(list)
             }
         }
