@@ -31,7 +31,7 @@ import com.brins.musiclistlib.presenter.MusicListPresenter
 import com.brins.musiclistlib.widget.StickNavLayout
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.musiclist.MoreMusicListResult
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.musiclist.MusicListResult
 import kotlinx.android.synthetic.main.activity_music_list.*
 import kotlin.math.min

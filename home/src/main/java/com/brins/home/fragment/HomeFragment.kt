@@ -16,7 +16,7 @@ import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.album.AlbumResult
 import com.brins.networklib.model.album.NewestAlbum
 import com.brins.networklib.model.daily.DailyData
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedMusics
 import com.brins.networklib.model.personal.PersonalizedResult

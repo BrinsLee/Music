@@ -1,9 +1,12 @@
 package com.brins.mine.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.mine.contract.MineContract
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.subscribeDbResult
 import com.brins.networklib.model.musiclist.MusicListsResult
 
 class MineViewModel private constructor(application: Application) :
@@ -65,20 +68,42 @@ class MineViewModel private constructor(application: Application) :
             val list = mutableListOf<MusicList>()
             list.addAll(it.playlists!!)
             mRecommendMusicListLiveData.value = list
+            DatabaseFactory.deleteMusicList().subscribeDbResult({
+                DatabaseFactory.addMusicList(list).subscribeDbResult({
+                    Log.d("Database", "$it")
+
+                }, {
+                    Log.d("Database", it.message ?: "000")
+
+                })
+            }, {
+                Log.d("Database", it.message ?: "000")
+            })
+
         }
     }
 
     fun createDefaultRecommend(which: Int) {
         val list = mutableListOf<MusicList>()
-        val musicList = MusicList()
-        musicList.apply {
-            name = "请先登录"
-        }
-        list.add(musicList)
-        if (which == TYPE_MUSIC_LIST) {
-            mMusicListLiveData.value = list
-        } else {
-            mRecommendMusicListLiveData.value = list
-        }
+        DatabaseFactory.getMusicList().subscribeDbResult({
+            list.addAll(it)
+            if (which == TYPE_MUSIC_LIST) {
+                mMusicListLiveData.value = list
+            } else {
+                mRecommendMusicListLiveData.value = list
+            }
+            Log.d("Database", "getMusicList: $it")
+        }, {
+            val musicList = MusicList()
+            musicList.apply {
+                name = "请先登录"
+            }
+            list.add(musicList)
+            if (which == TYPE_MUSIC_LIST) {
+                mMusicListLiveData.value = list
+            } else {
+                mRecommendMusicListLiveData.value = list
+            }
+        })
     }
 }

@@ -11,7 +11,7 @@ import com.brins.networklib.model.album.NewestAlbum
 import com.brins.networklib.model.banner.BannerResult
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedResult

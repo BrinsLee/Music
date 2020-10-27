@@ -10,7 +10,7 @@ import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.musicsquarelib.R
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 

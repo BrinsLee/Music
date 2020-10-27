@@ -1,9 +1,11 @@
 package com.brins.baselib.database.factory
 
 import com.brins.baselib.cache.login.LoginCache
+import com.brins.baselib.database.musiclistdb.MusicListDatabaseHelper
 import com.brins.baselib.database.recentlypalydb.RecentlyMusicDatabaseHelper
 import com.brins.baselib.database.userinfodb.UserInfoDatabaseHelper
 import com.brins.baselib.module.BaseMusic
+import com.brins.baselib.module.MusicList
 import com.brins.baselib.module.userlogin.UserAccountBean
 import com.brins.baselib.module.userlogin.UserProfileBean
 import com.brins.baselib.utils.UIUtils
@@ -14,6 +16,7 @@ object DatabaseFactory {
 
     private var mRecentlyMusicDB: RecentlyMusicDatabaseHelper? = null
     private var mUserInfoDB: UserInfoDatabaseHelper? = null
+    private var mMusicListDB: MusicListDatabaseHelper? = null
 
 
     private fun getRecentlyMusicDB(): RecentlyMusicDatabaseHelper {
@@ -36,6 +39,17 @@ object DatabaseFactory {
             }
         }
         return mUserInfoDB!!
+    }
+
+    private fun getMusicListDB(): MusicListDatabaseHelper {
+        if (mMusicListDB == null) {
+            synchronized(MusicListDatabaseHelper::class.java) {
+                if (mMusicListDB == null) {
+                    mMusicListDB = MusicListDatabaseHelper(UIUtils.getContext())
+                }
+            }
+        }
+        return mMusicListDB!!
     }
 
     //用户登录
@@ -78,5 +92,23 @@ object DatabaseFactory {
 
     fun getRecentlyMusics(): Single<List<BaseMusic>> {
         return getRecentlyMusicDB().getRecentlyMusic()
+    }
+
+    //推荐歌单
+    fun addMusicList(musicList: MusicList): Completable {
+        return getMusicListDB().insertMusicList(musicList)
+    }
+
+    fun addMusicList(musicList: MutableList<MusicList>): Completable {
+        return getMusicListDB().insertMusicList(musicList)
+    }
+
+    fun getMusicList(): Single<List<MusicList>> {
+        return getMusicListDB().getMusicList()
+    }
+
+    fun deleteMusicList(): Completable {
+
+        return getMusicListDB().deleteMusicLists()
     }
 }

@@ -1,5 +1,7 @@
 package com.brins.networklib.model.musiclist
 
+import com.brins.baselib.module.MusicList
+
 
 class MusicListResult {
 

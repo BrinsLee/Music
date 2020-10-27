@@ -17,11 +17,12 @@ import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
+import com.brins.baselib.utils.handleNum
 import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
 import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_RECOMMEND_MUSIC_LIST
 import com.brins.networklib.helper.ApiHelper
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
@@ -68,7 +69,9 @@ class RecommendMusicListFragment : BaseMvvmFragment<MineViewModel>() {
         if (LoginCache.isLogin && LoginCache.userProfile != null) {
             ApiHelper.launch({
                 mViewModel?.getRecommendMusicLists()
-            }, {})
+            }, {
+                mViewModel?.createDefaultRecommend(TYPE_RECOMMEND_MUSIC_LIST)
+            })
         } else {
             mViewModel?.createDefaultRecommend(TYPE_RECOMMEND_MUSIC_LIST)
         }
@@ -102,7 +105,7 @@ class RecommendMusicListFragment : BaseMvvmFragment<MineViewModel>() {
         override fun convert(helper: BaseViewHolder, item: BaseData) {
             helper.setText(R.id.name, (item as MusicList).name)
             helper.setVisible(R.id.playCount, true)
-            helper.setText(R.id.playCount, "${item.playCount}")
+            helper.setText(R.id.playCount, "${handleNum(item.playCount)}")
             if (item.coverImgUrl.isNotEmpty()) {
                 GlideHelper.setRoundImageResource(
                     helper.getView(R.id.cover),

@@ -11,7 +11,7 @@ import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
 import com.brins.home.R
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter

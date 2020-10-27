@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -24,21 +24,24 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="49855915-a46a-4638-8981-9b7db65772c8">
-        <schema name="main" object-types="table, view" />
+      <connection connection-id="27f3f937-d7a2-42d7-84f3-8aed69df0505">
+        <schema name="main" object-types="view, constraint, index, column, dataset trigger, table" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="49855915-a46a-4638-8981-9b7db65772c8">
-      <console name="Connection" type="STANDARD" schema="main" session="Main" />
+    <connection id="27f3f937-d7a2-42d7-84f3-8aed69df0505">
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from main.recommend_music_list]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="49855915-a46a-4638-8981-9b7db65772c8" />
+    <connection id="27f3f937-d7a2-42d7-84f3-8aed69df0505" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="27f3f937-d7a2-42d7-84f3-8aed69df0505" dataset="main.recommend_music_list" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -63,7 +66,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="49855915-a46a-4638-8981-9b7db65772c8" active="true">
+      <connection id="27f3f937-d7a2-42d7-84f3-8aed69df0505" active="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -78,7 +81,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="C:\Users\74712\Desktop\dbRecentlyMusic" schema="main" />
+            <file path="C:\Users\74712\Desktop\dbRecommendMusicList" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

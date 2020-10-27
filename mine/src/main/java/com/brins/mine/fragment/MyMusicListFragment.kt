@@ -1,7 +1,6 @@
 package com.brins.mine.fragment
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,7 @@ import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
 import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_MUSIC_LIST
 import com.brins.networklib.helper.ApiHelper
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder

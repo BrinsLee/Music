@@ -2,13 +2,11 @@ package com.brins.musiclistlib.adapter
 
 import android.widget.LinearLayout
 import com.brins.baselib.module.*
-import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC
 import com.brins.baselib.utils.eventbus.EventBusManager
-import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.musiclistlib.R
 import com.brins.networklib.model.album.AlbumListResult
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.module.LoadMoreModule
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder

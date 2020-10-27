@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.brins.baselib.module.BaseData
 import com.brins.home.R
 import com.brins.home.adapter.PersonalizedMusicAdapter
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.recommend.RecommendResult
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base2.BaseQuickAdapter

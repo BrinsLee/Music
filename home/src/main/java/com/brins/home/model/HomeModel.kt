@@ -5,7 +5,7 @@ import com.brins.networklib.helper.ApiHelper
 import com.brins.networklib.helper.ApiHelper.await
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.recommend.RecommendResult
 
 class HomeModel : HomeContract.Model {
