@@ -11,8 +11,10 @@ import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_UPDATE_MUSIC
 import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_UPDATE_PLAY_MODE
+import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.playerlib.R
@@ -84,6 +86,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
      *
      */
     fun onSongPause() {
+        EventBusManager.post(EventBusKey.KEY_EVENT_PAUSE_MUSIC)
         mView?.onSongPause()
     }
 
@@ -92,6 +95,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
      *
      */
     fun onSongPlay() {
+        EventBusManager.post(EventBusKey.KEY_EVENT_RESUME_MUSIC)
         mView?.onSongPlay()
     }
 

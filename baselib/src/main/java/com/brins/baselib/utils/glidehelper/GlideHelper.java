@@ -269,6 +269,7 @@ public class GlideHelper {
             if (listener != null) {
                 requestBuilder.listener(listener);
             }
+            requestBuilder.override(500, 500);
             requestBuilder.apply(RequestOptions.bitmapTransform(new GlideRoundTransform(imageView.getContext(), radius)));
             requestBuilder.into(imageView);
 

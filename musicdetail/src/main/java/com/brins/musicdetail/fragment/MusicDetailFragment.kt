@@ -192,6 +192,11 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             EventBusKey.KEY_EVENT_UPDATE_PLAY_MODE -> {
                 upDateButtonStatus(mPlayer?.isPlaying() ?: false)
             }
+            EventBusKey.KEY_EVENT_RESUME_MUSIC, EventBusKey.KEY_EVENT_PAUSE_MUSIC -> {
+                mPlayer?.let {
+                    upDateButtonStatus(it.isPlaying())
+                }
+            }
         }
     }
 

@@ -21,11 +21,13 @@ import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.subscribeDbResult
+import com.brins.playerlib.broadcast.HeadsetButtonReceiver
 import com.brins.playerlib.contract.IPlayback
 import com.brins.playerlib.presenter.PlayerPresenter
 import java.util.ArrayList
 
-class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
+class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
+    HeadsetButtonReceiver.onHeadsetListener {
 
     companion object {
         @JvmStatic
@@ -50,6 +52,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
 
     override fun onCreate() {
         super.onCreate()
+        HeadsetButtonReceiver(this)
         mIsServiceBound = true
 //        EventBus.getDefault().register(this)
 
@@ -261,7 +264,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                 if (mPlayList.prepare()) {
                     try {
                         DatabaseFactory.addRecentlyMusic(music)
-                            .subscribeDbResult({},{
+                            .subscribeDbResult({}, {
                                 Log.d("DataBaseFactory", it.message!!)
                             })
                         mPlayer.reset()
@@ -302,7 +305,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                         }
                         try {
                             DatabaseFactory.addRecentlyMusic(music)
-                                .subscribeDbResult({},{
+                                .subscribeDbResult({}, {
                                     Log.d("DataBaseFactory", it.message!!)
                                 })
                             mPlayer.reset()
@@ -341,7 +344,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                     try {
                         mPlayList.getCurrentSong()?.let {
                             DatabaseFactory.addRecentlyMusic(it)
-                                .subscribeDbResult({},{
+                                .subscribeDbResult({}, {
                                     Log.d("DataBaseFactory", it.message!!)
                                 })
                         }
@@ -575,5 +578,22 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         override fun deleteAll(): Boolean {
             return mPlayList.deleteAll()
         }
+    }
+
+    //耳机线控
+    override fun playOrPause() {
+        if (mPlayer.isPlaying()) {
+            pause()
+        } else {
+            resume()
+        }
+    }
+
+    override fun playNextSong() {
+        playNext()
+    }
+
+    override fun playPreviousSong() {
+        playLast()
     }
 }

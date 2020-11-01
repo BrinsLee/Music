@@ -8,10 +8,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import butterknife.OnClick
-import com.brins.baselib.activity.BaseActivity
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
-import com.brins.baselib.module.ITEM_MUSIC_LIST_TRACK_MUSIC
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
@@ -21,7 +19,6 @@ import com.brins.baselib.utils.getStatusBarHeight
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.lightmusic.R
 import com.brins.lightmusic.adapter.MainPagerAdapter
-import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.playerlib.contract.PlayerContract
 import com.brins.playerlib.model.PlayBackService
 import com.brins.playerlib.presenter.PlayerPresenter
