@@ -11,6 +11,8 @@ interface RouterHub {
         const val BRIDGE = "/bridge"
         const val MUSIC_SQUARE = "/musicsquare"
         const val MINE = "/mine"
+        const val DAILY = "/daily"
+
 
 
         //    ****************Activity路径配置***************************
@@ -32,6 +34,8 @@ interface RouterHub {
         const val LOGINSELECTACTIVITY = "$LOGIN/LoginSelectActivity"
 
         const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
+
+        const val DAILYMUSICACTIVITY = "$DAILY/DailyMusicActivity"
 
 
 

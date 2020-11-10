@@ -72,9 +72,8 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         }
     }
 
-    override fun setStatusBar() {
-        setTranslucent(this)
-    }
+
+
 
     override fun onMusicDetailLoad(data: MusicListResult?) {
         hideLoading()

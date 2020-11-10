@@ -15,6 +15,7 @@ import com.brins.networklib.model.banner.BannerResult
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
 import com.brins.baselib.module.MusicList
+import com.brins.networklib.model.daily.DailyMusicResult
 import com.brins.networklib.model.musiclist.MusicListsResult
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
@@ -89,11 +90,9 @@ interface PersonalizedService {
     ): Call<MusicListsResult>
 
     /**
-     *
-     *
+     * 每日推荐
+     *@Query("cookie")cookie : String = UserCookie
      */
     @GET(RECOMMEND_DAILY_MUSIC)
-    fun getDailyMusicRecommend() {
-
-    }
+    fun getDailyMusicRecommend(): Call<DailyMusicResult>
 }

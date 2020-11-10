@@ -299,7 +299,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
                 if (mPlayList.prepare()) {
                     val music = mPlayList.getCurrentSong()
                     music?.let {
-                        if (it.musicUrl.isEmpty()) {
+                        if (it.musicUrl.isNullOrEmpty()) {
                             mPresenter?.play(it)
                             return false
                         }

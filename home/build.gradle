@@ -62,6 +62,8 @@ dependencies {
     implementation project(':bridgelib')
     implementation project(':musiclistlib')
     implementation project(':musicsquarelib')
+    implementation project(':dailylib')
+
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"

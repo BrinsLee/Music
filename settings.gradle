@@ -1,3 +1,4 @@
+include ':dailylib'
 include ':mine'
 include ':musicsquarelib'
 include ':musicdetail'

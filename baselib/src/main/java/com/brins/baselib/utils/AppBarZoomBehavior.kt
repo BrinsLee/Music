@@ -1,4 +1,4 @@
-package com.brins.musiclistlib.utils
+package com.brins.baselib.utils
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
-import com.brins.musiclistlib.R
+import com.brins.baselib.R
 import com.google.android.material.appbar.AppBarLayout
 
 class AppBarZoomBehavior @JvmOverloads constructor(

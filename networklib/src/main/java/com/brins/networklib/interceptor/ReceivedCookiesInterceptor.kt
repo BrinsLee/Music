@@ -1,12 +1,12 @@
 package com.brins.networklib.interceptor
 
 import android.util.Log
+import com.brins.baselib.cache.login.LoginCache.UserCookie
 import com.brins.baselib.utils.SpUtils
 import com.brins.baselib.utils.SpUtils.KEY_COOKIE
 import com.brins.baselib.utils.SpUtils.SP_USER_INFO
 import com.brins.bridgelib.app.AppBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
-import com.brins.baselib.config.UserCookie
 
 import okhttp3.Interceptor
 import okhttp3.Response

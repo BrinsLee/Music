@@ -11,7 +11,7 @@ const val TRANSITION_NAME = "TRANSITION_NAME"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
 
-var UserCookie = ""
+val API_NEED_COOKIE = arrayListOf<String>("[recommend, songs]","[like]")
 
 interface RECOMMEND {
     companion object {

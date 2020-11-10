@@ -36,6 +36,7 @@ class LoginPresenter : LoginContract.Presenter() {
                 DatabaseFactory.storeUserProfile(result.profile).subscribeDbResult({
                     LoginCache.userAccount = result.account
                     LoginCache.userProfile = result.profile
+                    LoginCache.isLogin = true
                     launch({
                         getUseLikeList(result)
                     }, {
