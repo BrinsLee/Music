@@ -52,6 +52,10 @@ class PlayerPresenter : PlayerContract.Presenter() {
         mPlaybackService?.setPlayList(list)
     }
 
+    override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+        mPlaybackService?.setPlayList(list, index)
+    }
+
     override fun play(music: BaseMusic) {
         launch({
             val result = mModel?.loadMusicUrl(music.id)

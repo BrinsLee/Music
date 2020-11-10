@@ -86,6 +86,10 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         mPlayer.setPlayList(list)
     }
 
+    override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+        mPlayer.setPlayList(list, index)
+    }
+
     override fun getPlayList(): BasePlayList {
         return mPlayer.getPlayList()
     }
@@ -239,6 +243,17 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         }
 
         /**
+         * 设置播放列表及当前音乐位置
+         *
+         * @param list
+         * @param index
+         */
+        override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+            mPlayList.add(list)
+            mPlayList.setPlayingIndex(index)
+        }
+
+        /**
          * 获取播放列表
          *
          * @return
@@ -256,7 +271,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         override fun play(music: BaseMusic): Boolean {
             mPlayOnAudioFocus = requestFocus()
             if (mPlayOnAudioFocus) {
-                if (isPaused) {
+                if (mPlayList.getCurrentSong()?.id == music.id && isPaused) {
                     mPlayer.start()
                     return true
                 }

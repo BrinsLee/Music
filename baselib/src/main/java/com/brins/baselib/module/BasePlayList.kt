@@ -134,6 +134,10 @@ open class BasePlayList() : BaseData() {
         return playingIndex
     }
 
+    fun setPlayingIndex(index: Int) {
+        this.playingIndex = index
+    }
+
     fun getNumOfSongs(): Int {
         return numOfSongs
     }

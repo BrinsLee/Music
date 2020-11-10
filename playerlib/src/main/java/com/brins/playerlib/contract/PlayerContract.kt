@@ -48,6 +48,14 @@ interface PlayerContract {
         abstract fun setPlayList(list: MutableList<BaseMusic>)
 
         /**
+         * 设置播放列表及音乐位置
+         *
+         * @param list
+         * @param index
+         */
+        abstract fun setPlayList(list: MutableList<BaseMusic>, index: Int)
+
+        /**
          * 根据id播放音乐
          *
          * @param id
@@ -82,7 +90,7 @@ interface PlayerContract {
          *
          * @param mode
          */
-        abstract fun changePlayMode(mode : PlayMode)
+        abstract fun changePlayMode(mode: PlayMode)
     }
 
     interface Model : IModel {

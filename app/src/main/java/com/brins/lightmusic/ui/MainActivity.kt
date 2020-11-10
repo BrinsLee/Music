@@ -96,7 +96,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
 
                 } else {
                     mPlayer?.stop()
-                    mPresenter?.setPlayList(musicList)
+                    mPresenter?.setPlayList(musicList, position)
                     mPresenter?.play(music)
                 }
             }
