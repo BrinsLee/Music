@@ -21,6 +21,11 @@ class MusicDetailModel : MusicDetailContract.Model {
     override suspend fun UnLikeMusic(id: String): LikeMusicResult =
         ApiHelper.getMusicService().likeOrUnLikeMusic(id, false).await()
 
+
+    override suspend fun likeOrunLikeComment(id: String, cid: String, t: Int, type: Int) {
+        ApiHelper.getMusicService().likeOrUnLikeMusicComment(id, cid, t, type).await()
+    }
+
     override fun onDestroy() {
 
     }

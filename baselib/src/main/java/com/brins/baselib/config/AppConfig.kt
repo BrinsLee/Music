@@ -11,7 +11,7 @@ const val TRANSITION_NAME = "TRANSITION_NAME"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
 
-val API_NEED_COOKIE = arrayListOf<String>("[recommend, songs]","[like]")
+val API_NEED_COOKIE = arrayListOf<String>("[recommend, songs]", "[like]","[comment, like]","[comment, music]")
 
 interface RECOMMEND {
     companion object {
@@ -121,6 +121,23 @@ interface MUSIC_COMMENT {
 
     companion object {
         const val MUSIC_COMMENT = "/comment/music"
+
+        const val LIKE_UNLIKE_MUSIC_COMMENT = "/comment/like"
+
+        const val COMMENT_TYPE_MUSIC = 0
+
+        const val COMMENT_TYPE_MV = 1
+
+        const val COMMENT_TYPE_LIST = 2
+
+        const val COMMENT_TYPE_ALBUM = 3
+
+        const val COMMENT_TYPE_STATION = 4
+
+        const val COMMENT_TYPE_VIDEO = 5
+
+        const val COMMENT_TYPE_DYMAIC = 6
+
     }
 }
 

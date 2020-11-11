@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvvmActivity
+import com.brins.baselib.config.MUSIC_COMMENT.Companion.COMMENT_TYPE_MUSIC
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
 import com.brins.baselib.module.ITEM_MUSIC_DETAIL_COMMENT
@@ -62,6 +63,31 @@ class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
         mAdapter = CommentAdapter()
         recycler.adapter = mAdapter
         recycler.layoutManager = LinearLayoutManager(this)
+        (mAdapter as CommentAdapter).setOnLikeCommentListener(object :
+            CommentAdapter.onLikeCommentListener {
+
+            override fun onLikeClick(t: Int, item: CommentResult.Comment, position: Int) {
+                synchronized(this@CommentsActivity) {
+                    launch({
+                        mViewModel?.likeOrUnLikeMusicComment(
+                            id,
+                            item.commentId,
+                            t,
+                            COMMENT_TYPE_MUSIC
+                        )
+                        if (t == 1) {
+                            item.likedCount++
+                        } else {
+                            item.likedCount--
+                        }
+                        item.liked = !item.liked
+                        mAdapter?.notifyItemChanged(position)
+
+                    }, {})
+                }
+            }
+
+        })
         mHotCommentObserver = Observer {
             header.initView("${UIUtils.getString(R.string.comment)}(${mViewModel?.getCommentData()?.total ?: 0})")
             val list = mutableListOf<BaseData>()
@@ -79,11 +105,20 @@ class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
 
     class CommentAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
+        private var listener: onLikeCommentListener? = null
+
+        interface onLikeCommentListener {
+            fun onLikeClick(t: Int, item: CommentResult.Comment, position: Int)
+        }
 
         init {
 
             addItemType(ITEM_MUSIC_DETAIL_COMMENT, R.layout.music_detail_item_comment)
             addItemType(ITEM_HOME_SINGLE_TITLE, R.layout.music_detail_item_title)
+        }
+
+        fun setOnLikeCommentListener(listener: onLikeCommentListener) {
+            this.listener = listener
         }
 
         override fun convert(helper: BaseViewHolder, item: BaseData) {
@@ -102,6 +137,22 @@ class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
                         likeCount
                     )
                     helper.setText(R.id.tv_content, item?.content)
+                    if (item.liked) {
+                        helper.getView<ImageView>(R.id.iv_like)
+                            .setImageResource(R.drawable.base_shape_comment_like)
+                        helper.getView<ImageView>(R.id.iv_like).setOnClickListener {
+                            //取消点赞
+                            listener?.onLikeClick(0, item, helper.adapterPosition)
+                        }
+                    } else {
+                        helper.getView<ImageView>(R.id.iv_like)
+                            .setImageResource(R.drawable.base_shape_comment_unlike)
+
+                        helper.getView<ImageView>(R.id.iv_like).setOnClickListener {
+                            //点赞
+                            listener?.onLikeClick(1, item, helper.adapterPosition)
+                        }
+                    }
                 }
 
                 ITEM_HOME_SINGLE_TITLE -> {

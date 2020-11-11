@@ -22,7 +22,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += [ moduleName : project.getName() ]
+                arguments += [moduleName: project.getName()]
 
             }
         }
@@ -72,18 +72,33 @@ dependencies {
     api rootProject.ext.supportLibs
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
-    kapt  "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
+    kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(':baselib')
     implementation project(':bridgelib')
-    implementation project(':home')
-    implementation project(':mine')
-    implementation project(':playerlib')
-    implementation project(':networklib')
-    implementation project(':recyclerlib')
-    implementation project(':musicdetail')
+    if (addHome) {
+        implementation project(':home')
+    }
+    if (addMine) {
+        implementation project(':mine')
+    }
+    if (addPlayer) {
+        implementation project(':playerlib')
+    }
+    if (addNetwork) {
+        implementation project(':networklib')
+    }
+    if (addRecycler) {
+        implementation project(':recyclerlib')
+    }
+    if (addMusicDetail) {
+        implementation project(':musicdetail')
+    }
+    if (addVideo) {
+        implementation project(':video')
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'

@@ -486,7 +486,26 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
          *
          * @param p0
          */
-        override fun onAudioFocusChange(p0: Int) {
+        override fun onAudioFocusChange(focusChange: Int) {
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    mPlayOnAudioFocus = false
+                    isPlayingBeforeLoseFocuse = mPlayer.isPlaying
+                    pause()
+                }
+                AudioManager.AUDIOFOCUS_GAIN -> {
+                    mPlayOnAudioFocus = true
+                    resume()
+                }
+                AudioManager.AUDIOFOCUS_LOSS -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
+                    } else {
+                        mAudioManager.abandonAudioFocus(this)
+                    }
+                    stop()
+                }
+            }
         }
 
         /**
