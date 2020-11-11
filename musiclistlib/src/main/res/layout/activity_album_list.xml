@@ -163,14 +163,15 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="70dp"
+                android:paddingTop="20dp"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin">
 
                 <com.brins.baselib.widget.CommonHeaderView
                     android:id="@+id/header"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="50dp"
                     app:chv_icon="@drawable/base_icon_back"
                     app:chv_text_color="@color/white"
                     app:chv_title="@string/music_list"

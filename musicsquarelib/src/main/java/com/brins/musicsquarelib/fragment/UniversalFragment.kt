@@ -105,7 +105,8 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
     private fun changeBackground() {
         mResult?.playlists?.let {
             if (it[0].coverGradientDrawable == null) {
-                GlideHelper.setRoundImageResource(iv_gone
+                GlideHelper.setRoundImageResource(
+                    iv_gone
                     , it[0].coverImgUrl, 2, object : RequestListener<Drawable> {
                         override fun onLoadFailed(
                             e: GlideException?,
@@ -171,7 +172,7 @@ class UniversalFragment : BaseMvpFragment<MusicListSquarePresenter>(), MusicSqua
                             return true
                         }
 
-                    }, 0
+                    }, 0, 500, 500
                 )
             } else {
                 (mActivity as MusicListSquareActivity)

@@ -23,6 +23,9 @@ import com.brins.mine.viewmodel.MineViewModel
 import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_RECOMMEND_MUSIC_LIST
 import com.brins.networklib.helper.ApiHelper
 import com.brins.baselib.module.MusicList
+import com.brins.bridgelib.login.LoginBridgeInterface
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
@@ -118,9 +121,11 @@ class RecommendMusicListFragment : BaseMvvmFragment<MineViewModel>() {
                 if (item.id.isNotEmpty()) {
                     val bundle = Bundle()
                     bundle.putString(KEY_ID, item.id)
-                    ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
                 } else {
-                    ARouterUtils.go(RouterHub.LOGINSELECTACTIVITY)
+                    BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                        .toLoginSelectActivity()
                 }
             }
         }

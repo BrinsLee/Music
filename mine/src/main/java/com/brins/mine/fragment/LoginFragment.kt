@@ -12,12 +12,12 @@ import com.brins.baselib.fragment.BaseMvvmFragment
 import com.brins.baselib.module.userlogin.UserProfileBean
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
+import com.brins.bridgelib.login.LoginBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -76,7 +76,8 @@ class LoginFragment : BaseMvvmFragment<MineViewModel>(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0.id) {
             R.id.cl_unlogin -> {
-                ARouterUtils.go(RouterHub.LOGINSELECTACTIVITY)
+                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                    .toLoginSelectActivity()
             }
         }
     }

@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.module.BaseData
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.createRadialGradientBitmap
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.musicsquarelib.R
 import com.brins.musicsquarelib.activity.MusicListSquareActivity
 import com.brins.musicsquarelib.adapter.MusicListGridAdapter
@@ -105,7 +105,8 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
                         mResult?.playlists?.let { musiclist ->
                             val bundle = Bundle()
                             bundle.putString(KEY_ID, musiclist[position].id)
-                            ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                            BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                                .toMusicListActivity(bundle)
                         }
 
                     }

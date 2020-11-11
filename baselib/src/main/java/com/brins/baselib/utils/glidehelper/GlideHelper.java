@@ -244,18 +244,22 @@ public class GlideHelper {
         setBlurImageResource(imageView, null, rid, true, radius, 0, null);
     }
 
+    public static void setRoundImageResource(ImageView imageView, String url, int radius, int defaultRes, int width, int height) {
+        setRoundImageResource(imageView, url, radius, null, defaultRes, width, height);
+    }
+
     public static void setRoundImageResource(ImageView imageView, String url, int radius, int defaultRes) {
-        setRoundImageResource(imageView, url, radius, null, defaultRes);
+        setRoundImageResource(imageView, url, radius, null, defaultRes, 500, 500);
     }
 
 
     public static void setRoundImageResource(ImageView imageView, String url, int radius) {
-        setRoundImageResource(imageView, url, radius, null, 0);
+        setRoundImageResource(imageView, url, radius, null, 0, 500, 500);
     }
 
 
     @SuppressLint("CheckResult")
-    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener, int def) {
+    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener, int def, int width, int height) {
         try {
             if (imageView == null) {
                 return;
@@ -269,7 +273,9 @@ public class GlideHelper {
             if (listener != null) {
                 requestBuilder.listener(listener);
             }
-            requestBuilder.override(500, 500);
+            if (width != 0 || height != 0) {
+                requestBuilder.override(width, height);
+            }
             requestBuilder.apply(RequestOptions.bitmapTransform(new GlideRoundTransform(imageView.getContext(), radius)));
             requestBuilder.into(imageView);
 

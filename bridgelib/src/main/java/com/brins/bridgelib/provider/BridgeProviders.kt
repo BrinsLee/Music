@@ -54,6 +54,7 @@ class BridgeProviders {
      * @param clazz
      * @return
      */
+    @Suppress("UNCHECKED_CAST")
     fun <T : BridgeInterface> getBridge(clazz: Class<T>): T {
         mProvidersMap[clazz]?.let {
             return it.get(mBridgeMap[clazz] as Class<T>)

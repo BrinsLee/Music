@@ -99,6 +99,18 @@ dependencies {
     if (addVideo) {
         implementation project(':video')
     }
+    if (addMusicList) {
+        implementation project(':musiclistlib')
+    }
+    if (addMusicSquare) {
+        implementation project(':musicsquarelib')
+    }
+    if (addDaily) {
+        implementation project(':dailylib')
+    }
+    if (addLogin) {
+        implementation project(':loginlib')
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'

@@ -14,8 +14,13 @@ import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
+import com.brins.dailylib.bridge.DailyMusicBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
+import com.brins.loginlib.bridge.LoginBridge
+import com.brins.mine.bridge.MineBridge
+import com.brins.musiclistlib.bridge.MusicListBridge
+import com.brins.musicsquarelib.bridge.MusicSquareBridge
 import dagger.hilt.android.HiltAndroidApp
 
 //import io.reactivex.plugins.RxJavaPlugins
@@ -128,6 +133,11 @@ class BaseApplication : Application() {
 
             })
             .register(HomeBridge::class.java)
+            .register(MineBridge::class.java)
+            .register(MusicListBridge::class.java)
+            .register(MusicSquareBridge::class.java)
+            .register(DailyMusicBridge::class.java)
+            .register(LoginBridge::class.java)
     }
 
 

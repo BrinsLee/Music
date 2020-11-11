@@ -55,6 +55,7 @@ dependencies {
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
     implementation project(':baselib')
     implementation project(':networklib')
+    implementation project(':bridgelib')
     api rootProject.ext.supportLibs
 
 }

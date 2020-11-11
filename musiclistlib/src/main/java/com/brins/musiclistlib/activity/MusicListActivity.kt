@@ -121,7 +121,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
                                     val tv = TextView(this)
                                     tv.setTextColor(Color.WHITE)
                                     tv.textSize = 12f
-                                    tv.text = "${handleNum(list.subscribedCount)}w关注"
+                                    tv.text = "${handleNum(list.subscribedCount)} 关注"
                                     tv.gravity = Gravity.CENTER_VERTICAL
                                     frameLayout.addView(tv)
                                     val params: FrameLayout.LayoutParams =

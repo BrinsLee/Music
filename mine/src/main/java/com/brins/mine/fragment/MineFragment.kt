@@ -28,6 +28,12 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), NestedScrollView.OnScroll
 
     private var mAdapter: BaseMineAdapter? = null
 
+    companion object {
+        fun getInstance(): MineFragment {
+            return MineFragment()
+        }
+    }
+
     override fun getLayoutResID(): Int {
         return R.layout.fragment_mine
     }

@@ -1,12 +1,18 @@
-package com.brins.lightmusic.bridge
+package com.brins.bridgelib.app
 
 import android.content.Context
 import com.brins.baselib.cache.login.LoginCache
-import com.brins.bridgelib.app.AppBridgeInterface
-import com.brins.lightmusic.BaseApplication
+import com.brins.baselib.utils.UIUtils
 
-class AppBridge : AppBridgeInterface {
-    override fun getAppContext(): Context = BaseApplication.getInstance().baseContext
+/**
+ * Created by lipeilin
+ * on 2020/11/11
+ */
+class DefaultAppBridge : AppBridgeInterface {
+    override fun getAppContext(): Context {
+        return UIUtils.getApplication().applicationContext
+    }
+
     override fun getAccessToken(): String? {
         return LoginCache.UserCookie
     }

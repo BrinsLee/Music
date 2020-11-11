@@ -4,10 +4,10 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.brins.baselib.cache.login.LoginCache
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
-import com.brins.baselib.route.RouterHub.Companion.DAILYMUSICACTIVITY
 import com.brins.baselib.utils.getCalendarDay
+import com.brins.bridgelib.daily.DailyMusicBridgeInterface
+import com.brins.bridgelib.login.LoginBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.home.R
 import com.brins.networklib.model.daily.DailyData
 import com.chad.library.adapter.base.model.BaseData
@@ -24,9 +24,11 @@ class DailyRecommendViewHolder(itemView: View) : BaseEmptyViewHolder(itemView) {
 
         rlDate.setOnClickListener {
             if (LoginCache.isLogin && LoginCache.userProfile != null) {
-                ARouterUtils.go(DAILYMUSICACTIVITY)
+                BridgeProviders.instance.getBridge(DailyMusicBridgeInterface::class.java)
+                    .toDailyMusicActivity()
             } else {
-                ARouterUtils.go(RouterHub.LOGINSELECTACTIVITY)
+                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                    .toLoginSelectActivity()
             }
         }
     }

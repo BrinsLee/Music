@@ -17,6 +17,8 @@ import com.brins.networklib.model.album.AlbumResult
 import com.brins.networklib.model.album.NewestAlbum
 import com.brins.networklib.model.daily.DailyData
 import com.brins.baselib.module.MusicList
+import com.brins.bridgelib.musicsquare.MusicSquareBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedMusics
 import com.brins.networklib.model.personal.PersonalizedResult
@@ -67,7 +69,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View {
             list.add(
                 SingleTitleMoreData().setTitle("晚霞灿烂，音乐惬意")
                     .setListener(View.OnClickListener {
-                        ARouterUtils.go(MUSICLISTSQUAREACTIVITY)
+                        BridgeProviders.instance.getBridge(MusicSquareBridgeInterface::class.java).toMusicSquareActivity()
                     })
             )
             list.add(PersonalizedMusics())

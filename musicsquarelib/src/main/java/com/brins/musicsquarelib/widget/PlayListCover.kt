@@ -70,7 +70,7 @@ class PlayListCover @JvmOverloads constructor(
                 return true
             }
 
-        }, 0)
+        }, 0, 500, 500)
     }
 
 }

@@ -6,12 +6,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.*
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
 import com.brins.home.R
 import com.brins.baselib.module.MusicList
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
@@ -53,7 +53,8 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
 
                     val bundle = Bundle()
                     bundle.putString(KEY_ID, item.id)
-                    ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
                     /*val options: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             activity,
@@ -99,7 +100,8 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
 
                     val bundle = Bundle()
                     bundle.putString(KEY_ID, item.id)
-                    ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
                 }
             }
         }
