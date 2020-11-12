@@ -7,6 +7,7 @@ import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.musiclistlib.R
 import com.brins.networklib.model.album.AlbumListResult
 import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.eventbus.EventBusKey
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.module.LoadMoreModule
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
@@ -30,17 +31,8 @@ class MusicListAdapter(data: MutableList<BaseData>) :
 
             helper.getView<LinearLayout>(R.id.music_list_ll)
                 .setOnClickListener {
-                    val musicList = mutableListOf<BaseMusic>()
-                    data.forEach {
-                        if (it.itemType == ITEM_MUSIC_LIST_TRACK_MUSIC) {
-                            musicList.add(it as BaseMusic)
-                        }
-                    }
-                    EventBusManager.post(
-                        KEY_EVENT_PERSONALIZED_MUSIC,
-                        musicList,
-                        "${helper.adapterPosition - 1}"
-                    )
+                    EventBusManager.post(EventBusKey.KEY_EVENT_CHANGE_PLAYMODE, PlayMode.LOOP)
+                    playTrackMusic(helper.adapterPosition - 1)
                 }
         }
         if (item.itemType == ITEM_ALBUM_LIST_MUSIC) {
@@ -50,18 +42,37 @@ class MusicListAdapter(data: MutableList<BaseData>) :
 
             helper.getView<LinearLayout>(R.id.music_list_ll)
                 .setOnClickListener {
-                    val musicList = mutableListOf<BaseMusic>()
-                    data.forEach {
-                        musicList.add(it as BaseMusic)
-                    }
-                    EventBusManager.post(
-                        KEY_EVENT_PERSONALIZED_MUSIC,
-                        musicList,
-                        "${helper.adapterPosition}"
-                    )
+                    EventBusManager.post(EventBusKey.KEY_EVENT_CHANGE_PLAYMODE, PlayMode.LOOP)
+                    playAlbumMusic(helper.adapterPosition)
                 }
         }
 
+    }
+
+    fun playTrackMusic(pos: Int) {
+        val musicList = mutableListOf<BaseMusic>()
+        data.forEach {
+            if (it.itemType == ITEM_MUSIC_LIST_TRACK_MUSIC) {
+                musicList.add(it as BaseMusic)
+            }
+        }
+        EventBusManager.post(
+            KEY_EVENT_PERSONALIZED_MUSIC,
+            musicList,
+            "$pos"
+        )
+    }
+
+    fun playAlbumMusic(pos: Int) {
+        val musicList = mutableListOf<BaseMusic>()
+        data.forEach {
+            musicList.add(it as BaseMusic)
+        }
+        EventBusManager.post(
+            KEY_EVENT_PERSONALIZED_MUSIC,
+            musicList,
+            "$pos"
+        )
     }
 
     private fun getArtists(data: BaseMusic): String {

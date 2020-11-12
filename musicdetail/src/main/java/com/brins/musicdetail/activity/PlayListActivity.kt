@@ -2,6 +2,7 @@ package com.brins.musicdetail.activity
 
 
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -10,6 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.*
 import com.brins.baselib.route.RouterHub.Companion.PLAYLISTACTIVITY
+import com.brins.baselib.utils.SpanUtils
+import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.hideStatusBar
 import com.brins.musicdetail.R
 import com.brins.playerlib.contract.PlayerContract
@@ -17,9 +20,10 @@ import com.brins.playerlib.model.PlayBackService
 import com.brins.playerlib.presenter.PlayerPresenter
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_play_list.*
-import kotlinx.android.synthetic.main.activity_play_list.iv_play_mode
 
+@AndroidEntryPoint
 @Route(path = PLAYLISTACTIVITY)
 class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View,
     View.OnClickListener {
@@ -27,7 +31,6 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
     private var mPlayer: PlayBackService? = null
     private var mAdapter: PlayListAdapter? = null
     private var mLayoutManager: LinearLayoutManager? = null
-
     override fun getLayoutResId(): Int {
         return R.layout.activity_play_list
     }
@@ -42,7 +45,6 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
         view.setOnClickListener(this)
         iv_play_mode.setOnClickListener(this)
         iv_trash_can.setOnClickListener(this)
-
     }
 
     override fun onPlaybackServiceBound(service: PlayBackService) {
@@ -88,7 +90,15 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
             PlayMode.LOOP -> {
                 iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle_gery)
             }
+            PlayMode.HEART -> {
+                val strBuilder = SpanUtils().append(getString(R.string.current_mode))
+                    .setForegroundColor(UIUtils.getColor(R.color.gery_333333))
+                    .append(getString(R.string.heart_mode))
+                    .setForegroundColor(UIUtils.getColor(R.color.red_ED5050)).create()
+                tv_play_mode.text = strBuilder
+                iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle_gery)
 
+            }
             PlayMode.SINGLE -> {
                 iv_play_mode.setImageResource(R.drawable.base_icon_play_single_grey)
             }
@@ -114,6 +124,7 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
             addItemType(ITEM_ALBUM_LIST_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_MUSIC_LIST_TRACK_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_DAILY_MUSIC, R.layout.music_detail_item_playlist)
+            addItemType(ITEM_HOME_MUSIC_LIST_INTELLIGENCE, R.layout.music_detail_item_playlist)
 
         }
 

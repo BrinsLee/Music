@@ -3,6 +3,7 @@ package com.brins.networklib.helper
 import android.util.Log
 import com.brins.baselib.config.BASEURL
 import com.brins.baselib.utils.GsonUtils
+import com.brins.baselib.utils.LogUtils
 import com.brins.networklib.RetrofitFactory
 import com.brins.networklib.service.*
 import kotlinx.coroutines.CoroutineScope
@@ -131,7 +132,7 @@ object ApiHelper {
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
-                    Log.d(
+                    LogUtils.d(
                         "await",
                         "message: ${response.message()}**** response: ${GsonUtils.toJson(body)}"
                     )

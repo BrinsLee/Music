@@ -19,6 +19,7 @@ import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
 import com.brins.loginlib.bridge.LoginBridge
 import com.brins.mine.bridge.MineBridge
+import com.brins.musicdetail.bridge.MusicDetailBridge
 import com.brins.musiclistlib.bridge.MusicListBridge
 import com.brins.musicsquarelib.bridge.MusicSquareBridge
 import dagger.hilt.android.HiltAndroidApp
@@ -138,6 +139,7 @@ class BaseApplication : Application() {
             .register(MusicSquareBridge::class.java)
             .register(DailyMusicBridge::class.java)
             .register(LoginBridge::class.java)
+            .register(MusicDetailBridge::class.java)
     }
 
 

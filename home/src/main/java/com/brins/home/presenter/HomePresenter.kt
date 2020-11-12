@@ -30,6 +30,11 @@ class HomePresenter @Inject constructor() : HomeContract.Presenter() {
         }
     }
 
+    override suspend fun loadIntelligenceMusicList(id: String, pid: String) {
+        val result = mModel?.loadIntelligenceMusicList(id, pid)
+        mView?.onIntelligenceMusicListLoad(result)
+    }
+
     override fun subscribe() {
         super.subscribe()
     }

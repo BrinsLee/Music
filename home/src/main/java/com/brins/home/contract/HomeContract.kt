@@ -12,6 +12,7 @@ import com.brins.networklib.model.banner.BannerResult
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
 import com.brins.baselib.module.MusicList
+import com.brins.networklib.model.musiclist.MusicListIntelligenceResult
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedResult
@@ -35,6 +36,8 @@ interface HomeContract {
 
         fun onHotRecommendLoad(data: RecommendResult<MusicList>?)
 
+        fun onIntelligenceMusicListLoad(data: MusicListIntelligenceResult?)
+
     }
 
     abstract class Presenter : BasePresenter<HomeModel, View>() {
@@ -44,6 +47,9 @@ interface HomeContract {
         abstract suspend fun loadBannerData()
 
         abstract suspend fun loadHotOrNewRecommend(type: String)
+
+        abstract suspend fun loadIntelligenceMusicList(id: String, pid: String)
+
 
     }
 
@@ -59,6 +65,8 @@ interface HomeContract {
         suspend fun loadTopMusic(type: Int = 0): TopMusicResult<TopMusic>
 
         suspend fun loadHotOrNewRecommend(type: String): RecommendResult<MusicList>?
+
+        suspend fun loadIntelligenceMusicList(id: String, pid: String): MusicListIntelligenceResult?
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<HomeModel>(application) {

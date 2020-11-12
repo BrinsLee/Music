@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
+import com.brins.baselib.cache.like.LikeCache
 import com.brins.baselib.cache.login.LoginCache
 import com.brins.baselib.module.userlogin.UserLoginResult
 import com.brins.baselib.route.RouterHub.Companion.LOGININPUTACTIVITY
@@ -67,7 +68,8 @@ class LoginInputActivity : BaseMvpActivity<LoginPresenter>(), View.OnClickListen
     }
 
     override fun onLogoutSuccess() {
-        TODO("Not yet implemented")
+        LoginCache.clear()
+        LikeCache.clear()
     }
 
     override fun onLogoutFail(msg: String) {

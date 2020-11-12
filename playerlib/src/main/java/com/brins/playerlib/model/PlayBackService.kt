@@ -24,8 +24,11 @@ import com.brins.baselib.utils.subscribeDbResult
 import com.brins.playerlib.broadcast.HeadsetButtonReceiver
 import com.brins.playerlib.contract.IPlayback
 import com.brins.playerlib.presenter.PlayerPresenter
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ServiceScoped
 import java.util.ArrayList
 
+@AndroidEntryPoint
 class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
     HeadsetButtonReceiver.onHeadsetListener {
 

@@ -7,11 +7,21 @@ const val UMAPPKEY = "5e33c33c4ca357e8100000fa"
 
 const val KEY_ID = "KEY_ID"
 const val KEY_URL = "KEY_URL"
+/*const val KEY_INTENT_FROM = "KEY_INTENT_FROM"
+const val KEY_INTENT_FROM_INTELLIGENCE = "KEY_INTENT_FROM_INTELLIGENCE"
+const val KEY_INTENT_FROM_MINE = "KEY_INTENT_FROM_MINE"*/
+
 const val TRANSITION_NAME = "TRANSITION_NAME"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
 
-val API_NEED_COOKIE = arrayListOf<String>("[recommend, songs]", "[like]","[comment, like]","[comment, music]")
+val API_NEED_COOKIE = arrayListOf<String>(
+    "[recommend, songs]",
+    "[like]",
+    "[comment, like]",
+    "[comment, music]",
+    "[playmode, intelligence, list]"
+)
 
 interface RECOMMEND {
     companion object {
@@ -114,6 +124,8 @@ interface MUSIC_LIST {
         const val MUSIC_LIST_USER_LIKE = "/likelist"
 
         const val MUSIC_LIST_DAILY_RECOMMEND = "/recommend/resource"
+
+        const val MUSIC_LIST_INTELLIGENCE = "/playmode/intelligence/list"
     }
 }
 

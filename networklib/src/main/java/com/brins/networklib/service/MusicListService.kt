@@ -2,8 +2,10 @@ package com.brins.networklib.service
 
 import com.brins.baselib.config.MUSIC_LIST
 import com.brins.baselib.config.MUSIC_LIST.Companion.MUSIC_LIST_DAILY_RECOMMEND
+import com.brins.baselib.config.MUSIC_LIST.Companion.MUSIC_LIST_INTELLIGENCE
 import com.brins.baselib.config.MUSIC_LIST.Companion.MUSIC_LIST_USER_LIKE
 import com.brins.baselib.module.like.UserLikeMusicResult
+import com.brins.networklib.model.musiclist.MusicListIntelligenceResult
 import com.brins.networklib.model.musiclist.MusicListResult
 import com.brins.networklib.model.musiclist.MusicListsResult
 import retrofit2.Call
@@ -23,4 +25,10 @@ interface MusicListService {
 
     @GET(MUSIC_LIST_DAILY_RECOMMEND)
     fun getDailyRecommendMusicList(): Call<MusicListsResult>
+
+    @GET(MUSIC_LIST_INTELLIGENCE)
+    fun getIntelligenceMusicList(
+        @Query("id") id: String,
+        @Query("pid") pid: String
+    ): Call<MusicListIntelligenceResult>
 }

@@ -16,20 +16,20 @@ class DailyRecommendViewHolder(itemView: View) : BaseEmptyViewHolder(itemView) {
 
     val tvDate = itemView.findViewById<TextView>(R.id.tv_date)
     val rlDate = itemView.findViewById<RelativeLayout>(R.id.daily_root)
+    val rlHeart = itemView.findViewById<RelativeLayout>(R.id.list_root)
     override fun setData(data: BaseData?) {
         super.setData(data)
         if (data is DailyData) {
             tvDate.text = getCalendarDay()
-        }
+            rlDate.setOnClickListener {
+                data.getListener()?.onDailyClick()
+            }
 
-        rlDate.setOnClickListener {
-            if (LoginCache.isLogin && LoginCache.userProfile != null) {
-                BridgeProviders.instance.getBridge(DailyMusicBridgeInterface::class.java)
-                    .toDailyMusicActivity()
-            } else {
-                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
-                    .toLoginSelectActivity()
+            rlHeart.setOnClickListener {
+                data.getListener()?.onHeartClick()
             }
         }
+
+
     }
 }

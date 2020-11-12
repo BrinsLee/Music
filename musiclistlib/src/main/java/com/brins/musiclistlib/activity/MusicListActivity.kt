@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
+import com.brins.baselib.cache.like.LikeCache
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
 import com.brins.baselib.route.RouterHub.Companion.MUSICLISTACTIVITY
@@ -22,7 +24,6 @@ import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.UIUtils.getScreenWidth
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
-import com.brins.baselib.utils.setTranslucent
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.musiclistlib.R
 import com.brins.musiclistlib.adapter.MusicListAdapter
@@ -40,8 +41,9 @@ import kotlin.math.min
 class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContract.View,
     StickNavLayout.MyStickyListener {
 
-    @Autowired(name = "KEY_ID")
+    @Autowired(name = KEY_ID)
     lateinit var id: String
+
     private var mAdapter: MusicListAdapter? = null
 
     private var mCurrentIndex = 0
@@ -71,8 +73,6 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
             }, {})
         }
     }
-
-
 
 
     override fun onMusicDetailLoad(data: MusicListResult?) {
@@ -174,6 +174,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
     private fun bindRecyclerViewAdapter(it: MusicListResult) {
         if (it.playlist?.tracks != null) {
             mCurrentIndex = it.playlist!!.tracks.size
+            LikeCache.likeMusicList?.trackIds = it.playlist?.trackIds!!
             val list = mutableListOf<BaseData>()
             list.add(object : BaseData() {
                 override val itemType: Int
@@ -227,7 +228,4 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         cover.layout((0 - dx).toInt(), 0, (screenWidth + dx).toInt(), b.toInt())
     }
 
-/*    override fun setStatusBar() {
-        StatusBarHelper.getInstance().setWindowTranslucentStatus(this)
-    }*/
 }

@@ -3,6 +3,7 @@ package com.brins.mine.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.brins.baselib.cache.like.LikeCache
 import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.mine.contract.MineContract
 import com.brins.baselib.module.MusicList
@@ -58,6 +59,7 @@ class MineViewModel private constructor(application: Application) :
             val list = mutableListOf<MusicList>()
             list.addAll(mMusicListData.playlists!!)
             mMusicListLiveData.value = list
+            LikeCache.likeMusicList = list[0]
         }
     }
 

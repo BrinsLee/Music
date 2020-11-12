@@ -6,6 +6,7 @@ import com.brins.networklib.helper.ApiHelper.await
 import com.brins.networklib.model.music.TopMusic
 import com.brins.networklib.model.music.TopMusicResult
 import com.brins.baselib.module.MusicList
+import com.brins.networklib.model.musiclist.MusicListIntelligenceResult
 import com.brins.networklib.model.recommend.RecommendResult
 
 class HomeModel : HomeContract.Model {
@@ -29,4 +30,11 @@ class HomeModel : HomeContract.Model {
 
     override suspend fun loadHotOrNewRecommend(type: String): RecommendResult<MusicList>? =
         ApiHelper.getPersonalizedService().getTopRecommendw(order = type).await()
+
+    override suspend fun loadIntelligenceMusicList(
+        id: String,
+        pid: String
+    ): MusicListIntelligenceResult? =
+        ApiHelper.getMusicListService().getIntelligenceMusicList(id, pid).await()
+
 }

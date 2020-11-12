@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/home_ic_music_list" />
+            android:src="@drawable/home_ic_heart" />
 
         <TextView
             android:id="@+id/list_tv"
@@ -61,7 +61,7 @@
             android:layout_below="@id/list_iv"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="2dp"
-            android:text="@string/music_list"
+            android:text="@string/heart_bit"
             android:textSize="12sp" />
     </RelativeLayout>
 
