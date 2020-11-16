@@ -12,6 +12,8 @@ interface RouterHub {
         const val MUSIC_SQUARE = "/musicsquare"
         const val MINE = "/mine"
         const val DAILY = "/daily"
+        const val SEARCH = "/search"
+
 
 
 
@@ -36,6 +38,8 @@ interface RouterHub {
         const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
 
         const val DAILYMUSICACTIVITY = "$DAILY/DailyMusicActivity"
+
+        const val SEARCHACTIVITY = "$SEARCH/SearchActivity"
 
 
 

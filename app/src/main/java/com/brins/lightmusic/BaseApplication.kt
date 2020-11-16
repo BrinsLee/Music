@@ -22,6 +22,7 @@ import com.brins.mine.bridge.MineBridge
 import com.brins.musicdetail.bridge.MusicDetailBridge
 import com.brins.musiclistlib.bridge.MusicListBridge
 import com.brins.musicsquarelib.bridge.MusicSquareBridge
+import com.brins.searchlib.bridge.SearchBridge
 import dagger.hilt.android.HiltAndroidApp
 
 //import io.reactivex.plugins.RxJavaPlugins
@@ -140,6 +141,7 @@ class BaseApplication : Application() {
             .register(DailyMusicBridge::class.java)
             .register(LoginBridge::class.java)
             .register(MusicDetailBridge::class.java)
+            .register(SearchBridge::class.java)
     }
 
 

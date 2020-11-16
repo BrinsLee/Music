@@ -111,6 +111,9 @@ dependencies {
     if (addLogin) {
         implementation project(':loginlib')
     }
+    if (addSearch) {
+        implementation project(':searchlib')
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'

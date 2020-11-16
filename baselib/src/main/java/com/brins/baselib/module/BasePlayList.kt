@@ -13,7 +13,7 @@ open class BasePlayList() : BaseData() {
      */
     fun last(): BaseMusic {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE, PlayMode.HEART -> {
                 var newIndex = playingIndex - 1
                 if (newIndex < 0) {
                     newIndex = songs.size - 1
@@ -32,7 +32,7 @@ open class BasePlayList() : BaseData() {
      */
     operator fun next(): BaseMusic {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.HEART -> {
                 var newIndex = playingIndex + 1
                 if (newIndex >= songs.size) {
                     newIndex = 0

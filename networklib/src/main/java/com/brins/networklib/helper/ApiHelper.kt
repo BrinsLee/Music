@@ -40,12 +40,13 @@ object ApiHelper {
         private var mLoginService: LoginService? = null
         private var mUserPlayListService: UserPlayListService? = null
         private var mDiscoveryService: DiscoveryService? = null
-        private var mSearchService: SearchService? = null*/
+        */
     private var mPersonalizedService: PersonalizedService? = null
     private var mMusicService: MusicService? = null
     private var mMusicListService: MusicListService? = null
     private var mAlbumService: AlbumService? = null
     private var mLoginService: LoginService? = null
+    private var mSearchService: SearchService? = null
 
 
     fun getPersonalizedService(): PersonalizedService {
@@ -121,6 +122,21 @@ object ApiHelper {
             }
         }
         return mLoginService!!
+    }
+
+    fun getSearchService(): SearchService {
+        if (mSearchService == null) {
+            synchronized(SearchService::class.java) {
+                if (mSearchService == null) {
+                    mSearchService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_SEARCH
+                    )
+                        .create(SearchService::class.java)
+                }
+            }
+        }
+        return mSearchService!!
     }
 
     suspend fun <T> Call<T>.await(): T {

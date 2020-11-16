@@ -5,25 +5,24 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import butterknife.OnClick
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.getStatusBarHeight
 import com.brins.bridgelib.musicdetail.MusicDetailBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
+import com.brins.bridgelib.search.SearchBridgeInterface
 import com.brins.lightmusic.R
 import com.brins.lightmusic.adapter.MainPagerAdapter
-import com.brins.musicdetail.bridge.MusicDetailBridge
 import com.brins.playerlib.contract.PlayerContract
 import com.brins.playerlib.model.PlayBackService
-import com.brins.playerlib.model.PlayerModel
 import com.brins.playerlib.presenter.PlayerPresenter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -80,6 +79,21 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
 
     fun getPlayingSong(): BaseMusic? {
         return mPlayer?.getPlayingSong()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                BridgeProviders.instance.getBridge(SearchBridgeInterface::class.java)
+                    .toSearchActivity()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     @Suppress("UNCHECKED_CAST")

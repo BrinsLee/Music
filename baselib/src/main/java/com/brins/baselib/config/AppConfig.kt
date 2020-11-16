@@ -165,3 +165,11 @@ interface LOGIN {
         const val LOGIN_EMAIL_LOGIN = "/login"
     }
 }
+
+interface SEARCH {
+    companion object {
+        const val SEARCH_HOT = "/search/hot/detail"
+        //搜索建议
+        const val SEARCH_SUGGEST = "/search/suggest"
+    }
+}
