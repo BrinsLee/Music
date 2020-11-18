@@ -1,17 +1,16 @@
 package com.brins.searchlib.activity
 
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -21,26 +20,50 @@ import com.brins.baselib.module.ITEM_SEARCH_HOT
 import com.brins.baselib.route.RouterHub.Companion.SEARCHACTIVITY
 import com.brins.baselib.utils.KeyboardUtils
 import com.brins.baselib.utils.ToastUtils
+import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.widget.*
+import com.brins.baselib.widget.CommonHeaderView
+import com.brins.baselib.widget.FlowLayout
+import com.brins.baselib.widget.TagAdapter
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.search.HotSearchResult
 import com.brins.networklib.model.search.SearchSuggestResult
 import com.brins.searchlib.R
+import com.brins.searchlib.adapter.SearchViewPagerAdapter
 import com.brins.searchlib.contract.SearchContract
+import com.brins.searchlib.fragment.SearchResultFragment
 import com.brins.searchlib.presenter.SearchPresenter
+import com.brins.searchlib.widget.ScaleTransitionPagerTitleView
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.activity_search.*
+import net.lucode.hackware.magicindicator.ViewPagerHelper
+import net.lucode.hackware.magicindicator.buildins.UIUtil
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
 
 @Route(path = SEARCHACTIVITY)
-class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, TextWatcher {
+class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, TextWatcher,
+    AdapterView.OnItemClickListener {
 
     private var mAdapter: BaseQuickAdapter<BaseData, BaseViewHolder>? = null
     private var mHis = arrayListOf<String>()
     private var mTagAdapter: TagAdapter<String>? = null
     private var mSearchSuggest: Array<String?> = emptyArray()
+    private var mTitleList: ArrayList<String> =
+        arrayListOf("单曲", "专辑", "歌手", "歌单", "mv", "电台", "用户")
+    private var mSearchAdapter: SearchViewPagerAdapter? = null
+
+    companion object {
+        val STATUS_SHOW_HOT = 1
+        val STATUS_SHOW_SUGGEST = 2
+        val STATUS_SHOW_RESULT = 3
+    }
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_search
@@ -58,18 +81,11 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
         et_search.addTextChangedListener(this)
         et_search.setOnEditorActionListener { v, actionId, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
-                KeyboardUtils.hideSoftInput(this@SearchActivity)
                 val search = et_search.text?.trim()
-                if (!search.isNullOrEmpty()) {
-                    ToastUtils.show(search, Toast.LENGTH_SHORT)
-                    mPresenter?.addHistorySearch(search.toString())
-                    onAddHistorySearch(search.toString())
-                    true
-                } else {
-                    false
-                }
+                startSearch(search.toString())
+
             }
-            false
+            true
 
 
         }
@@ -91,8 +107,10 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
 
         id_flowlayout.setOnTagClickListener { view, position, parent ->
             ToastUtils.show(mHis[position], Toast.LENGTH_SHORT)
+            startSearch(mHis[position])
             true
         }
+        list_item.onItemClickListener = this
         mAdapter = HotSearchAdapter()
         rv_hot_search.adapter = mAdapter
         rv_hot_search.layoutManager = GridLayoutManager(
@@ -105,6 +123,107 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
             mPresenter?.loadHotSearch()
             mPresenter?.loadHistorySearch()
         }, {})
+        initViewPager()
+    }
+
+    private fun initViewPager() {
+        mSearchAdapter = SearchViewPagerAdapter(supportFragmentManager)
+        vp_search.offscreenPageLimit = 5
+        vp_search.adapter = mSearchAdapter
+        val commonNavigator = CommonNavigator(this)
+        commonNavigator.setScrollPivotX(0.25f)
+        commonNavigator.adapter = object : CommonNavigatorAdapter() {
+            override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
+                val simplePagerTitleView: SimplePagerTitleView =
+                    ScaleTransitionPagerTitleView(context)
+                simplePagerTitleView.text = mTitleList[index]
+                simplePagerTitleView.normalColor = Color.GRAY
+                simplePagerTitleView.selectedColor = Color.BLACK
+                simplePagerTitleView.textSize = 18f
+                simplePagerTitleView.setOnClickListener {
+                    vp_search.currentItem = index
+                }
+                return simplePagerTitleView
+            }
+
+            override fun getCount(): Int {
+                return mTitleList.size
+            }
+
+            override fun getIndicator(context: Context?): IPagerIndicator {
+                val linePagerIndicator = LinePagerIndicator(context)
+                linePagerIndicator.mode = LinePagerIndicator.MODE_EXACTLY
+                linePagerIndicator.lineWidth = UIUtil.dip2px(context, 10.0).toFloat()
+                linePagerIndicator.setColors(Color.BLACK)
+                return linePagerIndicator
+
+            }
+
+        }
+        magic_indicator.navigator = commonNavigator
+        val titleContainer =
+            commonNavigator.titleContainer
+        titleContainer.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
+        titleContainer.dividerPadding = UIUtil.dip2px(this, 15.0)
+        titleContainer.dividerDrawable = UIUtils.getDrawable(R.drawable.base_bg_simple_divider)
+        ViewPagerHelper.bind(magic_indicator, vp_search)
+
+    }
+
+    /**
+     * 开始搜索
+     *
+     * @param search
+     * @return
+     */
+    private fun startSearch(search: String): Boolean {
+        KeyboardUtils.hideSoftInput(this@SearchActivity)
+        return if (!search.isNullOrEmpty()) {
+            mPresenter?.addHistorySearch(search)
+            onAddHistorySearch(search)
+            et_search.removeTextChangedListener(this)
+            et_search.setText(search)
+            et_search.setSelection(search.length)
+            et_search.addTextChangedListener(this)
+            changeVisibility(STATUS_SHOW_RESULT)
+            mSearchAdapter?.getList()?.forEach {
+                (it as SearchResultFragment).keyWords = search
+
+            }
+
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun changeVisibility(status: Int) {
+        when (status) {
+            STATUS_SHOW_HOT -> {
+                rl_history_search.visibility = View.VISIBLE
+                rl_hot_search.visibility = View.VISIBLE
+                rv_hot_search.visibility = View.VISIBLE
+                list_item.visibility = View.GONE
+                ll_magic.visibility = View.GONE
+                vp_search.visibility = View.GONE
+            }
+            STATUS_SHOW_SUGGEST -> {
+                rl_history_search.visibility = View.GONE
+                rl_hot_search.visibility = View.GONE
+                rv_hot_search.visibility = View.GONE
+                ll_magic.visibility = View.GONE
+                vp_search.visibility = View.GONE
+                list_item.visibility = View.VISIBLE
+            }
+            STATUS_SHOW_RESULT -> {
+                rl_history_search.visibility = View.GONE
+                rl_hot_search.visibility = View.GONE
+                rv_hot_search.visibility = View.GONE
+                list_item.visibility = View.GONE
+                vp_search.visibility = View.VISIBLE
+                ll_magic.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onResume() {
@@ -140,10 +259,12 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
     }
 
     override fun onAddHistorySearch(result: String) {
+        mHis.add(0, result)
         mTagAdapter?.addNewData(result)
     }
 
     override fun onHistorySearchClear() {
+        mHis.clear()
         mTagAdapter?.clear()
     }
 
@@ -153,7 +274,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
             for ((i, a) in it.allMatch!!.withIndex()) {
                 mSearchSuggest[i] = a.keyword
             }
-            list_item.visibility = View.VISIBLE
+            changeVisibility(STATUS_SHOW_SUGGEST)
             list_item.adapter = ArrayAdapter<String>(
                 this
                 , android.R.layout.simple_list_item_1, mSearchSuggest
@@ -161,10 +282,11 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
         }
     }
 
+
     override fun afterTextChanged(s: Editable?) {
         s.let {
             if (it.toString().isNullOrEmpty()) {
-                list_item.visibility = View.GONE
+                changeVisibility(STATUS_SHOW_HOT)
                 mSearchSuggest = emptyArray()
             } else {
                 launch({
@@ -208,5 +330,10 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
 
     }
 
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (mSearchSuggest.isNotEmpty() && position < mSearchSuggest.size) {
+            startSearch(mSearchSuggest[position].toString())
+        }
+    }
 
 }

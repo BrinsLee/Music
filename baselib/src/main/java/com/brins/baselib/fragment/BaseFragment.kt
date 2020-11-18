@@ -134,7 +134,8 @@ abstract class BaseFragment : Fragment(), IView {
     }
 
     override fun hideLoading() {
-        mLoadingFragment?.dismiss()
+        mLoadingFragment?.dismiss(childFragmentManager)
+
     }
 
     protected fun showError() {

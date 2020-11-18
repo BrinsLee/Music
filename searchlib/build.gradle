@@ -49,8 +49,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
-
+    //MagicIndicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation project(':baselib')
     implementation project(':networklib')
     implementation project(':recyclerlib')

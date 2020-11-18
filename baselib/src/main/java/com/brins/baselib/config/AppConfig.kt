@@ -168,8 +168,27 @@ interface LOGIN {
 
 interface SEARCH {
     companion object {
+
+        const val TYPE_MUSIC = 1
+
+        const val TYPE_ALBUM = 10
+
+        const val TYPE_ARTIST = 100
+
+        const val TYPE_MUSIC_LIST = 1000
+
+        const val TYPE_USER = 1002
+
+        const val TYPE_MV = 1004
+
+        const val TYPE_RADIO = 1009
+
+        const val TYPE_VIDEO = 1014
+
         const val SEARCH_HOT = "/search/hot/detail"
         //搜索建议
         const val SEARCH_SUGGEST = "/search/suggest"
+        //搜索接口
+        const val SEARCH_CLOUD = "/search"
     }
 }

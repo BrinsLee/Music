@@ -23,6 +23,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_history_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -104,6 +105,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_hot_search"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
@@ -140,6 +142,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_magic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
+    <com.brins.baselib.widget.PlayListViewPager
+        android:id="@+id/vp_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="115dp"
         android:background="@color/white"
         android:visibility="gone" />
 

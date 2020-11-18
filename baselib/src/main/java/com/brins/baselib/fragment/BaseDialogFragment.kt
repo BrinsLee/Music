@@ -18,9 +18,9 @@ abstract class BaseDialogFragment : DialogFragment() {
             }
             val ft = fragmentManager.beginTransaction()
             ft.add(this, TAG)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 ft.commitNow()
-            }else{
+            } else {
                 ft.commit()
                 fragmentManager.executePendingTransactions()
             }
@@ -29,6 +29,26 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
 
         return this
+    }
+
+    fun dismiss(fragmentManager: FragmentManager) {
+        try {
+            val fragment = fragmentManager.findFragmentByTag(TAG)
+            if (fragment != null && fragment.isAdded) {
+                val ft = fragmentManager.beginTransaction()
+                ft.remove(fragment)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    ft.commitNow()
+                } else {
+                    ft.commit()
+                    fragmentManager.executePendingTransactions()
+                }
+                dismiss()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

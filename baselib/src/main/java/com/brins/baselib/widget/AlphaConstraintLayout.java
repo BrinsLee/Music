@@ -4,37 +4,32 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Created by lipeilin
  * on 2020/11/18
  */
-
-public class AlphaLinearLayout extends LinearLayout {
+public class AlphaConstraintLayout extends ConstraintLayout {
 
     private ObjectAnimator mAnimatorOut;
     private boolean mIsClick = false;
 
-    public AlphaLinearLayout(Context context) {
+    public AlphaConstraintLayout(@NonNull Context context) {
         super(context);
         init();
     }
 
-    public AlphaLinearLayout(Context context, @Nullable AttributeSet attrs) {
+    public AlphaConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public AlphaLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public AlphaConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public AlphaLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
@@ -42,6 +37,7 @@ public class AlphaLinearLayout extends LinearLayout {
         mAnimatorOut = ObjectAnimator.ofFloat(this, "alpha", 0.6f, 1f);
         mAnimatorOut.setDuration(100);
     }
+
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         if (l == null) {

@@ -1,4 +1,4 @@
-package com.brins.musicsquarelib.widget
+package com.brins.baselib.widget
 
 import android.content.Context
 import android.util.AttributeSet

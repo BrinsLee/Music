@@ -41,7 +41,7 @@
             android:layout_height="45dp"
             android:layout_gravity="center" />
 
-        <com.brins.musicsquarelib.widget.PlayListViewPager
+        <com.brins.baselib.widget.PlayListViewPager
             android:id="@+id/vp_music_square"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

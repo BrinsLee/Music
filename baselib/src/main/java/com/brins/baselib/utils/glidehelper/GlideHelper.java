@@ -130,6 +130,35 @@ public class GlideHelper {
         }
     }
 
+    public static void setCircleImageResource(ImageView imageView, String imageUrl, int defaultRes, int width, int height, RequestListener<Drawable> listener) {
+        try {
+            if (imageView == null) {
+                return;
+            }
+            Glide.get(imageView.getContext()).setMemoryCategory(MemoryCategory.NORMAL);
+
+            RequestBuilder requestBuilder;
+            if (!TextUtils.isEmpty(imageUrl)) {
+                requestBuilder = Glide.with(imageView.getContext()).load(imageUrl);
+            } else {
+                requestBuilder = Glide.with(imageView.getContext()).load(defaultRes);
+            }
+            if (!TextUtils.isEmpty(imageUrl) && defaultRes != 0) {
+                requestBuilder.apply(new RequestOptions().placeholder(defaultRes));
+            }
+            requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+
+            if (listener != null) {
+                requestBuilder.listener(listener);
+            }
+            if (width != 0 || height != 0) {
+                requestBuilder.override(width, height);
+            }
+            requestBuilder.apply(RequestOptions.bitmapTransform(new GlideCircleTransform(imageView.getContext()))).into(imageView);
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
     public static void setCircleImageResource(ImageView imageView, String imageUrl, boolean isCacheMemory) {
         setCircleImageResource(imageView, imageUrl, 0, true, isCacheMemory, null);
     }
@@ -148,6 +177,10 @@ public class GlideHelper {
 
     public static void setCircleImageResource(ImageView imageView, int resId) {
         setCircleImageResource(imageView, null, resId, true, true, null);
+    }
+
+    public static void setCircleImageResource(ImageView imageView, String url, int resId, int width, int height) {
+        setCircleImageResource(imageView, url, resId, width, height, null);
     }
 
     /**************************特殊处理圆形图片*/

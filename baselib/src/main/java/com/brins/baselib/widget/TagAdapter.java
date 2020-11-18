@@ -54,7 +54,7 @@ public abstract class TagAdapter<T> {
     }
 
     public void addNewData(T data) {
-        mTagDatas.add(data);
+        mTagDatas.add(0, data);
         if (mOnDataChangedListener != null) {
             mOnDataChangedListener.onChanged();
         }

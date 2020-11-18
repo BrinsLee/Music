@@ -68,7 +68,7 @@ open class BaseMusic : BaseData() {
      * 歌手信息
      */
     @ColumnInfo(name = "Artists")
-    @SerializedName("ar")
+    @SerializedName("ar", alternate = ["artists"])
     var artists: ArrayList<Artist>? = null
 
     /**
@@ -89,7 +89,7 @@ open class BaseMusic : BaseData() {
         var album: Album? = null
     }
 
-    class Artist {
+    class Artist : BaseData() {
 
         var id = ""
 
@@ -100,9 +100,11 @@ open class BaseMusic : BaseData() {
         var img1v1Url = ""
 
         var albumSize = 0
+        override val itemType: Int
+            get() = ITEM_SEARCH_ARTIST
     }
 
-    class Album {
+    class Album : BaseData() {
         var name = ""
 
         var id = ""
@@ -122,6 +124,10 @@ open class BaseMusic : BaseData() {
         var subType = ""
 
         var info: Info? = null
+
+        var artist: Artist? = null
+        override val itemType: Int
+            get() = ITEM_SEARCH_ALBUM
 
     }
 
