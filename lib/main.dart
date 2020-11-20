@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:light_music_flutter/models/themeModel.dart';
 import 'package:light_music_flutter/routes/find_page.dart';
 import 'package:light_music_flutter/routes/home_page.dart';
@@ -6,7 +7,11 @@ import 'package:light_music_flutter/routes/mine_page.dart';
 import 'package:light_music_flutter/routes/video_page.dart';
 import 'package:provider/provider.dart';
 
+SystemUiOverlayStyle uiStyle = SystemUiOverlayStyle.light.copyWith(
+  statusBarColor: Colors.white,
+);
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(uiStyle);
   runApp(MyApp());
 }
 
@@ -16,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -91,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Consumer<ThemeModel>(
           builder: (BuildContext context, themeModel, Widget child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
               primaryColor: Colors.white,
               accentColor: Colors.black,
@@ -99,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
             bottomNavigationBar: BottomNavigationBar(
               items: bottomNavItems,
               currentIndex: _currentIndex,
-              type: BottomNavigationBarType.shifting,
+              type: BottomNavigationBarType.fixed,
               selectedItemColor: Colors.black,
               selectedFontSize: 12,
               unselectedItemColor: Colors.grey,

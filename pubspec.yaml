@@ -26,6 +26,8 @@ dependencies:
   provider: ^3.0.0+1
   shared_preferences: ^0.5.8
   dio: ^3.0.10
+  json_annotation: ^2.0.0
+  flutter_swiper: ^1.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -35,7 +37,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -59,6 +62,7 @@ flutter:
     - images/tab_main_press.png
     - images/tab_my_normal.png
     - images/tab_my_press.png
+    - images/base_icon_default_cover.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

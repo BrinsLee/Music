@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:light_music_flutter/net/api/api_service.dart';
+import 'package:light_music_flutter/widget/banner_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +22,10 @@ class _HomePageState extends State<HomePage> {
         ),
         elevation: 0,
       ),
-      body: Center(
-        child: Text("主页"),
+      body: Column(
+        children: [
+          BannerWidget()
+        ],
       ),
     );
   }
