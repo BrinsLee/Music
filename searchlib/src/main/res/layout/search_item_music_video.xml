@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.brins.baselib.widget.AlphaConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ri_music_video_cover"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_icon_default_cover"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_shape_rect_black_gradient_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_play_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableStart="@drawable/base_icon_play_white_24dp"
+            android:drawablePadding="2dp"
+            android:gravity="center_vertical"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/ri_music_video_cover"
+            app:layout_constraintTop_toTopOf="@id/ri_music_video_cover" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_weight="8"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/ri_music_video_cover">
+
+            <TextView
+                android:id="@+id/tv_music_video_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxEms="20"
+                android:maxLines="1"
+                android:paddingEnd="5dp"
+                android:text="11121212121" />
+
+            <TextView
+                android:id="@+id/tv_music_video_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxEms="20"
+                android:maxLines="1"
+                android:paddingEnd="5dp"
+                android:text="11121212121" />
+        </LinearLayout>
+
+    </com.brins.baselib.widget.AlphaConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_search_result.*
  * on 2020/11/17
  */
 class SearchResultFragment private constructor() :
-    BaseMvvmFragment<SearchViewModel>() {
+    BaseMvvmFragment<SearchViewModel>(), UserProfile.OnFollowListener {
     val type: Int by lazy { mBundle?.getInt("SEARCH_TYPE") ?: 1 }
 
     //    private var mSearchResult: SearchResult<T>? = null
@@ -137,7 +137,6 @@ class SearchResultFragment private constructor() :
                 mViewModel?.getMutableArtistLiveData()
                     ?.observe(this@SearchResultFragment, mArtistDataObserver!!)
             }
-            /*
             SEARCH.TYPE_MUSIC_LIST -> {
                 mMusicListDataObserver = Observer {
                     hideLoading()
@@ -147,16 +146,6 @@ class SearchResultFragment private constructor() :
                 }
                 mViewModel?.getMutableMusicListLiveData()
                     ?.observe(this@SearchResultFragment, mMusicListDataObserver!!)
-            }
-            SEARCH.TYPE_USER -> {
-                mUserDataObserver = Observer {
-                    hideLoading()
-                    val list = mutableListOf<BaseData>()
-                    list.addAll(it.dataBean?.data!!)
-                    mAdapter?.setNewData(list)
-                }
-                mViewModel?.getMutableUserLiveData()
-                    ?.observe(this@SearchResultFragment, mUserDataObserver!!)
             }
             SEARCH.TYPE_MV -> {
                 mMusicVideoDataObserver = Observer {
@@ -177,7 +166,20 @@ class SearchResultFragment private constructor() :
                 }
                 mViewModel?.getMutableRadioLiveData()
                     ?.observe(this@SearchResultFragment, mRadioDataObserver!!)
-            }*/
+            }
+            SEARCH.TYPE_USER -> {
+                mUserDataObserver = Observer {
+                    hideLoading()
+                    val list = mutableListOf<BaseData>()
+                    it.dataBean?.data?.forEach {
+                        it.setFollowListener(this)
+                    }
+                    list.addAll(it.dataBean?.data!!)
+                    mAdapter?.setNewData(list)
+                }
+                mViewModel?.getMutableUserLiveData()
+                    ?.observe(this@SearchResultFragment, mUserDataObserver!!)
+            }
         }
     }
 
@@ -217,6 +219,14 @@ class SearchResultFragment private constructor() :
             })
         } else {
             return
+        }
+    }
+
+    override fun onFollow(user: UserProfile, pos: Int) {
+        mViewModel?.followUser(user) {
+
+            /*user.followed = !user.followed
+            mAdapter?.notifyItemChanged(pos)*/
         }
     }
 }

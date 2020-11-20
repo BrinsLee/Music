@@ -21,9 +21,10 @@ class SearchViewPagerAdapter(manager: FragmentManager) :
             add(SearchResultFragment.getInstance(SEARCH.TYPE_ALBUM))
             add(SearchResultFragment.getInstance(SEARCH.TYPE_ARTIST))
             add(SearchResultFragment.getInstance(SEARCH.TYPE_MUSIC_LIST))
-            add(SearchResultFragment.getInstance(SEARCH.TYPE_USER))
             add(SearchResultFragment.getInstance(SEARCH.TYPE_MV))
             add(SearchResultFragment.getInstance(SEARCH.TYPE_RADIO))
+            add(SearchResultFragment.getInstance(SEARCH.TYPE_USER))
+
 
         }
     }

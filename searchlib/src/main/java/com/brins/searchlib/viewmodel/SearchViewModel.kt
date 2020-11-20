@@ -169,4 +169,8 @@ class SearchViewModel private constructor(application: Application) :
             }
         }
     }
+
+    fun followUser(user: UserProfile, finish: () -> Unit) {
+        finish()
+    }
 }

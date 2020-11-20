@@ -35,6 +35,7 @@
     <color name="gery_FFCFCECE">#CFCECE</color>
     <color name="gery_FFE3E3E3">#E3E3E3</color>
     <color name="translucent">#aa000000</color>
+    <color name="translucent_000000">#00000000</color>
 
     <color name="lrc_normal_text_color">#9E9E9E</color>
     <color name="lrc_current_text_color">#FF4081</color>

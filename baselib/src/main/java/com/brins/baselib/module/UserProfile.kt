@@ -43,7 +43,14 @@ class UserProfile : BaseData() {
 
     var backgroundUrl = ""
 
-    var avatarDetail : AvatarDetail? = null
+    var avatarDetail: AvatarDetail? = null
+
+    var onFollowListener: OnFollowListener? = null
+
+    fun setFollowListener(followListener: OnFollowListener): UserProfile {
+        this.onFollowListener = followListener
+        return this
+    }
 
     class AvatarDetail {
         var userType = 0
@@ -53,4 +60,8 @@ class UserProfile : BaseData() {
 
     override val itemType: Int
         get() = ITEM_SEARCH_USER
+
+    interface OnFollowListener {
+        fun onFollow(user: UserProfile, pos: Int)
+    }
 }
