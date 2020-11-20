@@ -1,5 +1,6 @@
 package com.brins.home.viewholder
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,10 @@ class PersonalizedViewHolder(itemView: View) :
 
     private lateinit var mAdapter: PersonalizedMusicAdapter
     private var mRecyclerView: RecyclerView = itemView.findViewById(R.id.rv_personalized_music)
+
+    init {
+        Log.d("PersonalizedViewHolder", "$this")
+    }
 
     override fun setData(data: PersonalizedResult<PersonalizedMusicList>?) {
         super.setData(data)

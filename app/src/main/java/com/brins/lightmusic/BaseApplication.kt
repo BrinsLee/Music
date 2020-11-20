@@ -5,15 +5,24 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
-import com.brins.baselib.utils.UIUtils
-import com.brins.baselib.utils.getCurrProcessName
+import com.brins.baselib.cache.login.LoginCache
 import com.brins.bridgelib.BridgeInterface
 import com.brins.bridgelib.factory.Factory
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.baselib.config.MAIN_PROCESS_NAME
-import com.brins.baselib.utils.AppUtils
+import com.brins.baselib.database.factory.DatabaseFactory
+import com.brins.baselib.module.like.UserLikeMusicResult
+import com.brins.baselib.utils.*
+import com.brins.baselib.utils.SpUtils.*
+import com.brins.dailylib.bridge.DailyMusicBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
+import com.brins.loginlib.bridge.LoginBridge
+import com.brins.mine.bridge.MineBridge
+import com.brins.musicdetail.bridge.MusicDetailBridge
+import com.brins.musiclistlib.bridge.MusicListBridge
+import com.brins.musicsquarelib.bridge.MusicSquareBridge
+import com.brins.searchlib.bridge.SearchBridge
 import dagger.hilt.android.HiltAndroidApp
 
 //import io.reactivex.plugins.RxJavaPlugins
@@ -44,8 +53,31 @@ class BaseApplication : Application() {
             initUserData()*/
             UIUtils.init(this)
             AppUtils.init(this)
+            initUserData()
             initArouter()
             registerBridge()
+        }
+    }
+
+    private fun initUserData() {
+        LoginCache.isLogin = obtain(SP_USER_INFO, this).getBoolean(KEY_IS_LOGIN, false)
+        LoginCache.UserCookie = obtain(SP_USER_INFO, this).getString(KEY_COOKIE, "")
+        LoginCache.likeResult = GsonUtils.fromJson(
+            obtain(SP_USER_INFO, this).getString(KEY_USER_LIKE, ""),
+            UserLikeMusicResult::class.java
+        )
+        if (LoginCache.isLogin) {
+            DatabaseFactory.getUserInfo().subscribeDbResult({
+                LoginCache.userAccount = it
+            }, {
+                it.printStackTrace()
+            })
+
+            DatabaseFactory.getUserProfile().subscribeDbResult({
+                LoginCache.userProfile = it
+            }, {
+                it.printStackTrace()
+            })
         }
     }
 
@@ -103,6 +135,13 @@ class BaseApplication : Application() {
 
             })
             .register(HomeBridge::class.java)
+            .register(MineBridge::class.java)
+            .register(MusicListBridge::class.java)
+            .register(MusicSquareBridge::class.java)
+            .register(DailyMusicBridge::class.java)
+            .register(LoginBridge::class.java)
+            .register(MusicDetailBridge::class.java)
+            .register(SearchBridge::class.java)
     }
 
 

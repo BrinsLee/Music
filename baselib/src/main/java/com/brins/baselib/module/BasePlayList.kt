@@ -13,7 +13,7 @@ open class BasePlayList() : BaseData() {
      */
     fun last(): BaseMusic {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.SINGLE, PlayMode.HEART -> {
                 var newIndex = playingIndex - 1
                 if (newIndex < 0) {
                     newIndex = songs.size - 1
@@ -32,7 +32,7 @@ open class BasePlayList() : BaseData() {
      */
     operator fun next(): BaseMusic {
         when (playMode) {
-            PlayMode.LOOP, PlayMode.LIST -> {
+            PlayMode.LOOP, PlayMode.LIST, PlayMode.HEART -> {
                 var newIndex = playingIndex + 1
                 if (newIndex >= songs.size) {
                     newIndex = 0
@@ -71,6 +71,12 @@ open class BasePlayList() : BaseData() {
 
     fun add(music: BaseMusic) {
         if (!songs.contains(music)) {
+            songs.forEach {
+                if (it.id == music.id) {
+                    playingIndex = songs.indexOf(it)
+                    return
+                }
+            }
             songs.add(music)
             numOfSongs = songs.size
             playingIndex = songs.lastIndex
@@ -83,6 +89,29 @@ open class BasePlayList() : BaseData() {
         songs.clear()
         songs.addAll(list)
         numOfSongs = songs.size
+    }
+
+    fun delete(music: BaseMusic): Boolean {
+        if (songs.contains(music)) {
+            if (songs.size == 1) {
+                return false
+            }
+            return songs.remove(music)
+        }
+        return false
+    }
+
+    fun deleteAll(): Boolean {
+        val song = getCurrentSong()
+        val iterator: MutableIterator<BaseMusic> = songs.iterator()
+        while (iterator.hasNext()) {
+            val music = iterator.next()
+            if (music != song) {
+                iterator.remove()
+            }
+        }
+        playingIndex = songs.lastIndex
+        return true
     }
 
     fun prepare(): Boolean {
@@ -105,6 +134,10 @@ open class BasePlayList() : BaseData() {
         return playingIndex
     }
 
+    fun setPlayingIndex(index: Int) {
+        this.playingIndex = index
+    }
+
     fun getNumOfSongs(): Int {
         return numOfSongs
     }
@@ -116,6 +149,8 @@ open class BasePlayList() : BaseData() {
         }
         return true
     }
+
+    fun getSong(): ArrayList<BaseMusic> = songs
 
     @NonNull
     private var id: Int = 0

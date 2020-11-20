@@ -29,6 +29,7 @@ import com.brins.musicdetail.fragment.MusicLrcFragment
 import com.brins.playerlib.contract.PlayerContract
 import com.brins.playerlib.model.PlayBackService
 import com.brins.playerlib.presenter.PlayerPresenter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_music_detail.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -43,6 +44,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import kotlin.system.exitProcess
 
+@AndroidEntryPoint
 @Route(path = RouterHub.MUSICDETAILACTIVITY)
 class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View,
     View.OnClickListener, Animator.AnimatorListener {
@@ -158,6 +160,10 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
 
     override fun updatePlayMode(playMode: PlayMode) {
         TODO("Not yet implemented")
+    }
+
+    override fun onMusicDelete() {
+
     }
 
     override fun onDestroy() {

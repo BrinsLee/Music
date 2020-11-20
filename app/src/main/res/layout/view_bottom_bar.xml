@@ -9,13 +9,20 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<!--    <LinearLayout
+        android:id="@+id/tab_main_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    </LinearLayout>-->
     <ImageButton
             android:id="@+id/tab_main_btn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:scaleType="centerInside"
             android:background="@drawable/tab_main_selected"
-            android:clickable="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="10dp"
@@ -41,7 +48,6 @@
             android:layout_height="20dp"
             android:scaleType="centerInside"
             android:background="@drawable/tab_find_selected"
-            android:clickable="false"
             app:layout_constraintStart_toEndOf="@id/tab_main_btn"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="10dp"
@@ -68,7 +74,6 @@
             android:layout_height="20dp"
             android:scaleType="centerInside"
             android:background="@drawable/tab_activity_selected"
-            android:clickable="false"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/tab_discovery_btn"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,7 +100,6 @@
             android:layout_height="20dp"
             android:scaleType="centerInside"
             android:background="@drawable/tab_my_selected"
-            android:clickable="false"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/tab_video_btn"
             app:layout_constraintTop_toTopOf="parent"

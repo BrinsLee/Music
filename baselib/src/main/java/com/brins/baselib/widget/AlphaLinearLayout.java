@@ -9,7 +9,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 /**
- * Created by lihuanxing on 2017/12/13.
+ * Created by lipeilin
+ * on 2020/11/18
  */
 
 public class AlphaLinearLayout extends LinearLayout {

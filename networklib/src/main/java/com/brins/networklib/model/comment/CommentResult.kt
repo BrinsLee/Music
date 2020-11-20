@@ -27,6 +27,7 @@ class CommentResult {
         var likedCount = 0
 
         var liked = false
+
         override val itemType: Int
             get() = ITEM_MUSIC_DETAIL_COMMENT
     }

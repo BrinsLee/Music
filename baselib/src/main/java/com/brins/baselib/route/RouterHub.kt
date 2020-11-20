@@ -9,6 +9,13 @@ interface RouterHub {
         const val MUSIC_LIST = "/musiclist"
         const val MUSIC_DETAIL = "/musicdetail"
         const val BRIDGE = "/bridge"
+        const val MUSIC_SQUARE = "/musicsquare"
+        const val MINE = "/mine"
+        const val DAILY = "/daily"
+        const val SEARCH = "/search"
+
+
+
 
         //    ****************Activity路径配置***************************
 
@@ -16,13 +23,29 @@ interface RouterHub {
 
         const val COMMENTSACTIVITY = "$MUSIC_DETAIL/CommentsActivity"
 
+        const val PLAYLISTACTIVITY = "$MUSIC_DETAIL/PlayListActivity"
 
         const val MUSICLISTACTIVITY = "$MUSIC_LIST/MusicListActivity"
 
         const val BROWSERACTIVITY = "$BRIDGE/BrowserActivity"
 
+        const val MUSICLISTSQUAREACTIVITY = "$MUSIC_SQUARE/MusicListSquareActivity"
+
+        const val ALBUMLISTACTIVITY = "$MUSIC_LIST/AlbumListActivity"
+
+        const val LOGINSELECTACTIVITY = "$LOGIN/LoginSelectActivity"
+
+        const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
+
+        const val DAILYMUSICACTIVITY = "$DAILY/DailyMusicActivity"
+
+        const val SEARCHACTIVITY = "$SEARCH/SearchActivity"
+
+
 
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"
+
+        const val MINEFRAGMENT = "$MINE/MineFragment"
     }
 }

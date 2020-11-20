@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.brins.baselib.R
 import com.brins.baselib.mvp.IView
 import com.brins.baselib.utils.eventbus.EventBusParams
+import com.brins.baselib.widget.ErrorStatuView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -29,9 +30,10 @@ abstract class BaseFragment : Fragment(), IView {
     var mLoadingFragment: LoadingFragment? = null
 
     /*实现懒加载*/
-    protected open var mIsViewBinding: Boolean = false
-    protected open var mIsVisibleToUser: Boolean = false
-    protected open var mHadLoaded = false
+    private var isFirst = true // 是否为第一次加载
+
+    private var isOk = false
+
 
     protected abstract fun getLayoutResID(): Int
     protected abstract fun reLoad()
@@ -39,29 +41,21 @@ abstract class BaseFragment : Fragment(), IView {
 
     @CallSuper
     protected open fun onCreateViewAfterBinding() {
-        mIsViewBinding = true
-        checkLoad()
     }
 
 
     private fun checkLoad() {
-        if (!mHadLoaded && mIsViewBinding && mIsVisibleToUser) {
+        if (isOk && isFirst) {
             onLazyLoad()
-            mHadLoaded = true
+            isFirst = false
         }
     }
 
 
     open fun onLazyLoad() {}
 
-    protected open fun beforeCreateView() {}
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        mIsVisibleToUser = isVisibleToUser
-        if (isVisibleToUser) {
-            checkLoad()
-        }
+    protected open fun needParent(): Boolean {
+        return true
     }
 
 
@@ -69,21 +63,30 @@ abstract class BaseFragment : Fragment(), IView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.base_fragment_base, container, false)
-        rootView = view.findViewById(R.id.appbase_fr_root)
         mActivity = activity
         mBundle = arguments
-        val mContentView = inflater.inflate(getLayoutResID(), null)
-        if (mContentView != null) {
-            rootView!!.addView(mContentView)
+        val view: View
+        if (needParent()) {
+            view = inflater.inflate(R.layout.base_fragment_base, container, false)
+            rootView = view.findViewById(R.id.appbase_fr_root)
+            val mContentView = inflater.inflate(getLayoutResID(), null)
+            if (mContentView != null) {
+                rootView!!.addView(mContentView)
+            }
+        } else {
+            view = inflater.inflate(getLayoutResID(), container, false)
         }
         createLoadingView()
         if (useEventBus()) EventBus.getDefault().register(this)
         if (useARouter()) ARouter.getInstance().inject(this)
-        val parent = rootView?.parent
-        return rootView
+        isOk = true
+        return if (needParent()) rootView else view
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkLoad()
+    }
 
     /**
      *
@@ -121,9 +124,7 @@ abstract class BaseFragment : Fragment(), IView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mIsViewBinding = false
-        mIsVisibleToUser = false
-        mHadLoaded = false
+        isFirst = true
         (rootView?.parent as? ViewGroup)?.removeView(rootView)
     }
 
@@ -133,7 +134,17 @@ abstract class BaseFragment : Fragment(), IView {
     }
 
     override fun hideLoading() {
-        mLoadingFragment?.dismiss()
+        mLoadingFragment?.dismiss(childFragmentManager)
+
+    }
+
+    protected fun showError() {
+        val error = ErrorStatuView(getMyContext())
+        error.setListener(View.OnClickListener {
+            reLoad()
+            rootView?.removeView(error)
+        })
+        rootView?.addView(error)
     }
 
 

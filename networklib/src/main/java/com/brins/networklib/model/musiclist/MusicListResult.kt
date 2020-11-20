@@ -1,6 +1,7 @@
 package com.brins.networklib.model.musiclist
 
-import com.google.gson.annotations.SerializedName
+import com.brins.baselib.module.MusicList
+
 
 class MusicListResult {
 

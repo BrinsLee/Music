@@ -22,6 +22,14 @@ interface IPlayback {
     fun setPlayList(list: MutableList<BaseMusic>)
 
     /**
+     * 设置播放列表及当前播放音乐的位置
+     *
+     * @param list
+     * @param index
+     */
+    fun setPlayList(list: MutableList<BaseMusic>, index: Int)
+
+    /**
      * 获取播放列表
      *
      * @return
@@ -148,6 +156,19 @@ interface IPlayback {
      * @return
      */
     fun getCurrentPlayMode(): PlayMode
+
+    /**
+     * 删除音乐
+     *
+     * @param music
+     */
+    fun deleteMusic(music: BaseMusic): Boolean
+
+    /**
+     * 删除全部音乐
+     *
+     */
+    fun deleteAll(): Boolean
 
     interface Callback {
 

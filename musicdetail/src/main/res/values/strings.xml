@@ -5,4 +5,9 @@
     <string name="default_duration">00:00</string>
     <string name="lrc_label">暂无歌词</string>
     <string name="comment">评论</string>
+    <string name="like_success">喜欢成功</string>
+    <string name="dislike_success">已移除</string>
+    <string name="current_mode">当前模式：</string>
+    <string name="heart_mode">心动模式</string>
+
 </resources>

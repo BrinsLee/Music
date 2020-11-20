@@ -21,11 +21,6 @@ class HomePresenter @Inject constructor() : HomeContract.Presenter() {
         mView?.onBannerLoad(result)
     }
 
-    override suspend fun loadPersonalizedMusic() {
-        val result = mModel?.loadPersonalizedMusic()
-        mView?.onPersonalizedMusicLoad(result)
-    }
-
     override suspend fun loadHotOrNewRecommend(type: String) {
         val result = mModel?.loadHotOrNewRecommend(type)
         when (type) {
@@ -33,6 +28,11 @@ class HomePresenter @Inject constructor() : HomeContract.Presenter() {
 
             "hot" -> mView?.onHotRecommendLoad(result)
         }
+    }
+
+    override suspend fun loadIntelligenceMusicList(id: String, pid: String) {
+        val result = mModel?.loadIntelligenceMusicList(id, pid)
+        mView?.onIntelligenceMusicListLoad(result)
     }
 
     override fun subscribe() {

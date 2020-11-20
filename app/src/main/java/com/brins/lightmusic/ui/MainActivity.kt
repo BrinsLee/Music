@@ -5,23 +5,22 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import butterknife.OnClick
-import com.brins.baselib.activity.BaseActivity
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
-import com.brins.baselib.module.ITEM_MUSIC_LIST_TRACK_MUSIC
 import com.brins.baselib.module.PlayMode
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.getStatusBarHeight
+import com.brins.bridgelib.musicdetail.MusicDetailBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
+import com.brins.bridgelib.search.SearchBridgeInterface
 import com.brins.lightmusic.R
 import com.brins.lightmusic.adapter.MainPagerAdapter
-import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.playerlib.contract.PlayerContract
 import com.brins.playerlib.model.PlayBackService
 import com.brins.playerlib.presenter.PlayerPresenter
@@ -78,21 +77,63 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
         return true
     }
 
+    fun getPlayingSong(): BaseMusic? {
+        return mPlayer?.getPlayingSong()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                BridgeProviders.instance.getBridge(SearchBridgeInterface::class.java)
+                    .toSearchActivity()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     @Suppress("UNCHECKED_CAST")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playMusic(params: EventBusParams) {
         when (params.key) {
-            EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC -> {
+            EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC, EventBusKey.KEY_EVENT_INTELLIGENCE_MUSIC -> {
                 val musicList = params.`object` as MutableList<BaseMusic>
-                mPresenter?.setPlayList(musicList)
                 val position = params.extra.toInt()
-                mPresenter?.play(musicList[position])
+                val music = musicList[position]
+                if (mPlayer?.getPlayingSong()?.id == music.id) {
+                    if (mPlayer?.isPlaying()!!) {
+                        mPlayer?.pause()
+                    } else {
+                        mPlayer?.resume()
+                    }
+
+                } else {
+                    mPlayer?.stop()
+                    mPresenter?.setPlayList(musicList, position)
+                    mPresenter?.play(music)
+                }
             }
 
+            EventBusKey.KEY_EVENT_TOP_MUSIC,
             EventBusKey.KEY_EVENT_BANNER_MUSIC -> {
                 val music = params.`object` as BaseMusic
                 mPresenter?.play(music)
             }
+            EventBusKey.KEY_EVENT_PAUSE_MUSIC -> {
+                mPlayer?.pause()
+            }
+            EventBusKey.KEY_EVENT_RESUME_MUSIC -> {
+                mPlayer?.resume()
+            }
+            EventBusKey.KEY_EVENT_CHANGE_PLAYMODE -> {
+                val mode = params.`object` as PlayMode
+                changeMode(mode)
+            }
+
         }
     }
 
@@ -197,7 +238,8 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
                 /*if (mPlayer != null && ::playList.isInitialized) {
                     MusicPlayActivity.startThisActivity(this@MainActivity)
                 }*/
-                ARouterUtils.go(RouterHub.MUSICDETAILACTIVITY)
+                BridgeProviders.instance.getBridge(MusicDetailBridgeInterface::class.java)
+                    .toMusicDetailActivity()
                 return
             }
         }
@@ -268,10 +310,18 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
         TODO("Not yet implemented")
     }
 
+    override fun onMusicDelete() {
+
+    }
+
     override fun showLoading() {
     }
 
     override fun hideLoading() {
+    }
+
+    fun changeMode(model: PlayMode) {
+        mPresenter?.changePlayMode(model)
     }
 
 }

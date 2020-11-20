@@ -7,20 +7,23 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
+import com.brins.baselib.cache.like.LikeCache
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
 import com.brins.baselib.route.RouterHub.Companion.MUSICLISTACTIVITY
 import com.brins.baselib.utils.SizeUtils.dp2px
+import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.UIUtils.getScreenWidth
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
-import com.brins.baselib.utils.setTranslucent
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.musiclistlib.R
 import com.brins.musiclistlib.adapter.MusicListAdapter
@@ -28,17 +31,22 @@ import com.brins.musiclistlib.contract.MusicListContract
 import com.brins.musiclistlib.presenter.MusicListPresenter
 import com.brins.musiclistlib.widget.StickNavLayout
 import com.brins.networklib.helper.ApiHelper.launch
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.networklib.model.musiclist.MoreMusicListResult
+import com.brins.baselib.module.MusicList
 import com.brins.networklib.model.musiclist.MusicListResult
 import kotlinx.android.synthetic.main.activity_music_list.*
+import kotlin.math.min
 
 @Route(path = MUSICLISTACTIVITY)
 class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContract.View,
     StickNavLayout.MyStickyListener {
 
-    @Autowired(name = "KEY_ID")
+    @Autowired(name = KEY_ID)
     lateinit var id: String
+
     private var mAdapter: MusicListAdapter? = null
+
+    private var mCurrentIndex = 0
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_music_list
@@ -59,19 +67,17 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         })
 //        stickynavlayout.setListener(this)
         if (id.isNotEmpty()) {
+            showLoading()
             launch({
                 mPresenter?.loadMusicListDetail(id)
             }, {})
         }
     }
 
-    override fun setStatusBar() {
-        setTranslucent(this)
-    }
 
     override fun onMusicDetailLoad(data: MusicListResult?) {
+        hideLoading()
         data?.let {
-
             it.playlist?.let { list ->
                 loadCover(list)
                 description.text = list.description
@@ -115,7 +121,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
                                     val tv = TextView(this)
                                     tv.setTextColor(Color.WHITE)
                                     tv.textSize = 12f
-                                    tv.text = "${handleNum(list.subscribedCount)}w关注"
+                                    tv.text = "${handleNum(list.subscribedCount)} 关注"
                                     tv.gravity = Gravity.CENTER_VERTICAL
                                     frameLayout.addView(tv)
                                     val params: FrameLayout.LayoutParams =
@@ -143,6 +149,15 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         }
     }
 
+    override fun onMoreMusicDetailLoad(data: MoreMusicListResult?) {
+        val list = mutableListOf<BaseData>()
+        data?.songs?.let {
+            list.addAll(it)
+            mAdapter?.addData(list)
+            mAdapter?.loadMoreModule?.isEnableLoadMore = true
+        }
+    }
+
     private fun loadCover(it: MusicList) {
         GlideHelper.setBlurImageResource(
             cover,
@@ -158,6 +173,8 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
      */
     private fun bindRecyclerViewAdapter(it: MusicListResult) {
         if (it.playlist?.tracks != null) {
+            mCurrentIndex = it.playlist!!.tracks.size
+            LikeCache.likeMusicList?.trackIds = it.playlist?.trackIds!!
             val list = mutableListOf<BaseData>()
             list.add(object : BaseData() {
                 override val itemType: Int
@@ -165,6 +182,11 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
             })
             list.addAll(it.playlist?.tracks!!)
             mAdapter = MusicListAdapter(list)
+            mAdapter?.loadMoreModule?.setOnLoadMoreListener {
+                loadMore(it)
+            }
+            mAdapter?.loadMoreModule?.isAutoLoadMore = true
+            mAdapter?.loadMoreModule?.isEnableLoadMoreIfNotFullPage = false
             musicRecycler.adapter = mAdapter
             val manager = LinearLayoutManager(this)
             manager.isSmoothScrollbarEnabled = true
@@ -174,13 +196,27 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         }
     }
 
-    override fun showLoading() {
-        TODO("Not yet implemented")
+    private fun loadMore(it: MusicListResult) {
+        mAdapter?.loadMoreModule?.isEnableLoadMore = false
+        if (it.playlist?.trackCount!! > mCurrentIndex) {
+
+            val loadMore = min(10, it.playlist!!.trackCount - mCurrentIndex)
+            val loadMores = arrayListOf<String>()
+            for (i in 0 until loadMore) {
+                loadMores.add(it.playlist!!.trackIds[mCurrentIndex].id)
+                mCurrentIndex++
+            }
+            launch({
+                mPresenter?.loadMoreMusicListDetail(loadMores)
+            }, {
+                ToastUtils.show("加载失败，请重试", Toast.LENGTH_SHORT)
+                mAdapter?.loadMoreModule?.isEnableLoadMore = true
+            })
+        } else {
+            mAdapter?.loadMoreModule?.isEnableLoadMore = false
+        }
     }
 
-    override fun hideLoading() {
-        TODO("Not yet implemented")
-    }
 
     override fun imageScale(bottom: Float) {
         val b = bottom + dp2px(20f)
@@ -192,7 +228,4 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
         cover.layout((0 - dx).toInt(), 0, (screenWidth + dx).toInt(), b.toInt())
     }
 
-/*    override fun setStatusBar() {
-        StatusBarHelper.getInstance().setWindowTranslucentStatus(this)
-    }*/
 }

@@ -22,7 +22,6 @@ public class BaseLottieAnimationview extends LottieAnimationView {
     }
 
     private void initView() {
-        useHardwareAcceleration();
     }
 
     public Activity getActivity() {

@@ -60,7 +60,7 @@ class RoundCoverImageView @JvmOverloads constructor(context: Context, attrs: Att
     }
 
     fun setImageBitmap(url: String) {
-        GlideHelper.setRoundImageResource(mImageView, url, 50)
+        GlideHelper.setRoundImageResource(mImageView, url, 50, R.drawable.base_icon_default_cover)
     }
 
     fun getMax(): Int {

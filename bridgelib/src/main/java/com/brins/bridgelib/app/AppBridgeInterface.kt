@@ -6,4 +6,8 @@ import com.brins.bridgelib.BridgeInterface
 interface AppBridgeInterface : BridgeInterface {
 
     fun getAppContext(): Context
+
+    fun getAccessToken(): String?
+
+    fun setAccessToken(accessToken: String?)
 }

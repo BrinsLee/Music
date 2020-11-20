@@ -15,15 +15,22 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.brins.baselib.BaseMvpService
+import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.subscribeDbResult
+import com.brins.playerlib.broadcast.HeadsetButtonReceiver
 import com.brins.playerlib.contract.IPlayback
 import com.brins.playerlib.presenter.PlayerPresenter
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ServiceScoped
 import java.util.ArrayList
 
-class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
+@AndroidEntryPoint
+class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
+    HeadsetButtonReceiver.onHeadsetListener {
 
     companion object {
         @JvmStatic
@@ -48,6 +55,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
 
     override fun onCreate() {
         super.onCreate()
+        HeadsetButtonReceiver(this)
         mIsServiceBound = true
 //        EventBus.getDefault().register(this)
 
@@ -79,6 +87,10 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
 
     override fun setPlayList(list: MutableList<BaseMusic>) {
         mPlayer.setPlayList(list)
+    }
+
+    override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+        mPlayer.setPlayList(list, index)
     }
 
     override fun getPlayList(): BasePlayList {
@@ -157,6 +169,14 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         return mPlayer.getCurrentPlayMode()
     }
 
+    override fun deleteMusic(music: BaseMusic): Boolean {
+        return mPlayer.deleteMusic(music)
+    }
+
+    override fun deleteAll(): Boolean {
+        return mPlayer.deleteAll()
+    }
+
     /**
      * 负责播放器的类
      *
@@ -226,6 +246,17 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         }
 
         /**
+         * 设置播放列表及当前音乐位置
+         *
+         * @param list
+         * @param index
+         */
+        override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+            mPlayList.add(list)
+            mPlayList.setPlayingIndex(index)
+        }
+
+        /**
          * 获取播放列表
          *
          * @return
@@ -243,14 +274,17 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         override fun play(music: BaseMusic): Boolean {
             mPlayOnAudioFocus = requestFocus()
             if (mPlayOnAudioFocus) {
-                if (isPaused) {
+                if (mPlayList.getCurrentSong()?.id == music.id && isPaused) {
                     mPlayer.start()
-//                    notifyPlayStatusChanged(true)
                     return true
                 }
                 mPlayList.add(music)
                 if (mPlayList.prepare()) {
                     try {
+                        DatabaseFactory.addRecentlyMusic(music)
+                            .subscribeDbResult({}, {
+                                Log.d("DataBaseFactory", it.message!!)
+                            })
                         mPlayer.reset()
                         mPlayer.setDataSource(music.musicUrl)
                         mPlayer.prepare()
@@ -278,17 +312,20 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
             if (mPlayOnAudioFocus) {
                 if (isPaused) {
                     mPlayer.start()
-//                    notifyPlayStatusChanged(true)
                     return true
                 }
                 if (mPlayList.prepare()) {
                     val music = mPlayList.getCurrentSong()
                     music?.let {
-                        if (it.musicUrl.isEmpty()) {
+                        if (it.musicUrl.isNullOrEmpty()) {
                             mPresenter?.play(it)
                             return false
                         }
                         try {
+                            DatabaseFactory.addRecentlyMusic(music)
+                                .subscribeDbResult({}, {
+                                    Log.d("DataBaseFactory", it.message!!)
+                                })
                             mPlayer.reset()
                             mPlayer.setDataSource(it.musicUrl)
                             mPlayer.prepare()
@@ -323,6 +360,12 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
                 }
                 if (mPlayList.prepare()) {
                     try {
+                        mPlayList.getCurrentSong()?.let {
+                            DatabaseFactory.addRecentlyMusic(it)
+                                .subscribeDbResult({}, {
+                                    Log.d("DataBaseFactory", it.message!!)
+                                })
+                        }
                         mPlayer.reset()
                         mPlayer.setDataSource(url)
                         mPlayer.prepare()
@@ -409,6 +452,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
          *
          */
         override fun stop() {
+            isPaused = false
             mPlayer.stop()
         }
 
@@ -445,7 +489,26 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
          *
          * @param p0
          */
-        override fun onAudioFocusChange(p0: Int) {
+        override fun onAudioFocusChange(focusChange: Int) {
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    mPlayOnAudioFocus = false
+                    isPlayingBeforeLoseFocuse = mPlayer.isPlaying
+                    pause()
+                }
+                AudioManager.AUDIOFOCUS_GAIN -> {
+                    mPlayOnAudioFocus = true
+                    resume()
+                }
+                AudioManager.AUDIOFOCUS_LOSS -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
+                    } else {
+                        mAudioManager.abandonAudioFocus(this)
+                    }
+                    stop()
+                }
+            }
         }
 
         /**
@@ -544,5 +607,30 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback {
         override fun getCurrentPlayMode(): PlayMode {
             return mPlayList.getPlayMode()
         }
+
+        override fun deleteMusic(music: BaseMusic): Boolean {
+            return mPlayList.delete(music)
+        }
+
+        override fun deleteAll(): Boolean {
+            return mPlayList.deleteAll()
+        }
+    }
+
+    //耳机线控
+    override fun playOrPause() {
+        if (mPlayer.isPlaying()) {
+            pause()
+        } else {
+            resume()
+        }
+    }
+
+    override fun playNextSong() {
+        playNext()
+    }
+
+    override fun playPreviousSong() {
+        playLast()
     }
 }

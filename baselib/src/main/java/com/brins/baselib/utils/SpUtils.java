@@ -10,9 +10,13 @@ import java.util.Map;
 public class SpUtils {
 
     public static String SP_USER_INFO = "sp_user_info";
+    public static String SP_COMMENT_INFO = "sp_comment_info";
+    public static String SP_SEARCH_INFO = "sp_search_info";
     public static String KEY_IS_LOGIN = "key_is_login";
     public static String KEY_AVATAR_STRING = "key_avatar_string";
     public static String KEY_COOKIE = "key_cookie";
+    public static String KEY_USER_LIKE = "key_user_like";
+    public static String KEY_SEARCH_HISTORY = "key_search_history";
 
     private SharedPreferences mSharedPreferences;
 

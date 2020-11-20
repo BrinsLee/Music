@@ -1,0 +1,14 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_now">立即登录</string>
+    <string name="follows">关注</string>
+    <string name="fans">粉丝</string>
+    <string name="bought">已购</string>
+    <string name="music_list">歌单</string>
+    <string name="like">喜欢</string>
+    <string name="local">本地</string>
+    <string name="recently_play">最近播放</string>
+    <string name="my_list">我的歌单</string>
+    <string name="may_like">猜你喜欢</string>
+</resources>

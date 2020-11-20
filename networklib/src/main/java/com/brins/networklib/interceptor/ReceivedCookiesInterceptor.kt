@@ -1,12 +1,12 @@
 package com.brins.networklib.interceptor
 
 import android.util.Log
+import com.brins.baselib.cache.login.LoginCache.UserCookie
 import com.brins.baselib.utils.SpUtils
 import com.brins.baselib.utils.SpUtils.KEY_COOKIE
 import com.brins.baselib.utils.SpUtils.SP_USER_INFO
 import com.brins.bridgelib.app.AppBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
-import com.brins.baselib.config.UserCookie
 
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -17,8 +17,11 @@ class ReceivedCookiesInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
         val stringBuilder = StringBuilder()
-        if (response.headers("Set-Cookie").isNotEmpty()) {
-            response.headers("Set-Cookie").forEach {
+        val cookies = response.headers("Set-Cookie")
+        val path = response.request().url().pathSegments()
+        if (path[0] == "login" && cookies.isNotEmpty()) {
+            cookies.forEach {
+                if (it.contains("MUSIC_U=") || it.startsWith("_"))
                 stringBuilder.append(it)
             }
             UserCookie = stringBuilder.toString()

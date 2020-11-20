@@ -13,13 +13,6 @@ abstract class BaseMvpActivity<P : BasePresenter<out IModel, out IView>> : BaseA
     protected var TAG = this.javaClass.simpleName
     var mPresenter: P? = null
 
-    override fun showLoading() {
-    }
-
-    override fun hideLoading() {
-
-    }
-
     @CallSuper
     override fun init(savedInstanceState: Bundle?) {
         mPresenter = TUtil.getT(this, 0)

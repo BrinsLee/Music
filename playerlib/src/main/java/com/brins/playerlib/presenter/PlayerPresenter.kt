@@ -8,9 +8,13 @@ import android.os.IBinder
 import android.widget.Toast
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.BasePlayList
+import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_UPDATE_MUSIC
+import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_UPDATE_PLAY_MODE
+import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.playerlib.R
@@ -36,11 +40,6 @@ class PlayerPresenter : PlayerContract.Presenter() {
             mPlaybackService = (service as PlayBackService.LocalBinder).service
             mPlaybackService!!.bind(this@PlayerPresenter)
             mView?.onPlaybackServiceBound(mPlaybackService!!)
-            /*if (mPlaybackService!!.getPlayingSong() == null) {
-                return
-            } else {
-                mView?.onSongUpdated(mPlaybackService!!.getPlayingSong()!!)
-            }*/
         }
 
     }
@@ -51,6 +50,10 @@ class PlayerPresenter : PlayerContract.Presenter() {
 
     override fun setPlayList(list: MutableList<BaseMusic>) {
         mPlaybackService?.setPlayList(list)
+    }
+
+    override fun setPlayList(list: MutableList<BaseMusic>, index: Int) {
+        mPlaybackService?.setPlayList(list, index)
     }
 
     override fun play(music: BaseMusic) {
@@ -68,7 +71,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
                 ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
             }
         }, {
-
+            ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
         })
     }
 
@@ -87,6 +90,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
      *
      */
     fun onSongPause() {
+        EventBusManager.post(EventBusKey.KEY_EVENT_PAUSE_MUSIC)
         mView?.onSongPause()
     }
 
@@ -95,6 +99,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
      *
      */
     fun onSongPlay() {
+        EventBusManager.post(EventBusKey.KEY_EVENT_RESUME_MUSIC)
         mView?.onSongPlay()
     }
 
@@ -115,5 +120,21 @@ class PlayerPresenter : PlayerContract.Presenter() {
         }
     }
 
+    override fun delete(music: BaseMusic) {
+        if (mPlaybackService?.deleteMusic(music) == true) {
+            mView?.onMusicDelete()
+        }
+    }
 
+    override fun deleteAll() {
+        if (mPlaybackService?.deleteAll() == true) {
+            mView?.onMusicDelete()
+        }
+    }
+
+    override fun changePlayMode(mode: PlayMode) {
+        mPlaybackService?.changePlayMode(mode)
+        mView?.updatePlayMode(mode)
+        EventBus.getDefault().post(EventBusParams(KEY_EVENT_UPDATE_PLAY_MODE, mode))
+    }
 }

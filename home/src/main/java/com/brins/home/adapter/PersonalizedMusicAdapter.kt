@@ -6,14 +6,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.*
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
-import com.brins.baselib.utils.eventbus.EventBusKey
-import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
 import com.brins.home.R
-import com.brins.networklib.model.musiclist.MusicList
+import com.brins.baselib.module.MusicList
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.networklib.model.personal.PersonalizedMusic
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
@@ -32,6 +30,16 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
         addItemType(ITEM_HOME_TOP_RECOMMEND, R.layout.home_item_personalized_music)
     }
 
+    private var mListener: OnMusicClickListener? = null
+
+    fun setListener(listener: OnMusicClickListener) {
+        this.mListener = listener
+    }
+
+    interface OnMusicClickListener {
+        fun onMusicClick(music: BaseMusic, position: Int)
+    }
+
     override fun convert(helper: BaseViewHolder, item: BaseData) {
         when (helper.itemViewType) {
             ITEM_HOME_PERSONALIZED -> {
@@ -45,7 +53,8 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
 
                     val bundle = Bundle()
                     bundle.putString(KEY_ID, item.id)
-                    ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
                     /*val options: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             activity,
@@ -68,17 +77,14 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
                 val image: ImageView = helper.getView(R.id.cover)
                 ViewCompat.setTransitionName(image, item.picUrl)
                 GlideHelper.setRoundImageResource(image, item.picUrl, 10)
-                helper.getView<ImageView>(R.id.iv_play).setOnClickListener {
-                    val musicList = mutableListOf<BaseMusic>()
-                    data.forEach {
-                        if (it.itemType == ITEM_HOME_PERSONALIZED_MUSIC) {
-                            musicList.add(it as BaseMusic)
-                        }
+                helper.getView<ImageView>(R.id.iv_play).apply {
+                    setOnClickListener {
+                        mListener?.onMusicClick(item, helper.adapterPosition)
                     }
-                    EventBusManager.post(
-                        EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC, musicList,
-                        "${helper.adapterPosition}"
-                    )
+                    when (item.playStatus) {
+                        MusicStatus.FIRST_PLAY, MusicStatus.PAUSE -> setImageResource(R.drawable.home_ic_play)
+                        MusicStatus.RESUME -> setImageResource(R.drawable.home_ic_pause)
+                    }
                 }
 
             }
@@ -94,11 +100,11 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
 
                     val bundle = Bundle()
                     bundle.putString(KEY_ID, item.id)
-                    ARouterUtils.go(RouterHub.MUSICLISTACTIVITY, bundle)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
                 }
             }
         }
 
     }
-
 }

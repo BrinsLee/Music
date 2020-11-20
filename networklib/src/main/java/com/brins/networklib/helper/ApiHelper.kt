@@ -2,6 +2,8 @@ package com.brins.networklib.helper
 
 import android.util.Log
 import com.brins.baselib.config.BASEURL
+import com.brins.baselib.utils.GsonUtils
+import com.brins.baselib.utils.LogUtils
 import com.brins.networklib.RetrofitFactory
 import com.brins.networklib.service.*
 import kotlinx.coroutines.CoroutineScope
@@ -38,130 +40,14 @@ object ApiHelper {
         private var mLoginService: LoginService? = null
         private var mUserPlayListService: UserPlayListService? = null
         private var mDiscoveryService: DiscoveryService? = null
-        private var mSearchService: SearchService? = null*/
+        */
     private var mPersonalizedService: PersonalizedService? = null
     private var mMusicService: MusicService? = null
     private var mMusicListService: MusicListService? = null
+    private var mAlbumService: AlbumService? = null
+    private var mLoginService: LoginService? = null
+    private var mSearchService: SearchService? = null
 
-    /*fun getMusicService(): MusicService {
-        if (mMusicService == null) {
-            synchronized(MusicService::class.java) {
-                if (mMusicService == null) {
-                    mMusicService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_MUSIC
-                    )
-                        .create(MusicService::class.java)
-                }
-            }
-        }
-        return mMusicService!!
-    }
-
-    fun getSearchService(): SearchService {
-        if (mSearchService == null) {
-            synchronized(SearchService::class.java) {
-                if (mSearchService == null) {
-                    mSearchService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_SEARCH
-                        ).create(SearchService::class.java)
-                }
-            }
-        }
-        return mSearchService!!
-    }
-
-    fun getPlayListService(): PlayListService {
-        if (mPlayListService == null) {
-            synchronized(PlayListService::class.java) {
-                if (mPlayListService == null) {
-                    mPlayListService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_PLAYLIST
-                        ).create(PlayListService::class.java)
-                }
-            }
-        }
-        return mPlayListService!!
-    }
-
-    fun getArtistService(): ArtistService {
-        if (mArtistService == null) {
-            synchronized(ArtistService::class.java) {
-                if (mArtistService == null) {
-                    mArtistService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_ARTIST
-                        ).create(ArtistService::class.java)
-                }
-            }
-        }
-        return mArtistService!!
-    }
-
-    fun getMvService(): MusicVideoService {
-        if (mMvService == null) {
-            synchronized(MusicVideoService::class.java) {
-                if (mMvService == null) {
-                    mMvService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_MV
-                        ).create(MusicVideoService::class.java)
-                }
-            }
-        }
-        return mMvService!!
-    }
-
-    fun getLoginService(): LoginService {
-        if (mLoginService == null) {
-            synchronized(LoginService::class.java) {
-                if (mLoginService == null) {
-                    mLoginService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_LOGIN
-                        ).create(LoginService::class.java)
-                }
-            }
-        }
-        return mLoginService!!
-    }
-
-    fun getUserPlayListService(): UserPlayListService {
-        if (mUserPlayListService == null) {
-            synchronized(UserPlayListService::class.java) {
-                if (mUserPlayListService == null) {
-                    mUserPlayListService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_USER_PLAYLIST
-                        ).create(UserPlayListService::class.java)
-                }
-            }
-        }
-        return mUserPlayListService!!
-    }
-
-    fun getDiscoveryService(): DiscoveryService {
-        if (mDiscoveryService == null) {
-            synchronized(DiscoveryService::class.java) {
-                if (mDiscoveryService == null) {
-                    mDiscoveryService =
-                        RetrofitFactory.newRetrofit(
-                            BASEURL,
-                            LOG_TAG_NETWORK_DISCOVERY
-                        ).create(DiscoveryService::class.java)
-                }
-            }
-        }
-        return mDiscoveryService!!
-    }*/
 
     fun getPersonalizedService(): PersonalizedService {
         if (mPersonalizedService == null) {
@@ -199,13 +85,58 @@ object ApiHelper {
                 if (mMusicListService == null) {
                     mMusicListService = RetrofitFactory.newRetrofit(
                         BASEURL,
-                        LOG_TAG_NETWORK_MUSIC
+                        LOG_TAG_NETWORK_PLAYLIST
                     )
                         .create(MusicListService::class.java)
                 }
             }
         }
         return mMusicListService!!
+    }
+
+    fun getAlbumService(): AlbumService {
+        if (mAlbumService == null) {
+            synchronized(AlbumService::class.java) {
+                if (mAlbumService == null) {
+                    mAlbumService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_MUSIC
+                    )
+                        .create(AlbumService::class.java)
+                }
+            }
+        }
+        return mAlbumService!!
+    }
+
+    fun getLoginService(): LoginService {
+        if (mLoginService == null) {
+            synchronized(LoginService::class.java) {
+                if (mLoginService == null) {
+                    mLoginService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_LOGIN
+                    )
+                        .create(LoginService::class.java)
+                }
+            }
+        }
+        return mLoginService!!
+    }
+
+    fun getSearchService(): SearchService {
+        if (mSearchService == null) {
+            synchronized(SearchService::class.java) {
+                if (mSearchService == null) {
+                    mSearchService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_SEARCH
+                    )
+                        .create(SearchService::class.java)
+                }
+            }
+        }
+        return mSearchService!!
     }
 
     suspend fun <T> Call<T>.await(): T {
@@ -217,7 +148,10 @@ object ApiHelper {
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
-                    Log.d("await", response.message())
+                    LogUtils.d(
+                        "await",
+                        "message: ${response.message()}**** response: ${GsonUtils.toJson(body)}"
+                    )
                     if (body != null) continuation.resume(body)
                     else continuation.resumeWithException(RuntimeException("response body is null"))
                 }

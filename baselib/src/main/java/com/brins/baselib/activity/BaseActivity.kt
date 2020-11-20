@@ -2,6 +2,7 @@ package com.brins.baselib.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
@@ -55,8 +56,13 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun onStart() {
         super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (hideToolBar())
             setStatusBar()
+        Log.d("BaseActivity", "onStart")
     }
 
     protected abstract fun getLayoutResId(): Int
@@ -161,5 +167,14 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun getMyContext(): Context {
         return mContext!!
+    }
+
+    override fun showLoading() {
+        mLoadingFragment?.show(supportFragmentManager)
+
+    }
+
+    override fun hideLoading() {
+        mLoadingFragment?.dismiss()
     }
 }

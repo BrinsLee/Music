@@ -1,5 +1,6 @@
 package com.brins.baselib.utils.glidehelper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -57,6 +58,11 @@ public class GlideHelper {
 
     public static void setImageResource(ImageView imageView, int resId) {
         setImageResource(imageView, null, resId, true, null);
+    }
+
+    public static void setImageResource(ImageView imageView, int resId, RequestOptions options) {
+        Glide.with(imageView.getContext()).load(resId).apply(options).into(imageView);
+
     }
 
     public static void setImageResource(ImageView view, String imageUrl, int defaultRes) {
@@ -124,6 +130,35 @@ public class GlideHelper {
         }
     }
 
+    public static void setCircleImageResource(ImageView imageView, String imageUrl, int defaultRes, int width, int height, RequestListener<Drawable> listener) {
+        try {
+            if (imageView == null) {
+                return;
+            }
+            Glide.get(imageView.getContext()).setMemoryCategory(MemoryCategory.NORMAL);
+
+            RequestBuilder requestBuilder;
+            if (!TextUtils.isEmpty(imageUrl)) {
+                requestBuilder = Glide.with(imageView.getContext()).load(imageUrl);
+            } else {
+                requestBuilder = Glide.with(imageView.getContext()).load(defaultRes);
+            }
+            if (!TextUtils.isEmpty(imageUrl) && defaultRes != 0) {
+                requestBuilder.apply(new RequestOptions().placeholder(defaultRes));
+            }
+            requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+
+            if (listener != null) {
+                requestBuilder.listener(listener);
+            }
+            if (width != 0 || height != 0) {
+                requestBuilder.override(width, height);
+            }
+            requestBuilder.apply(RequestOptions.bitmapTransform(new GlideCircleTransform(imageView.getContext()))).into(imageView);
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
     public static void setCircleImageResource(ImageView imageView, String imageUrl, boolean isCacheMemory) {
         setCircleImageResource(imageView, imageUrl, 0, true, isCacheMemory, null);
     }
@@ -142,6 +177,10 @@ public class GlideHelper {
 
     public static void setCircleImageResource(ImageView imageView, int resId) {
         setCircleImageResource(imageView, null, resId, true, true, null);
+    }
+
+    public static void setCircleImageResource(ImageView imageView, String url, int resId, int width, int height) {
+        setCircleImageResource(imageView, url, resId, width, height, null);
     }
 
     /**************************特殊处理圆形图片*/
@@ -238,12 +277,22 @@ public class GlideHelper {
         setBlurImageResource(imageView, null, rid, true, radius, 0, null);
     }
 
-
-    public static void setRoundImageResource(ImageView imageView, String url, int radius) {
-        setRoundImageResource(imageView, url, radius, null);
+    public static void setRoundImageResource(ImageView imageView, String url, int radius, int defaultRes, int width, int height) {
+        setRoundImageResource(imageView, url, radius, null, defaultRes, width, height);
     }
 
-    private static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener) {
+    public static void setRoundImageResource(ImageView imageView, String url, int radius, int defaultRes) {
+        setRoundImageResource(imageView, url, radius, null, defaultRes, 500, 500);
+    }
+
+
+    public static void setRoundImageResource(ImageView imageView, String url, int radius) {
+        setRoundImageResource(imageView, url, radius, null, 0, 500, 500);
+    }
+
+
+    @SuppressLint("CheckResult")
+    public static void setRoundImageResource(ImageView imageView, String imageUrl, int radius, RequestListener<Drawable> listener, int def, int width, int height) {
         try {
             if (imageView == null) {
                 return;
@@ -251,8 +300,14 @@ public class GlideHelper {
             Glide.get(imageView.getContext()).setMemoryCategory(MemoryCategory.NORMAL);
             RequestBuilder requestBuilder;
             requestBuilder = Glide.with(imageView.getContext()).load(imageUrl);
+            if (def != 0) {
+                requestBuilder.apply(new RequestOptions().placeholder(def));
+            }
             if (listener != null) {
                 requestBuilder.listener(listener);
+            }
+            if (width != 0 || height != 0) {
+                requestBuilder.override(width, height);
             }
             requestBuilder.apply(RequestOptions.bitmapTransform(new GlideRoundTransform(imageView.getContext(), radius)));
             requestBuilder.into(imageView);

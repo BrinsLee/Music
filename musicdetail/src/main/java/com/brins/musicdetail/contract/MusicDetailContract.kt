@@ -7,15 +7,16 @@ import com.brins.baselib.mvp.p.BasePresenter
 import com.brins.baselib.mvvm.BaseViewModel
 import com.brins.musicdetail.model.MusicDetailModel
 import com.brins.networklib.model.comment.CommentResult
+import com.brins.networklib.model.like.LikeMusicResult
 import com.brins.networklib.model.music.MusicLrc
 import com.brins.networklib.model.music.MusicLrcResult
 
 interface MusicDetailContract {
 
     interface View : IView {
-        fun onLikeMusic()
+        fun onLikeMusic(isSuccess: Boolean, id: String)
 
-        fun onDislikeMusic()
+        fun onDislikeMusic(isSuccess: Boolean, id: String)
 
         fun onMusicDetialLoad()
 
@@ -26,17 +27,29 @@ interface MusicDetailContract {
 
         abstract suspend fun loadMusicLrc(id: String)
 
+        abstract suspend fun likeMusic(id: String)
+
+        abstract suspend fun unLikeMusic(id: String)
+
     }
 
     interface Model : IModel {
         suspend fun loadMusicLrc(id: String): MusicLrcResult
 
         suspend fun loadMusicComment(id: String): CommentResult
+
+        suspend fun likeMusic(id: String): LikeMusicResult
+
+        suspend fun UnLikeMusic(id: String): LikeMusicResult
+
+        suspend fun likeOrunLikeComment(id: String, cid: String, t: Int, type: Int)
     }
 
     abstract class ViewModel(application: Application) :
         BaseViewModel<MusicDetailModel>(application) {
 
         abstract suspend fun loadMusicComments(id: String)
+
+        abstract suspend fun likeOrUnLikeMusicComment(id: String, cid: String, t: Int, type: Int)
     }
 }

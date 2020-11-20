@@ -7,5 +7,11 @@
             android:name=".model.PlayBackService"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver android:name=".broadcast.HeadsetButtonReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

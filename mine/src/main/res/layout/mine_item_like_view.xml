@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/base_bg_15dp_white"
+    android:orientation="horizontal"
+    android:paddingStart="15dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="15dp"
+    android:paddingBottom="10dp">
+
+    <com.brins.mine.widget.IconTextVerticalView
+        android:id="@+id/it_like"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:icon_src="@drawable/base_icon_like_black"
+        app:icon_title="@string/like" />
+
+    <com.brins.mine.widget.IconTextVerticalView
+        android:id="@+id/it_local"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:icon_src="@drawable/base_icon_down_black"
+        app:icon_title="@string/local" />
+
+    <com.brins.mine.widget.IconTextVerticalView
+        android:id="@+id/it_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:icon_src="@drawable/base_icon_music_list_black"
+        app:icon_title="@string/music_list" />
+
+    <com.brins.mine.widget.IconTextVerticalView
+        android:id="@+id/it_buy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:icon_src="@drawable/base_icon_bought_black"
+        app:icon_title="@string/bought" />
+</LinearLayout>

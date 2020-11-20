@@ -60,7 +60,7 @@ dependencies {
     implementation project(':networklib')
     implementation project(':recyclerlib')
     implementation project(':bridgelib')
-    implementation project(':musiclistlib')
+
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
