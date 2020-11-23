@@ -189,21 +189,6 @@ class SearchResultFragment private constructor() :
         loadSearchResult()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "type: $type,onStart")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "type: $type,onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "type: $type,onPause")
-    }
-
 
     private fun loadSearchResult() {
         if (mNeedSearch && keyWords.isNotEmpty()) {

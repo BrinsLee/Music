@@ -7,6 +7,7 @@ const val UMAPPKEY = "5e33c33c4ca357e8100000fa"
 
 const val KEY_ID = "KEY_ID"
 const val KEY_URL = "KEY_URL"
+const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
 /*const val KEY_INTENT_FROM = "KEY_INTENT_FROM"
 const val KEY_INTENT_FROM_INTELLIGENCE = "KEY_INTENT_FROM_INTELLIGENCE"
 const val KEY_INTENT_FROM_MINE = "KEY_INTENT_FROM_MINE"*/
@@ -132,7 +133,11 @@ interface MUSIC_LIST {
 interface MUSIC_COMMENT {
 
     companion object {
-        const val MUSIC_COMMENT = "/comment/music"
+        const val MUSIC_COMMENT = "music"
+
+        const val ALBUM_COMMENT = "album"
+
+        const val COMMENT = "/comment/{commentPath}"
 
         const val LIKE_UNLIKE_MUSIC_COMMENT = "/comment/like"
 

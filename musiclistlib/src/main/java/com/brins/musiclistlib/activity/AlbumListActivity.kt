@@ -6,12 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
+import com.brins.baselib.config.KEY_COMMEND_PATH
+import com.brins.baselib.config.KEY_ID
+import com.brins.baselib.config.MUSIC_COMMENT.Companion.ALBUM_COMMENT
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.route.RouterHub.Companion.ALBUMLISTACTIVITY
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
 import com.brins.baselib.utils.setTranslucent
 import com.brins.baselib.widget.CommonHeaderView
+import com.brins.bridgelib.musicdetail.MusicDetailBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.musiclistlib.R
 import com.brins.musiclistlib.adapter.MusicListAdapter
 import com.brins.musiclistlib.contract.AlbumContract
@@ -22,7 +27,6 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_album_list.*
 import kotlinx.android.synthetic.main.activity_album_list.header
 import kotlinx.android.synthetic.main.activity_album_list.toolbar
-import kotlinx.android.synthetic.main.activity_music_list.*
 import kotlin.math.abs
 
 @Route(path = ALBUMLISTACTIVITY)
@@ -57,6 +61,13 @@ class AlbumListActivity : BaseMvpActivity<AlbumPresenter>(), AlbumContract.View 
             ApiHelper.launch({
                 mPresenter?.loadAlbumDetail(id)
             }, {})
+        }
+        rl_comment.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString(KEY_ID, id)
+            bundle.putString(KEY_COMMEND_PATH, ALBUM_COMMENT)
+            BridgeProviders.instance.getBridge(MusicDetailBridgeInterface::class.java)
+                .toCommentsActivity(bundle)
         }
     }
 

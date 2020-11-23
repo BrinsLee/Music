@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvvmActivity
+import com.brins.baselib.config.KEY_COMMEND_PATH
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.config.MUSIC_COMMENT.Companion.COMMENT_TYPE_MUSIC
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_SINGLE_TITLE
@@ -33,8 +35,12 @@ import kotlinx.android.synthetic.main.activity_comments.*
 @Route(path = COMMENTSACTIVITY)
 class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
 
-    @Autowired(name = "KEY_ID")
+    @Autowired(name = KEY_ID)
     lateinit var id: String
+
+    @Autowired(name = KEY_COMMEND_PATH)
+    lateinit var path: String
+
     private var mAdapter: BaseQuickAdapter<BaseData, BaseViewHolder>? = null
     private var mHotCommentObserver: Observer<MutableList<CommentResult.Comment>>? = null
     override fun getViewModel(): BaseViewModel<out IModel>? {
@@ -99,7 +105,7 @@ class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
         }
         mViewModel?.getMutableHotCommentData()?.observe(this, mHotCommentObserver!!)
         launch({
-            mViewModel?.loadMusicComments(id)
+            mViewModel?.loadComments(path, id)
         }, {})
     }
 

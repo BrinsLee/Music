@@ -1,12 +1,20 @@
 package com.brins.searchlib.adapter
 
+import android.os.Bundle
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.*
+import com.brins.baselib.route.ARouterUtils
+import com.brins.baselib.route.RouterHub
+import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.formatDuration
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
+import com.brins.baselib.widget.AlphaLinearLayout
 import com.brins.searchlib.R
 import com.brins.searchlib.widget.FollowTextView
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
@@ -35,6 +43,13 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                 helper.setText(R.id.tv_music_num, "${helper.adapterPosition + 1}")
                 helper.setText(R.id.tv_music_name, (item as BaseMusic).name)
                 helper.setText(R.id.tv_music_artist, getArtists(item))
+                helper.getView<AlphaLinearLayout>(R.id.music_list_ll).setOnClickListener {
+                    item.let {
+                        EventBusManager.post(
+                            EventBusKey.KEY_EVENT_BANNER_MUSIC, it
+                        )
+                    }
+                }
 
             }
             ITEM_SEARCH_ALBUM -> {
@@ -48,6 +63,11 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                     200,
                     200
                 )
+                helper.getView<ConstraintLayout>(R.id.album_list_cl).setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString(KEY_ID, item.id)
+                    ARouterUtils.go(RouterHub.ALBUMLISTACTIVITY, bundle)
+                }
             }
             ITEM_SEARCH_ARTIST -> {
                 helper.setText(R.id.tv_artist_name, (item as BaseMusic.Artist).name)

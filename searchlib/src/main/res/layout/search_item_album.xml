@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.brins.baselib.widget.AlphaConstraintLayout
+        android:id="@+id/album_list_cl"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="5dp"

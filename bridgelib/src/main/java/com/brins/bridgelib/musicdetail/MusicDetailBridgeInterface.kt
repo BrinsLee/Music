@@ -1,5 +1,6 @@
 package com.brins.bridgelib.musicdetail
 
+import android.os.Bundle
 import com.brins.bridgelib.BridgeInterface
 
 /**
@@ -8,4 +9,6 @@ import com.brins.bridgelib.BridgeInterface
  */
 interface MusicDetailBridgeInterface : BridgeInterface {
     fun toMusicDetailActivity()
+
+    fun toCommentsActivity(bundle: Bundle)
 }

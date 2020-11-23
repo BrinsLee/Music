@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.brins.baselib.cache.login.LoginCache
+import com.brins.baselib.config.KEY_COMMEND_PATH
 import com.brins.baselib.config.KEY_ID
+import com.brins.baselib.config.MUSIC_COMMENT.Companion.MUSIC_COMMENT
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
@@ -279,6 +281,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
     private fun openComments() {
         val bundle = Bundle()
         bundle.putString(KEY_ID, mPlayer?.getPlayingSong()?.id ?: "")
+        bundle.putString(KEY_COMMEND_PATH, MUSIC_COMMENT)
         ARouterUtils.go(RouterHub.COMMENTSACTIVITY, bundle)
     }
 

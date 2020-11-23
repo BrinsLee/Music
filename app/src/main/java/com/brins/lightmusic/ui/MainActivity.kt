@@ -14,6 +14,7 @@ import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusKey.KEY_EVENT_SERACH_MUSIC
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.getStatusBarHeight
 import com.brins.bridgelib.musicdetail.MusicDetailBridgeInterface
@@ -119,7 +120,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
             }
 
             EventBusKey.KEY_EVENT_TOP_MUSIC,
-            EventBusKey.KEY_EVENT_BANNER_MUSIC -> {
+            EventBusKey.KEY_EVENT_BANNER_MUSIC, KEY_EVENT_SERACH_MUSIC -> {
                 val music = params.`object` as BaseMusic
                 mPresenter?.play(music)
             }
