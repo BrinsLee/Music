@@ -9,11 +9,11 @@ import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.*
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
+import com.brins.baselib.utils.convertNumMillion
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.formatDuration
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.handleNum
 import com.brins.baselib.widget.AlphaConstraintLayout
 import com.brins.baselib.widget.AlphaLinearLayout
 import com.brins.bridgelib.musiclist.MusicListBridgeInterface
@@ -85,7 +85,7 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                 helper.setVisible(R.id.vinyl_record, false)
                 helper.setText(
                     R.id.tv_album_artist,
-                    "${item.trackCount}首 by ${item.creator?.nickname}，播放${handleNum(item.playCount)}次"
+                    "${item.trackCount}首 by ${item.creator?.nickname}，播放${convertNumMillion(item.playCount)}次"
                 )
                 helper.getView<TextView>(R.id.tv_album_artist)
                     .setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
@@ -112,7 +112,7 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                 )
                 helper.getView<TextView>(R.id.tv_music_video_artist)
                     .setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                helper.setText(R.id.tv_play_count, handleNum(item.playCount))
+                helper.setText(R.id.tv_play_count, convertNumMillion(item.playCount.toLong()))
                 GlideHelper.setRoundImageResource(
                     helper.getView(R.id.ri_music_video_cover),
                     item.cover,
@@ -158,7 +158,7 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                 } else {
                     followTextView.setOnClickListener {
                         followTextView.startLoading()
-                        item.onFollowListener?.onFollow(item, helper.adapterPosition)
+                        item.onFollowListener?.get()?.onFollow(item, helper.adapterPosition)
                     }
                 }
             }

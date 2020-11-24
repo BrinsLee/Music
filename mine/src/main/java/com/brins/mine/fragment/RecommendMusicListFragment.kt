@@ -12,17 +12,15 @@ import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_HOME_TOP_RECOMMEND
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
-import com.brins.baselib.route.ARouterUtils
-import com.brins.baselib.route.RouterHub
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.handleNum
 import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
 import com.brins.mine.viewmodel.MineViewModel.Companion.TYPE_RECOMMEND_MUSIC_LIST
 import com.brins.networklib.helper.ApiHelper
 import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.convertNum
 import com.brins.bridgelib.login.LoginBridgeInterface
 import com.brins.bridgelib.musiclist.MusicListBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
@@ -108,7 +106,7 @@ class RecommendMusicListFragment : BaseMvvmFragment<MineViewModel>() {
         override fun convert(helper: BaseViewHolder, item: BaseData) {
             helper.setText(R.id.name, (item as MusicList).name)
             helper.setVisible(R.id.playCount, true)
-            helper.setText(R.id.playCount, "${handleNum(item.playCount)}")
+            helper.setText(R.id.playCount, "${convertNum(item.playCount)}")
             if (item.coverImgUrl.isNotEmpty()) {
                 GlideHelper.setRoundImageResource(
                     helper.getView(R.id.cover),

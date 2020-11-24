@@ -11,8 +11,8 @@ import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.config.MUSIC_COMMENT.Companion.ALBUM_COMMENT
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.route.RouterHub.Companion.ALBUMLISTACTIVITY
+import com.brins.baselib.utils.convertNumMillion
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.handleNum
 import com.brins.baselib.utils.setTranslucent
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.bridgelib.musicdetail.MusicDetailBridgeInterface
@@ -80,8 +80,8 @@ class AlbumListActivity : BaseMvpActivity<AlbumPresenter>(), AlbumContract.View 
             hideLoading()
             tv_playlist_name.setText(it.album?.name)
             header.initView(it.album?.name)
-            tv_comment.text = handleNum(it.album?.info?.commentCount ?: 0)
-            tv_share.text = handleNum(it.album?.info?.shareCount ?: 0)
+            tv_comment.text = convertNumMillion(it.album?.info?.commentCount?.toLong() ?: 0L)
+            tv_share.text = convertNumMillion(it.album?.info?.shareCount?.toLong() ?: 0L)
             GlideHelper.setRoundImageResource(
                 iv_cover,
                 it.album?.picUrl,

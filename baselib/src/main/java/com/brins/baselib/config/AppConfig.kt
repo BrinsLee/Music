@@ -24,7 +24,8 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[playmode, intelligence, list]",
     "[follow]",
     "[search]",
-    "[likelist]"
+    "[likelist]",
+    "[recommend, resource]"
 )
 
 interface RECOMMEND {

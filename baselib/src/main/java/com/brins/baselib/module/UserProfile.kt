@@ -1,5 +1,7 @@
 package com.brins.baselib.module
 
+import java.lang.ref.WeakReference
+
 /**
  * Created by lipeilin
  * on 2020/11/17
@@ -45,10 +47,10 @@ class UserProfile : BaseData() {
 
     var avatarDetail: AvatarDetail? = null
 
-    var onFollowListener: OnFollowListener? = null
+    var onFollowListener: WeakReference<OnFollowListener>? = null
 
     fun setFollowListener(followListener: OnFollowListener): UserProfile {
-        this.onFollowListener = followListener
+        this.onFollowListener = WeakReference(followListener)
         return this
     }
 

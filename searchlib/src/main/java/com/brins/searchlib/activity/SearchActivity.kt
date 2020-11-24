@@ -22,6 +22,7 @@ import com.brins.baselib.utils.KeyboardUtils
 import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.glidehelper.GlideHelper
+import com.brins.baselib.widget.AlphaLinearLayout
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.baselib.widget.FlowLayout
 import com.brins.baselib.widget.TagAdapter
@@ -37,6 +38,7 @@ import com.brins.searchlib.widget.ScaleTransitionPagerTitleView
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_search.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -46,8 +48,10 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
+import javax.inject.Inject
 
 @Route(path = SEARCHACTIVITY)
+@AndroidEntryPoint
 class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, TextWatcher,
     AdapterView.OnItemClickListener {
 
@@ -57,7 +61,9 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
     private var mSearchSuggest: Array<String?> = emptyArray()
     private var mTitleList: ArrayList<String> =
         arrayListOf("单曲", "专辑", "歌手", "歌单", "mv", "电台", "用户")
-    private var mSearchAdapter: SearchViewPagerAdapter? = null
+
+    @Inject
+    lateinit var mSearchAdapter: SearchViewPagerAdapter
 
     companion object {
         val STATUS_SHOW_HOT = 1
@@ -127,7 +133,6 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
     }
 
     private fun initViewPager() {
-        mSearchAdapter = SearchViewPagerAdapter(supportFragmentManager)
         vp_search.offscreenPageLimit = 5
         vp_search.adapter = mSearchAdapter
         val commonNavigator = CommonNavigator(this)
@@ -186,7 +191,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
             et_search.setSelection(search.length)
             et_search.addTextChangedListener(this)
             changeVisibility(STATUS_SHOW_RESULT)
-            mSearchAdapter?.getList()?.forEach {
+            mSearchAdapter.getList()?.forEach {
                 (it as SearchResultFragment).keyWords = search
 
             }
@@ -304,7 +309,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
 
     }
 
-    class HotSearchAdapter() : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
+    inner class HotSearchAdapter() : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
         init {
             addItemType(ITEM_SEARCH_HOT, R.layout.search_item_hot)
@@ -320,11 +325,15 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View, 
                     R.id.tv_search_name,
                     (item as HotSearchResult.HotSearchData).searchWord
                 )
+
                 helper.setText(
                     R.id.tv_search_decoration,
                     item.content
                 )
                 GlideHelper.setImageResource(helper.getView(R.id.iv_search_icon), item.iconUrl)
+                helper.getView<AlphaLinearLayout>(R.id.music_list_ll).setOnClickListener {
+                    startSearch(item.searchWord)
+                }
             }
         }
 

@@ -5,12 +5,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.brins.baselib.config.SEARCH
 import com.brins.searchlib.fragment.SearchResultFragment
+import javax.inject.Inject
 
 /**
  * Created by lipeilin
  * on 2020/11/17
  */
-class SearchViewPagerAdapter(manager: FragmentManager) :
+class SearchViewPagerAdapter @Inject constructor(manager: FragmentManager) :
     FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val mList: ArrayList<Fragment> = ArrayList()

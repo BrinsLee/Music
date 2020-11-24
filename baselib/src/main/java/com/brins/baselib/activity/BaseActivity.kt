@@ -176,5 +176,6 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun hideLoading() {
         mLoadingFragment?.dismiss()
+        mLoadingFragment = null
     }
 }

@@ -191,6 +191,10 @@ class SearchResultFragment private constructor() :
         loadSearchResult()
     }
 
+    override fun onDestroyView() {
+        rv_searchResult.adapter = null
+        super.onDestroyView()
+    }
 
     private fun loadSearchResult() {
         if (mNeedSearch && keyWords.isNotEmpty()) {
@@ -208,6 +212,54 @@ class SearchResultFragment private constructor() :
             return
         }
     }
+
+/*    override fun onDetach() {
+        mMusicDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicLiveData()?.removeObserver(it)
+                clear(SEARCH.TYPE_MUSIC)
+            }
+
+        }
+        mAlbumDataObserver?.let {
+            mViewModel?.apply {
+                getMutableAlbumLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_ALBUM)
+            }
+        }
+        mArtistDataObserver?.let {
+            mViewModel?.apply {
+                getMutableArtistLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_ARTIST)
+            }
+        }
+        mMusicListDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicListLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_MUSIC_LIST)
+            }
+        }
+        mUserDataObserver?.let {
+            mViewModel?.apply {
+                getMutableUserLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_USER)
+            }
+        }
+        mMusicVideoDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicVideoLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_MV)
+            }
+        }
+        mRadioDataObserver?.let {
+            mViewModel?.apply {
+                getMutableRadioLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_RADIO)
+            }
+        }
+
+        super.onDetach()
+    }*/
 
     override fun onFollow(user: UserProfile, pos: Int) {
         launch({
