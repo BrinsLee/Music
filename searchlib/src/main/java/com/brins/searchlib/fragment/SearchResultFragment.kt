@@ -2,6 +2,7 @@ package com.brins.searchlib.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.brins.baselib.fragment.BaseMvvmFragment
 import com.brins.baselib.module.*
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
+import com.brins.baselib.utils.ToastUtils
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.search.SearchResult
 import com.brins.searchlib.R
@@ -208,10 +210,16 @@ class SearchResultFragment private constructor() :
     }
 
     override fun onFollow(user: UserProfile, pos: Int) {
-        mViewModel?.followUser(user) {
-
-            /*user.followed = !user.followed
-            mAdapter?.notifyItemChanged(pos)*/
-        }
+        launch({
+            mViewModel?.followUser(user) {
+                if (it) {
+                    user.followed = !user.followed
+                    mAdapter?.notifyItemChanged(pos)
+                }
+            }
+        }, {
+            ToastUtils.show(R.string.un_login, Toast.LENGTH_SHORT)
+            mAdapter?.notifyItemChanged(pos)
+        })
     }
 }

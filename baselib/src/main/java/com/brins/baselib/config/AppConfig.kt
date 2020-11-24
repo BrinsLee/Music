@@ -21,7 +21,10 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[like]",
     "[comment, like]",
     "[comment, music]",
-    "[playmode, intelligence, list]"
+    "[playmode, intelligence, list]",
+    "[follow]",
+    "[search]",
+    "[likelist]"
 )
 
 interface RECOMMEND {
@@ -191,9 +194,13 @@ interface SEARCH {
         const val TYPE_VIDEO = 1014
 
         const val SEARCH_HOT = "/search/hot/detail"
+
         //搜索建议
         const val SEARCH_SUGGEST = "/search/suggest"
+
         //搜索接口
         const val SEARCH_CLOUD = "/search"
+
+        const val SERACH_FOLLOW = "/follow"
     }
 }

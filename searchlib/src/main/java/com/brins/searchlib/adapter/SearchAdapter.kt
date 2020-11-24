@@ -14,7 +14,10 @@ import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.baselib.utils.formatDuration
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.handleNum
+import com.brins.baselib.widget.AlphaConstraintLayout
 import com.brins.baselib.widget.AlphaLinearLayout
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.searchlib.R
 import com.brins.searchlib.widget.FollowTextView
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
@@ -94,6 +97,12 @@ class SearchAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
                     200,
                     200
                 )
+                helper.getView<AlphaConstraintLayout>(R.id.album_list_cl).setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString(KEY_ID, item.id)
+                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                        .toMusicListActivity(bundle)
+                }
             }
             ITEM_SEARCH_MUSIC_VIDEO -> {
                 helper.setText(R.id.tv_music_video_name, (item as BaseMusicVideo).name)

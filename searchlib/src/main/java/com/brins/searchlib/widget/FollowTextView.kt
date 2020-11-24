@@ -9,6 +9,7 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.brins.baselib.utils.UIUtils
 import com.brins.searchlib.R
 
 /**
@@ -54,6 +55,7 @@ class FollowTextView @JvmOverloads constructor(
         mRotatEAnimation.cancel()
         ivAdd.setImageResource(R.drawable.search_icon_check)
         tvFollow.text = context.getString(R.string.followed)
+        tvFollow.setTextColor(UIUtils.getColor(R.color.default_btn_text))
         rlAdd.setBackgroundResource(R.drawable.search_bg_follow_grey_stroke)
     }
 

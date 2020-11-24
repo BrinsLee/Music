@@ -3,7 +3,9 @@ package com.brins.networklib.service
 import com.brins.baselib.config.SEARCH
 import com.brins.baselib.config.SEARCH.Companion.SEARCH_CLOUD
 import com.brins.baselib.config.SEARCH.Companion.SEARCH_SUGGEST
+import com.brins.baselib.config.SEARCH.Companion.SERACH_FOLLOW
 import com.brins.baselib.module.*
+import com.brins.networklib.model.follow.FollowOrUnFollowResult
 import com.brins.networklib.model.search.HotSearchResult
 import com.brins.networklib.model.search.SearchResult
 import com.brins.networklib.model.search.SearchSuggestResult
@@ -60,4 +62,7 @@ interface SearchService {
     fun loadRadioSearchResult(
         @Query("keywords") keys: String, @Query("type") type: Int = 1009
     ): Call<SearchResult<DjRadio>>
+
+    @GET(SERACH_FOLLOW)
+    fun followUser(@Query("id") id: String, @Query("t") type: Int = 1): Call<FollowOrUnFollowResult>
 }

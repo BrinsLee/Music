@@ -170,7 +170,10 @@ class SearchViewModel private constructor(application: Application) :
         }
     }
 
-    fun followUser(user: UserProfile, finish: () -> Unit) {
-        finish()
+    override suspend fun followUser(user: UserProfile, finish: (bool: Boolean) -> Unit) {
+        val result = mModel?.followUser(user.userId)
+        result?.let {
+            finish(it.code == 200)
+        }
     }
 }
