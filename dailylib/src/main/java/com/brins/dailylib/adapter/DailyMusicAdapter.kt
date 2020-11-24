@@ -7,12 +7,13 @@ import com.brins.baselib.utils.eventbus.EventBusManager
 import com.brins.dailylib.R
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
+import javax.inject.Inject
 
 /**
  * Created by lipeilin
  * on 2020/11/2
  */
-class DailyMusicAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
+class DailyMusicAdapter @Inject constructor() : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
     init {
         addItemType(ITEM_DAILY_MUSIC, R.layout.daily_item_music)
