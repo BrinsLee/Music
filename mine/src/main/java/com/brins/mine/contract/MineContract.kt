@@ -13,19 +13,25 @@ interface MineContract {
 
     interface View : IView {
 
+        fun onUserInfoLoad()
+
+        fun onUserInfoUpdated()
 
     }
 
     abstract class Presenter : BasePresenter<MineModel, View>() {
 
+        abstract fun fetchUserInfo()
+
+        abstract fun updateUserInfo()
 
     }
 
     interface Model : IModel {
 
-        suspend fun getMyMusicLists(id: String) : MusicListsResult
+        suspend fun getMyMusicLists(id: String): MusicListsResult
 
-        suspend fun getRecommendMusicList() : MusicListsResult
+        suspend fun getRecommendMusicList(): MusicListsResult
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<MineModel>(application) {
@@ -33,5 +39,7 @@ interface MineContract {
         abstract suspend fun getMyMusicLists(id: String)
 
         abstract suspend fun getRecommendMusicLists()
+
+        abstract suspend fun getSubmitAlbums()
     }
 }

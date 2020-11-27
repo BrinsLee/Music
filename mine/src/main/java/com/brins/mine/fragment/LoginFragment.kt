@@ -76,8 +76,14 @@ class LoginFragment : BaseMvvmFragment<MineViewModel>(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0.id) {
             R.id.cl_unlogin -> {
-                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
-                    .toLoginSelectActivity()
+                if (LoginCache.isLogin && LoginCache.userProfile != null) {
+                    BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                        .toMineInfoActivity()
+                } else {
+                    BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                        .toLoginSelectActivity()
+                }
+
             }
         }
     }

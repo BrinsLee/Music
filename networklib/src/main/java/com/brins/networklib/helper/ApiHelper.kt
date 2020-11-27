@@ -1,6 +1,5 @@
 package com.brins.networklib.helper
 
-import android.util.Log
 import com.brins.baselib.config.BASEURL
 import com.brins.baselib.utils.GsonUtils
 import com.brins.baselib.utils.LogUtils

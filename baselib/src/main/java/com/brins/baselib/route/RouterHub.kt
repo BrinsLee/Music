@@ -41,6 +41,7 @@ interface RouterHub {
 
         const val SEARCHACTIVITY = "$SEARCH/SearchActivity"
 
+        const val MINEINFOACTIVITY = "$MINE/MineInfoActivity"
 
 
         //    ****************Fragment路径配置***************************

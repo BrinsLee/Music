@@ -85,6 +85,10 @@ class MineViewModel private constructor(application: Application) :
         }
     }
 
+    override suspend fun getSubmitAlbums() {
+
+    }
+
     fun createDefaultRecommend(which: Int) {
         val list = mutableListOf<MusicList>()
         DatabaseFactory.getMusicList().subscribeDbResult({

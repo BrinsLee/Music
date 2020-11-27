@@ -8,5 +8,7 @@ import com.brins.bridgelib.BridgeInterface
  */
 interface LoginBridgeInterface : BridgeInterface {
 
+    fun toMineInfoActivity()
+
     fun toLoginSelectActivity()
 }
