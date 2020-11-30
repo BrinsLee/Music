@@ -3,12 +3,18 @@ package com.brins.mine.fragment
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.fragment.BaseMvvmFragment
 import com.brins.baselib.module.*
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
 import com.brins.baselib.utils.glidehelper.GlideHelper
+import com.brins.baselib.widget.AlphaConstraintLayout
+import com.brins.baselib.widget.AlphaLinearLayout
 import com.brins.baselib.widget.CircleImageView
+import com.brins.bridgelib.login.LoginBridgeInterface
+import com.brins.bridgelib.musiclist.MusicListBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.mine.R
 import com.brins.mine.viewmodel.MineViewModel
 import com.brins.networklib.model.title.SingleTitleData2
@@ -49,9 +55,6 @@ class MineHomeFragment : BaseMvvmFragment<MineViewModel>() {
         }
         mViewModel?.getMutableMusicListData()?.observe(this, mMusicListDataObserver!!)
 
-        if (mViewModel?.getMusicListData() != null) {
-
-        }
     }
 
     class MyMusicListAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
@@ -71,8 +74,23 @@ class MineHomeFragment : BaseMvvmFragment<MineViewModel>() {
                     val imageView = helper.getView<CircleImageView>(R.id.ri_album_cover)
                     GlideHelper.setImageResource(imageView, (item as MusicList).coverImgUrl)
                     helper.setText(R.id.tv_album_name, item.name)
-                    helper.setText(R.id.tv_album_artist, "上次更新：")
+                    helper.setText(R.id.tv_album_artist, "共${item.trackCount}首，")
+                    helper.getView<AlphaConstraintLayout>(R.id.album_list_cl).setOnClickListener {
+                        clickMyMusicList(item)
+                    }
                 }
+            }
+        }
+
+        private fun clickMyMusicList(item: MusicList) {
+            if (item.id.isNotEmpty()) {
+                val bundle = Bundle()
+                bundle.putString(KEY_ID, item.id)
+                BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                    .toMusicListActivity(bundle)
+            } else {
+                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                    .toLoginSelectActivity()
             }
         }
 

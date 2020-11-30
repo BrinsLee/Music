@@ -25,7 +25,8 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[follow]",
     "[search]",
     "[likelist]",
-    "[recommend, resource]"
+    "[recommend, resource]",
+    "[user, event]"
 )
 
 interface RECOMMEND {
@@ -166,6 +167,8 @@ interface MUSIC_COMMENT {
 interface MINE_MUSIC_LIST {
     companion object {
         const val MINE_MUSIC_LIST = "/user/playlist"
+
+        const val MINE_EVENT_DATA = "/user/event"
     }
 }
 

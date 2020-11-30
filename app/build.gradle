@@ -18,7 +18,6 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -73,9 +72,6 @@ dependencies {
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
     implementation project(':baselib')
     implementation project(':bridgelib')

@@ -66,7 +66,6 @@ class MineInfoActivity : BaseMvpActivity<MinePresenter>() {
 
                 if (percent > 0.8) {
                     tv_title.visibility = View.VISIBLE
-                    tv_focus.visibility = View.VISIBLE
                     val alpha = 1 - (1 - percent) * 5
                     tv_title.alpha = alpha
                     tv_focus.alpha = alpha
@@ -74,7 +73,7 @@ class MineInfoActivity : BaseMvpActivity<MinePresenter>() {
 
                 } else {
                     tv_title.visibility = View.GONE
-                    tv_focus.visibility = View.GONE
+                    ll_mine_info.alpha = 1f
                 }
 
             }

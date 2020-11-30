@@ -6,7 +6,8 @@ import java.lang.ref.WeakReference
  * Created by lipeilin
  * on 2020/11/17
  */
-class UserProfile : BaseData() {
+class
+UserProfile : BaseData() {
 
     var province = 0
 

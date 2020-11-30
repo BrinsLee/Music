@@ -15,10 +15,10 @@
 
             <com.brins.baselib.widget.CircleImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:scaleType="centerCrop"
                 app:es_shape_type="round" />
 
@@ -32,6 +32,7 @@
                 android:background="@drawable/base_shape_round_red"
                 android:gravity="center"
                 android:text="关注"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 

@@ -8,6 +8,7 @@ import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.mine.contract.MineContract
 import com.brins.baselib.module.MusicList
 import com.brins.baselib.utils.subscribeDbResult
+import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.musiclist.MusicListsResult
 
 class MineViewModel private constructor(application: Application) :
@@ -28,6 +29,13 @@ class MineViewModel private constructor(application: Application) :
         mRecommendMusicListLiveData
 
     fun getRecommendMusicListData(): MusicListsResult = mRecommendMusicListData
+
+    private lateinit var mEventData: ArrayList<EventData>
+    private val mEventLiveData: MutableLiveData<MutableList<EventData>> = MutableLiveData()
+
+    fun getMutableEventData(): MutableLiveData<MutableList<EventData>> = mEventLiveData
+
+    fun getEventData(): ArrayList<EventData> = mEventData
 
 
     companion object {
@@ -87,6 +95,17 @@ class MineViewModel private constructor(application: Application) :
 
     override suspend fun getSubmitAlbums() {
 
+    }
+
+    override suspend fun getEventData(id: String) {
+        val result = mModel?.getEventData(id)
+        result?.let {
+            if (it.events != null) {
+                mEventData = it.events!!
+                mEventLiveData.value = it.events
+            }
+
+        }
     }
 
     fun createDefaultRecommend(which: Int) {

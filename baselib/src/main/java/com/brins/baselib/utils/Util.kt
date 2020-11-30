@@ -18,8 +18,9 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.lang.Exception
 import java.lang.ref.WeakReference
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 获取当前进程名
@@ -45,17 +46,6 @@ fun getCurrProcessName(context: Context): String? {
     return null
 }
 
-fun handleNum(num: Int): String {
-    return if (num > 10000) {
-        "${num / 10000}w"
-    } else num.toString()
-}
-
-fun handleNum(num: Long): String {
-    return if (num > 10000) {
-        "${num / 10000}w"
-    } else num.toString()
-}
 
 /**
  * 设置状态栏文字颜色
@@ -140,6 +130,18 @@ fun getCalendarDay(): String {
         time.setToNow()
         time.monthDay.toString()
     }
+}
+
+fun getDateToString(time: Long): String? {
+    val d = Date(time)
+    val sf = SimpleDateFormat("yyyy/MM/dd/ HH:mm")
+    return sf.format(d)
+}
+
+fun getDateToString(time: Long, format: String?): String? {
+    val d = Date(time * 1000)
+    val sf = SimpleDateFormat(format)
+    return sf.format(d)
 }
 
 fun createRadialGradientBitmap(
