@@ -13,7 +13,7 @@ interface RouterHub {
         const val MINE = "/mine"
         const val DAILY = "/daily"
         const val SEARCH = "/search"
-
+        const val FIND = "/find"
 
 
 
@@ -48,5 +48,8 @@ interface RouterHub {
         const val HOMEFRAGMENT = "$HOME/HomeFragment"
 
         const val MINEFRAGMENT = "$MINE/MineFragment"
+
+        const val FINDFRAGMENT = "$FIND/FindFragment"
+
     }
 }
