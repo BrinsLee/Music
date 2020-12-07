@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="30dp"
-    android:paddingEnd="30dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     tools:context=".fragment.MusicLrcFragment">
 
 
@@ -20,7 +20,7 @@
         app:lrcLabel="暂无歌词"
         app:lrcNormalTextColor="@color/white_60"
         app:lrcNormalTextSize="15sp"
-        app:lrcPadding="10dp"
+        app:lrcPadding="20dp"
         app:lrcTextGravity="left"
         app:lrcTextSize="20sp"
         app:lrcTimeTextColor="@color/white_60"
