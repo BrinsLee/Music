@@ -5,10 +5,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import com.brins.baselib.R
+import com.brins.baselib.utils.SizeUtils.px2dp
 import com.google.android.material.appbar.AppBarLayout
+import kotlin.math.min
 
 class AppBarZoomBehavior @JvmOverloads constructor(
     context: Context,
@@ -17,6 +20,7 @@ class AppBarZoomBehavior @JvmOverloads constructor(
     AppBarLayout.Behavior(context, attributeSet) {
 
     private var mImageView: ImageView? = null
+    private var mImageBackground: ImageView? = null
     private var mAppbarHeight = 0 //记录AppbarLayout原始高度
     private var mImageViewHeight = 0 //记录ImageView原始高度
 
@@ -54,7 +58,8 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         abl.clipChildren = false
         mAppbarHeight = abl.height
         mImageView = abl.findViewById(R.id.cover)
-        if (mImageView != null) {
+        mImageBackground = abl.findViewWithTag("coverBg")
+        if (mImageView != null && mImageViewHeight == 0) {
             mImageViewHeight = mImageView!!.height
         }
     }
@@ -83,13 +88,16 @@ class AppBarZoomBehavior @JvmOverloads constructor(
     }
 
     /**
-     * 做具体滑动处理
-     *
+     * 嵌套滚动发生之前被调用
+     * 在nested scroll child 消费掉自己的滚动距离之前，嵌套滚动每次被nested scroll child
+     * 更新都会调用onNestedPreScroll。注意有个重要的参数consumed，可以修改这个数组表示你消费
+     * 了多少距离。假设用户滑动了100px,child 做了90px 的位移，你需要把 consumed［1］的值改成90，
+     * 这样coordinatorLayout就能知道只处理剩下的10px的滚动。
      * @param coordinatorLayout
      * @param child
      * @param target
-     * @param dx
-     * @param dy
+     * @param dx  用户水平方向的滚动距离
+     * @param dy  用户竖直方向的滚动距离
      * @param consumed
      */
     override fun onNestedPreScroll(
@@ -134,8 +142,18 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         mScaleValue = 1f.coerceAtLeast(1f + mTotalDy / MAX_ZOOM_HEIGHT)
         mImageView?.scaleX = mScaleValue
         mImageView?.scaleY = mScaleValue
-        mLastBottom = mAppbarHeight + (mImageViewHeight / 2 * (mScaleValue - 1)).toInt()
+        mLastBottom = mAppbarHeight + (mImageView!!.height / 2 * (mScaleValue - 1)).toInt()
         abl.bottom = mLastBottom
+        mImageView?.layoutParams =
+            ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                min((1.5 * mImageViewHeight).toInt(), mLastBottom)
+            )
+        mImageBackground?.layoutParams =
+            ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                min((1.5 * mImageViewHeight).toInt(), mLastBottom)
+            )
     }
 
 
@@ -172,14 +190,35 @@ class AppBarZoomBehavior @JvmOverloads constructor(
                     val value = animation.animatedValue as Float
                     mImageView?.scaleX = value
                     mImageView?.scaleY = value
-                    abl.bottom =
+                    val bottom =
                         (mLastBottom - (mLastBottom - mAppbarHeight) * animation.animatedFraction).toInt()
+                    abl.bottom = bottom
+                    mImageView?.layoutParams =
+                        ConstraintLayout.LayoutParams(
+                            ConstraintLayout.LayoutParams.MATCH_PARENT,
+                            mImageViewHeight
+                        )
+                    mImageBackground?.layoutParams =
+                        ConstraintLayout.LayoutParams(
+                            ConstraintLayout.LayoutParams.MATCH_PARENT,
+                            mImageViewHeight
+                        )
                 }
                 valueAnimator?.start()
             } else {
                 mImageView?.scaleX = 1f
                 mImageView?.scaleY = 1f
                 abl.bottom = mAppbarHeight
+                mImageView?.layoutParams =
+                    ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        mImageViewHeight
+                    )
+                mImageBackground?.layoutParams =
+                    ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        mImageViewHeight
+                    )
             }
         }
     }

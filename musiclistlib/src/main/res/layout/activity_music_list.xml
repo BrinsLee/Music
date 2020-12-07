@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/translucent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             app:layout_behavior="com.brins.baselib.utils.AppBarZoomBehavior">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -45,6 +47,7 @@
                         android:layout_height="270dp"
                         android:scaleType="centerCrop"
                         android:src="@color/black_30"
+                        android:tag="coverBg"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView

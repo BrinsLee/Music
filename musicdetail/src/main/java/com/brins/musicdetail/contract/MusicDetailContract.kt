@@ -36,7 +36,7 @@ interface MusicDetailContract {
     interface Model : IModel {
         suspend fun loadMusicLrc(id: String): MusicLrcResult
 
-        suspend fun loadMusicComment(id: String): CommentResult
+        suspend fun loadComment(path: String, id: String): CommentResult
 
         suspend fun likeMusic(id: String): LikeMusicResult
 
@@ -48,7 +48,7 @@ interface MusicDetailContract {
     abstract class ViewModel(application: Application) :
         BaseViewModel<MusicDetailModel>(application) {
 
-        abstract suspend fun loadMusicComments(id: String)
+        abstract suspend fun loadComments(path: String, id: String)
 
         abstract suspend fun likeOrUnLikeMusicComment(id: String, cid: String, t: Int, type: Int)
     }

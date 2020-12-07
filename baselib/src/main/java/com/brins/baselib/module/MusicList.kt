@@ -98,6 +98,7 @@ class MusicList : BaseData() {
     /**
      * 播放数量
      */
+    @SerializedName("playCount", alternate = ["playcount"])
     @ColumnInfo(name = "playCount")
     var playCount: Long = 0
 

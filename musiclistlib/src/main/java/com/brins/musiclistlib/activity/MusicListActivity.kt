@@ -23,7 +23,6 @@ import com.brins.baselib.utils.ToastUtils
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.UIUtils.getScreenWidth
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.handleNum
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.musiclistlib.R
 import com.brins.musiclistlib.adapter.MusicListAdapter
@@ -33,6 +32,7 @@ import com.brins.musiclistlib.widget.StickNavLayout
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.musiclist.MoreMusicListResult
 import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.convertNumMillion
 import com.brins.networklib.model.musiclist.MusicListResult
 import kotlinx.android.synthetic.main.activity_music_list.*
 import kotlin.math.min
@@ -121,7 +121,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
                                     val tv = TextView(this)
                                     tv.setTextColor(Color.WHITE)
                                     tv.textSize = 12f
-                                    tv.text = "${handleNum(list.subscribedCount)} 关注"
+                                    tv.text = "${convertNumMillion(list.subscribedCount.toLong())} 关注"
                                     tv.gravity = Gravity.CENTER_VERTICAL
                                     frameLayout.addView(tv)
                                     val params: FrameLayout.LayoutParams =

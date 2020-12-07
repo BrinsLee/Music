@@ -8,6 +8,7 @@ import com.brins.baselib.utils.SpUtils.SP_SEARCH_INFO
 import com.brins.baselib.utils.UIUtils
 import com.brins.networklib.helper.ApiHelper
 import com.brins.networklib.helper.ApiHelper.await
+import com.brins.networklib.model.follow.FollowOrUnFollowResult
 import com.brins.networklib.model.search.HotSearchResult
 import com.brins.networklib.model.search.SearchResult
 import com.brins.searchlib.contract.SearchContract
@@ -33,6 +34,10 @@ class SearchModel : SearchContract.Model {
 
     override suspend fun loadMusicSearchResult(input: String, type: Int): SearchResult<BaseMusic> =
         ApiHelper.getSearchService().loadMusicSearchResult(input, type).await()
+
+    override suspend fun followUser(id: String): FollowOrUnFollowResult =
+        ApiHelper.getSearchService().followUser(id).await()
+
 
     override suspend fun loadAlbumSearchResult(
         input: String,

@@ -87,6 +87,9 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
                     }, {})
                 }
             }
+            EventBusKey.KEY_EVENT_CLICK_MY_LIKE -> {
+                (mAdapter as MyMusicListAdapter).clickMyMusicList(mAdapter!!.data.get(0) as MusicList)
+            }
 
         }
     }
@@ -109,17 +112,19 @@ class MyMusicListFragment : BaseMvvmFragment<MineViewModel>() {
 
             helper.setVisible(R.id.iv_play, true)
             helper.getView<ConstraintLayout>(R.id.rootLayout).setOnClickListener {
+                clickMyMusicList(item)
+            }
+        }
 
-                if (item.id.isNotEmpty()) {
-                    val bundle = Bundle()
-                    bundle.putString(KEY_ID, item.id)
-                    BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
-                        .toMusicListActivity(bundle)
-                } else {
-                    BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
-                        .toLoginSelectActivity()
-                }
-
+        fun clickMyMusicList(item: MusicList) {
+            if (item.id.isNotEmpty()) {
+                val bundle = Bundle()
+                bundle.putString(KEY_ID, item.id)
+                BridgeProviders.instance.getBridge(MusicListBridgeInterface::class.java)
+                    .toMusicListActivity(bundle)
+            } else {
+                BridgeProviders.instance.getBridge(LoginBridgeInterface::class.java)
+                    .toLoginSelectActivity()
             }
         }
 

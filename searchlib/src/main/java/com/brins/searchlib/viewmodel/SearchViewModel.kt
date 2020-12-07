@@ -170,7 +170,73 @@ class SearchViewModel private constructor(application: Application) :
         }
     }
 
-    fun followUser(user: UserProfile, finish: () -> Unit) {
-        finish()
+    override suspend fun followUser(user: UserProfile, finish: (bool: Boolean) -> Unit) {
+        val result = mModel?.followUser(user.userId)
+        result?.let {
+            finish(it.code == 200)
+        }
     }
+
+    fun clear(type: Int) {
+        when (type) {
+            SEARCH.TYPE_MUSIC -> {
+                clearMusicData()
+            }
+            SEARCH.TYPE_ALBUM -> {
+                clearAlbumData()
+            }
+            SEARCH.TYPE_ARTIST -> {
+                clearArtistData()
+            }
+            SEARCH.TYPE_MUSIC_LIST -> {
+                clearMusicListData()
+            }
+            SEARCH.TYPE_USER -> {
+                clearUserData()
+            }
+            SEARCH.TYPE_MV -> {
+                clearMusicVideoData()
+            }
+            SEARCH.TYPE_RADIO -> {
+                clearRadioData()
+            }
+        }
+    }
+
+    private fun clearMusicData() {
+        mMusicData.clear()
+        mMusicLiveData.value = null
+    }
+
+    private fun clearAlbumData() {
+        mAlbumData.clear()
+        mAlbumLiveData.value = null
+    }
+
+    private fun clearArtistData() {
+        mArtistData.clear()
+        mArtistLiveData.value = null
+    }
+
+    private fun clearMusicListData() {
+        mMusicListData.clear()
+        mMusicListLiveData.value = null
+    }
+
+    private fun clearUserData() {
+        mUserData.clear()
+        mUserLiveData.value = null
+    }
+
+    private fun clearMusicVideoData() {
+        mMusicVideoData.clear()
+        mMusicVideoLiveData.value = null
+    }
+
+    private fun clearRadioData() {
+        mRadioData.clear()
+        mRadioLiveData.value = null
+    }
+
+
 }

@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseData
+import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.route.RouterHub.Companion.DAILYMUSICACTIVITY
 import com.brins.baselib.utils.ToastUtils
+import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.setTranslucent
 import com.brins.baselib.widget.CommonHeaderView
 import com.brins.dailylib.R
@@ -17,13 +19,18 @@ import com.brins.dailylib.contract.DailyContract
 import com.brins.dailylib.presenter.DailyMusicPresenter
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.daily.DailyMusicResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_daily_music.*
+import javax.inject.Inject
 
 
 @Route(path = DAILYMUSICACTIVITY)
+@AndroidEntryPoint
 class DailyMusicActivity : BaseMvpActivity<DailyMusicPresenter>(), DailyContract.View {
 
-    private val mAdapter: DailyMusicAdapter = DailyMusicAdapter()
+
+    @Inject
+    lateinit var mAdapter: DailyMusicAdapter
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_daily_music
@@ -63,6 +70,7 @@ class DailyMusicActivity : BaseMvpActivity<DailyMusicPresenter>(), DailyContract
             val list = mutableListOf<BaseData>()
             list.addAll(it)
             mAdapter.setNewData(list)
+            GlideHelper.setBlurImageResource(cover, (list[0] as BaseMusic).song?.picUrl)
         }
     }
 }

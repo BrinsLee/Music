@@ -74,7 +74,7 @@ class PersonalizedMusicFragment : BaseMvvmFragment<HomeViewModel>(),
         Log.d(TAG, "${params.key}")
         when (params.key) {
             EventBusKey.KEY_EVENT_UPDATE_MUSIC -> {
-                updatePlaystatus((params.`object` as BaseMusic))
+                updatePlayStatus((params.`object` as BaseMusic))
             }
         }
     }
@@ -114,7 +114,7 @@ class PersonalizedMusicFragment : BaseMvvmFragment<HomeViewModel>(),
         }
     }
 
-    private fun updatePlaystatus(music: BaseMusic) {
+    private fun updatePlayStatus(music: BaseMusic) {
         mViewModel?.getMutablePersonalizedMusicData()?.value?.let {
             hideLoading()
             for (i in it.indices) {

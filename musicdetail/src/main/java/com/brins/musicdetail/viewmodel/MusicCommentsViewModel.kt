@@ -23,8 +23,8 @@ class MusicCommentsViewModel(application: Application) :
 
     fun getCommentData(): CommentResult = mCommentData
 
-    override suspend fun loadMusicComments(id: String) {
-        val result = mModel?.loadMusicComment(id)
+    override suspend fun loadComments(path: String, id: String) {
+        val result = mModel?.loadComment(path, id)
         result?.let {
             mCommentData = it
             mCommentLiveData.value = it.comments

@@ -45,7 +45,7 @@ class LrcEntry(var time: Long = 0L, var text: String = "") : Comparable<LrcEntry
         val lrc = getShowText()
         staticLayout = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             StaticLayout.Builder.obtain(lrc, 0, lrc.length, paint, width)
-                .setLineSpacing(0f, 1f).build()
+                .setLineSpacing(0f, 1f).setAlignment(align!!).build()
         } else {
             StaticLayout(getShowText(), paint, width, align, 1f, 0f, false)
         }

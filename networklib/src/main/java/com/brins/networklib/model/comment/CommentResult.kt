@@ -16,6 +16,8 @@ class CommentResult {
     class Comment : BaseData() {
         var user: User? = null
 
+        var beReplied: ArrayList<Replay>? = null
+
         var status = 0
 
         var commentId = ""
@@ -39,5 +41,13 @@ class CommentResult {
         var userId = ""
 
         var nickname = ""
+    }
+
+    class Replay {
+        var user: User? = null
+
+        var beRepliedCommentId = ""
+
+        var status = 0
     }
 }

@@ -24,6 +24,9 @@ public class EventBusKey {
     public static final String KEY_EVENT_LOGIN_SUCCESS = "KEY_EVENT_LOGIN_SUCCESS";
     public static final String KEY_EVENT_INTELLIGENCE_MUSIC = "KEY_EVENT_INTELLIGENCE_MUSIC";
     public static final String KEY_EVENT_CHANGE_PLAYMODE = "KEY_EVENT_CHANGE_PLAYMODE";
+    public static final String KEY_EVENT_SERACH_MUSIC = "KEY_EVENT_SERACH_MUSIC";
+    public static final String KEY_EVENT_CLICK_MY_LIKE = "KEY_EVENT_CLICK_MY_LIKE";
+
 
 
 }

@@ -7,6 +7,7 @@ const val UMAPPKEY = "5e33c33c4ca357e8100000fa"
 
 const val KEY_ID = "KEY_ID"
 const val KEY_URL = "KEY_URL"
+const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
 /*const val KEY_INTENT_FROM = "KEY_INTENT_FROM"
 const val KEY_INTENT_FROM_INTELLIGENCE = "KEY_INTENT_FROM_INTELLIGENCE"
 const val KEY_INTENT_FROM_MINE = "KEY_INTENT_FROM_MINE"*/
@@ -20,7 +21,13 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[like]",
     "[comment, like]",
     "[comment, music]",
-    "[playmode, intelligence, list]"
+    "[playmode, intelligence, list]",
+    "[follow]",
+    "[search]",
+    "[likelist]",
+    "[recommend, resource]",
+    "[user, event]",
+    "[user, follows]"
 )
 
 interface RECOMMEND {
@@ -132,7 +139,11 @@ interface MUSIC_LIST {
 interface MUSIC_COMMENT {
 
     companion object {
-        const val MUSIC_COMMENT = "/comment/music"
+        const val MUSIC_COMMENT = "music"
+
+        const val ALBUM_COMMENT = "album"
+
+        const val COMMENT = "/comment/{commentPath}"
 
         const val LIKE_UNLIKE_MUSIC_COMMENT = "/comment/like"
 
@@ -157,6 +168,14 @@ interface MUSIC_COMMENT {
 interface MINE_MUSIC_LIST {
     companion object {
         const val MINE_MUSIC_LIST = "/user/playlist"
+
+        const val MINE_EVENT_DATA = "/user/event"
+    }
+}
+
+interface MINE_INFO {
+    companion object {
+        const val MINE_INFO_FOLLOW = "/user/follows"
     }
 }
 
@@ -186,9 +205,13 @@ interface SEARCH {
         const val TYPE_VIDEO = 1014
 
         const val SEARCH_HOT = "/search/hot/detail"
+
         //搜索建议
         const val SEARCH_SUGGEST = "/search/suggest"
+
         //搜索接口
         const val SEARCH_CLOUD = "/search"
+
+        const val SERACH_FOLLOW = "/follow"
     }
 }

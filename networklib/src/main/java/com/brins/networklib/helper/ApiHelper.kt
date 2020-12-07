@@ -1,6 +1,5 @@
 package com.brins.networklib.helper
 
-import android.util.Log
 import com.brins.baselib.config.BASEURL
 import com.brins.baselib.utils.GsonUtils
 import com.brins.baselib.utils.LogUtils
@@ -47,7 +46,7 @@ object ApiHelper {
     private var mAlbumService: AlbumService? = null
     private var mLoginService: LoginService? = null
     private var mSearchService: SearchService? = null
-
+    private var mMineService: MyService? = null
 
     fun getPersonalizedService(): PersonalizedService {
         if (mPersonalizedService == null) {
@@ -137,6 +136,21 @@ object ApiHelper {
             }
         }
         return mSearchService!!
+    }
+
+    fun getMineService(): MyService {
+        if (mMineService == null) {
+            synchronized(MyService::class.java) {
+                if (mMineService == null) {
+                    mMineService = RetrofitFactory.newRetrofit(
+                        BASEURL,
+                        LOG_TAG_NETWORK_PERSONALIZED
+                    )
+                        .create(MyService::class.java)
+                }
+            }
+        }
+        return mMineService!!
     }
 
     suspend fun <T> Call<T>.await(): T {

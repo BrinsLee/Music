@@ -2,6 +2,7 @@ package com.brins.searchlib.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.brins.baselib.fragment.BaseMvvmFragment
 import com.brins.baselib.module.*
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
+import com.brins.baselib.utils.ToastUtils
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.search.SearchResult
 import com.brins.searchlib.R
@@ -189,21 +191,10 @@ class SearchResultFragment private constructor() :
         loadSearchResult()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "type: $type,onStart")
+    override fun onDestroyView() {
+        rv_searchResult.adapter = null
+        super.onDestroyView()
     }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "type: $type,onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "type: $type,onPause")
-    }
-
 
     private fun loadSearchResult() {
         if (mNeedSearch && keyWords.isNotEmpty()) {
@@ -222,11 +213,65 @@ class SearchResultFragment private constructor() :
         }
     }
 
-    override fun onFollow(user: UserProfile, pos: Int) {
-        mViewModel?.followUser(user) {
+/*    override fun onDetach() {
+        mMusicDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicLiveData()?.removeObserver(it)
+                clear(SEARCH.TYPE_MUSIC)
+            }
 
-            /*user.followed = !user.followed
-            mAdapter?.notifyItemChanged(pos)*/
         }
+        mAlbumDataObserver?.let {
+            mViewModel?.apply {
+                getMutableAlbumLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_ALBUM)
+            }
+        }
+        mArtistDataObserver?.let {
+            mViewModel?.apply {
+                getMutableArtistLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_ARTIST)
+            }
+        }
+        mMusicListDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicListLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_MUSIC_LIST)
+            }
+        }
+        mUserDataObserver?.let {
+            mViewModel?.apply {
+                getMutableUserLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_USER)
+            }
+        }
+        mMusicVideoDataObserver?.let {
+            mViewModel?.apply {
+                getMutableMusicVideoLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_MV)
+            }
+        }
+        mRadioDataObserver?.let {
+            mViewModel?.apply {
+                getMutableRadioLiveData().removeObserver(it)
+                clear(SEARCH.TYPE_RADIO)
+            }
+        }
+
+        super.onDetach()
+    }*/
+
+    override fun onFollow(user: UserProfile, pos: Int) {
+        launch({
+            mViewModel?.followUser(user) {
+                if (it) {
+                    user.followed = !user.followed
+                    mAdapter?.notifyItemChanged(pos)
+                }
+            }
+        }, {
+            ToastUtils.show(R.string.un_login, Toast.LENGTH_SHORT)
+            mAdapter?.notifyItemChanged(pos)
+        })
     }
 }

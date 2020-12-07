@@ -130,11 +130,15 @@ abstract class BaseFragment : Fragment(), IView {
 
 
     override fun showLoading() {
+        if (mLoadingFragment == null){
+            createLoadingView()
+        }
         mLoadingFragment?.show(childFragmentManager)
     }
 
     override fun hideLoading() {
         mLoadingFragment?.dismiss(childFragmentManager)
+        mLoadingFragment = null
 
     }
 

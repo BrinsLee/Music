@@ -7,9 +7,9 @@ import androidx.core.view.ViewCompat
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.module.*
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.handleNum
 import com.brins.home.R
 import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.convertNumMillion
 import com.brins.bridgelib.musiclist.MusicListBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.networklib.model.personal.PersonalizedMusic
@@ -44,7 +44,7 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
         when (helper.itemViewType) {
             ITEM_HOME_PERSONALIZED -> {
                 helper.setText(R.id.name, (item as PersonalizedMusicList).name)
-                helper.setText(R.id.playCount, "${handleNum(item.playCount)}")
+                helper.setText(R.id.playCount, "${convertNumMillion(item.playCount.toLong())}")
                 val image: ImageView = helper.getView(R.id.cover)
                 ViewCompat.setTransitionName(image, item.picUrl)
                 GlideHelper.setRoundImageResource(image, item.picUrl, 10)
@@ -91,7 +91,7 @@ class PersonalizedMusicAdapter(data: MutableList<BaseData>) :
 
             ITEM_HOME_TOP_RECOMMEND -> {
                 helper.setText(R.id.name, (item as MusicList).name)
-                helper.setText(R.id.playCount, "${handleNum(item.playCount)}")
+                helper.setText(R.id.playCount, "${convertNumMillion(item.playCount)}")
                 val image: ImageView = helper.getView(R.id.cover)
                 ViewCompat.setTransitionName(image, item.coverImgUrl)
                 GlideHelper.setRoundImageResource(image, item.coverImgUrl, 10)

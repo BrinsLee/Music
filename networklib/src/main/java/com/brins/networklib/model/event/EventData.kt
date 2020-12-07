@@ -1,0 +1,90 @@
+package com.brins.networklib.model.event
+
+import com.brins.baselib.module.BaseData
+import com.brins.baselib.module.BaseMusic
+import com.brins.baselib.module.ITEM_MINE_EVENT_DATA
+import com.brins.baselib.module.UserProfile
+
+/**
+ * Created by lipeilin
+ * on 2020/11/28
+ */
+class EventData : BaseData() {
+
+
+    var actName: String? = null
+
+    var forwardCount = 0
+
+    var uuid = ""
+
+    var showTime: Long = 0
+
+    var pics: ArrayList<Image>? = null
+
+    var eventTime: Long = 0
+
+    var user: UserProfile? = null
+
+    var id = ""
+
+    /**
+     * 18 分享单曲
+    19 分享专辑
+    17、28 分享电台节目
+    22 转发
+    39 发布视频
+    35、13 分享歌单
+    24 分享专栏文章
+    41、21 分享视频
+     */
+    var type = 0
+
+    var topEvent = false
+
+    var info: Info? = null
+
+    var json: String? = null
+
+    var jsonData: EventJson? = null
+    override val itemType: Int
+        get() = ITEM_MINE_EVENT_DATA
+
+    class Image {
+        var originUrl = ""
+
+        var squareUrl = ""
+
+        var rectangleUrl = ""
+
+        var pcSquareUrl = ""
+
+        var pcRectangleUrl = ""
+
+        var width = 0
+
+        var height = 0
+
+        var format = ""
+    }
+
+    class Info {
+
+        var liked = false
+
+        var resourceId = ""
+
+        var likedCount = 0
+
+        var commentCount = 0
+
+        var shareCount = 0
+
+    }
+
+    class EventJson {
+        var msg = ""
+
+        var song: BaseMusic? = null
+    }
+}

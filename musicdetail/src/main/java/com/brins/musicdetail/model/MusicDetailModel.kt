@@ -12,8 +12,8 @@ class MusicDetailModel : MusicDetailContract.Model {
     override suspend fun loadMusicLrc(id: String): MusicLrcResult =
         ApiHelper.getMusicService().getMusicLrc(id).await()
 
-    override suspend fun loadMusicComment(id: String): CommentResult =
-        ApiHelper.getMusicService().getMusicComment(id).await()
+    override suspend fun loadComment(path: String, id: String): CommentResult =
+        ApiHelper.getMusicService().getComment(path, id).await()
 
     override suspend fun likeMusic(id: String): LikeMusicResult =
         ApiHelper.getMusicService().likeOrUnLikeMusic(id, true).await()

@@ -118,6 +118,7 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
     inner class PlayListAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
         init {
+            addItemType(0, R.layout.music_detail_item_playlist)
             addItemType(ITEM_BANNER_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_HOME_PERSONALIZED_MUSIC, R.layout.music_detail_item_playlist)
             addItemType(ITEM_HOME_TOP_MUSIC, R.layout.music_detail_item_playlist)
