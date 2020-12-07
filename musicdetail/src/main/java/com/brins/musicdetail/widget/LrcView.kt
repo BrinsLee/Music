@@ -33,27 +33,103 @@ class LrcView @JvmOverloads constructor(
 ) : View(context, attributeSet, def) {
 
     companion object {
+        /**
+         * 调整时间
+         */
         private const val ADJUST_DURATION: Long = 100
+
+        /**
+         * 时间线出现的时间
+         */
         private const val TIMELINE_KEEP_TIME = 4 * DateUtils.SECOND_IN_MILLIS
+
+        private const val TAG = "LrcView"
     }
 
-    private val mLrcEntryList: MutableList<LrcEntry> = ArrayList<LrcEntry>()
+    /**
+     * 歌词列表
+     */
+    private val mLrcEntryList: MutableList<LrcEntry> = ArrayList()
+
+    /**
+     * 歌词画笔
+     */
     private val mLrcPaint = TextPaint()
+
+    /**
+     * 时间线画笔
+     */
     private val mTimePaint = TextPaint()
+
+    /**
+     * 时间线画笔度量
+     */
     private var mTimeFontMetrics: Paint.FontMetrics? = null
+
+    /**
+     * 播放图标
+     */
     private var mPlayDrawable: Drawable? = null
+
+    /**
+     * 分界线高度
+     */
     private var mDividerHeight = 0f
+
+    /**
+     * 动画持续时间
+     */
     private var mAnimationDuration: Long = 0
+
+    /**
+     * 正常字体颜色
+     */
     private var mNormalTextColor = 0
+
+    /**
+     * 正常字体大小
+     */
     private var mNormalTextSize = 0f
+
+    /**
+     * 当前播放字体颜色
+     */
     private var mCurrentTextColor = 0
+
+    /**
+     * 当前播放字体大小
+     */
     private var mCurrentTextSize = 0f
+
+    /**
+     * 时间线字体颜色
+     */
     private var mTimelineTextColor = 0
+
+    /**
+     * 时间线颜色
+     */
     private var mTimelineColor = 0
+
+    /**
+     * 时间字体大小
+     */
     private var mTimeTextColor = 0
+
+    /**
+     * 图标宽度
+     */
     private var mDrawableWidth = 0
+
+    /**
+     * 时间字体宽度
+     */
     private var mTimeTextWidth = 0
     private var mDefaultLabel: String? = null
+
+    /**
+     * 歌词间隔
+     */
     private var mLrcPadding = 0f
     private var mOnPlayClickListener: OnPlayClickListener? = null
     private var mOnTapListener: OnTapListener? = null
@@ -65,7 +141,6 @@ class LrcView @JvmOverloads constructor(
     private var mFlag: Any? = null
     private var isShowTimeline = false
     private var isTouching = false
-    private var isFling = false
 
     /**
      * 歌词显示位置，靠左/居中/靠右
@@ -89,9 +164,9 @@ class LrcView @JvmOverloads constructor(
                 if (!hasLrc() || mOnPlayClickListener == null) {
                     return super.onScroll(e1, e2, distanceX, distanceY)
                 }
+                removeCallbacks(hideTimelineRunnable)
                 if (!isShowTimeline) {
                     mScroller!!.forceFinished(true)
-                    removeCallbacks(hideTimelineRunnable)
                     isTouching = true
                     isShowTimeline = true
                     invalidate()
@@ -113,6 +188,7 @@ class LrcView @JvmOverloads constructor(
                 if (!hasLrc() || mOnPlayClickListener == null) {
                     return super.onFling(e1, e2, velocityX, velocityY)
                 }
+
                 if (isShowTimeline) {
                     mScroller!!.fling(
                         0,
@@ -124,7 +200,6 @@ class LrcView @JvmOverloads constructor(
                         getOffset(mLrcEntryList.size - 1).toInt(),
                         getOffset(0).toInt()
                     )
-                    isFling = true
                     return true
                 }
                 return super.onFling(e1, e2, velocityX, velocityY)
@@ -220,7 +295,6 @@ class LrcView @JvmOverloads constructor(
         mDefaultLabel =
             if (TextUtils.isEmpty(mDefaultLabel)) getContext().getString(R.string.lrc_label) else mDefaultLabel
 
-        mLrcPadding = ta.getDimension(R.styleable.LrcView_lrcPadding, 0f)
         mTimelineColor = ta.getColor(
             R.styleable.LrcView_lrcTimelineColor,
             UIUtils.getColor(R.color.lrc_timeline_color)
@@ -232,6 +306,9 @@ class LrcView @JvmOverloads constructor(
         mPlayDrawable = ta.getDrawable(R.styleable.LrcView_lrcPlayDrawable)
         mPlayDrawable =
             if (mPlayDrawable == null) UIUtils.getDrawable(R.drawable.base_icon_lrc_play) else mPlayDrawable
+
+        mLrcPadding = ta.getDimension(R.styleable.LrcView_lrcPadding, 0f)
+        mLrcPadding += mPlayDrawable!!.intrinsicWidth / 2
         mTimeTextColor = ta.getColor(
             R.styleable.LrcView_lrcTimeTextColor,
             UIUtils.getColor(R.color.lrc_time_text_color)
@@ -545,7 +622,7 @@ class LrcView @JvmOverloads constructor(
         if (event.action == MotionEvent.ACTION_UP) {
             isTouching = false
             // 启动延时任务，恢复歌词位置
-            if (hasLrc() && isShowTimeline && !isFling) {
+            if (hasLrc() && isShowTimeline) {
                 adjustCenter()
                 postDelayed(hideTimelineRunnable, TIMELINE_KEEP_TIME)
             }
@@ -588,7 +665,6 @@ class LrcView @JvmOverloads constructor(
         mScroller!!.forceFinished(true)
         isShowTimeline = false
         isTouching = false
-        isFling = false
         removeCallbacks(hideTimelineRunnable)
         mLrcEntryList.clear()
         mOffset = 0f
@@ -609,7 +685,7 @@ class LrcView @JvmOverloads constructor(
      * @return true，如果歌词有效，否则false
      */
     fun hasLrc(): Boolean {
-        return !mLrcEntryList.isEmpty()
+        return mLrcEntryList.isNotEmpty()
     }
 
     /**
@@ -626,12 +702,14 @@ class LrcView @JvmOverloads constructor(
         val offset: Float = getOffset(line)
         endAnimation()
         mAnimator = ValueAnimator.ofFloat(mOffset, offset)
-        mAnimator!!.setDuration(duration)
-        mAnimator!!.setInterpolator(LinearInterpolator())
-        mAnimator!!.addUpdateListener(ValueAnimator.AnimatorUpdateListener { animation: ValueAnimator ->
-            mOffset = animation.animatedValue as Float
-            invalidate()
-        })
+        mAnimator?.apply {
+            this.duration = duration
+            interpolator = LinearInterpolator()
+            addUpdateListener { animation: ValueAnimator ->
+                mOffset = animation.animatedValue as Float
+                invalidate()
+            }
+        }
         LrcUtils.resetDurationScale()
         mAnimator!!.start()
     }
