@@ -1,5 +1,6 @@
 package com.brins.networklib.helper
 
+import android.util.Log
 import com.brins.baselib.config.BASEURL
 import com.brins.baselib.utils.GsonUtils
 import com.brins.baselib.utils.LogUtils
@@ -32,14 +33,6 @@ object ApiHelper {
     val LOG_TAG_NETWORK_USERINFO = "network_userinfo"
     val LOG_TAG_NETWORK_API = "network_api"
 
-    /*    private var mMusicService: MusicService? = null
-        private var mPlayListService: PlayListService? = null
-        private var mArtistService: ArtistService? = null
-        private var mMvService: MusicVideoService? = null
-        private var mLoginService: LoginService? = null
-        private var mUserPlayListService: UserPlayListService? = null
-        private var mDiscoveryService: DiscoveryService? = null
-        */
     private var mPersonalizedService: PersonalizedService? = null
     private var mMusicService: MusicService? = null
     private var mMusicListService: MusicListService? = null
@@ -47,6 +40,7 @@ object ApiHelper {
     private var mLoginService: LoginService? = null
     private var mSearchService: SearchService? = null
     private var mMineService: MyService? = null
+    private var mFindService: FindService? = null
 
     fun getPersonalizedService(): PersonalizedService {
         if (mPersonalizedService == null) {
@@ -153,10 +147,23 @@ object ApiHelper {
         return mMineService!!
     }
 
+    fun getFindService(): FindService {
+        if (mFindService == null) {
+            synchronized(FindService::class.java) {
+                if (mFindService == null) {
+                    mFindService = RetrofitFactory.newRetrofit(BASEURL, LOG_TAG_NETWORK_API)
+                        .create(FindService::class.java)
+                }
+            }
+        }
+        return mFindService!!
+    }
+
     suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
+                    Log.d("OkHttp", "error: " + t.message)
                     continuation.resumeWithException(t)
                 }
 

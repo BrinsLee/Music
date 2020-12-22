@@ -47,6 +47,7 @@ class EventData : BaseData() {
     var json: String? = null
 
     var jsonData: EventJson? = null
+
     override val itemType: Int
         get() = ITEM_MINE_EVENT_DATA
 

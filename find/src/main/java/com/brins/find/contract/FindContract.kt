@@ -6,6 +6,7 @@ import com.brins.baselib.mvp.IView
 import com.brins.baselib.mvp.p.BasePresenter
 import com.brins.baselib.mvvm.BaseViewModel
 import com.brins.find.model.FindModel
+import com.brins.networklib.model.event.EventsResult
 import com.brins.networklib.model.follow.FollowResult
 
 /**
@@ -15,11 +16,11 @@ import com.brins.networklib.model.follow.FollowResult
 interface FindContract {
 
     interface View : IView {
-        fun onUserEventLoad()
+        fun onUserEventLoad(result: EventsResult)
     }
 
     abstract class Presenter : BasePresenter<FindModel, View>() {
-
+        abstract suspend fun loadEvent(lastTime: Int = -1, pageSize: Int = 30)
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<FindModel>(application) {
@@ -27,7 +28,7 @@ interface FindContract {
     }
 
     interface Model : IModel {
-        suspend fun loadUserEvent()
+        suspend fun loadUserEvent(lastTime: Int, pageSize: Int): EventsResult
 
         suspend fun loadMyFollows(uid: String): FollowResult
     }

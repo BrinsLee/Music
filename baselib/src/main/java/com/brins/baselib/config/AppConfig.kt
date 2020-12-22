@@ -27,7 +27,8 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[likelist]",
     "[recommend, resource]",
     "[user, event]",
-    "[user, follows]"
+    "[user, follows]",
+    "[event]"
 )
 
 interface RECOMMEND {
@@ -213,5 +214,11 @@ interface SEARCH {
         const val SEARCH_CLOUD = "/search"
 
         const val SERACH_FOLLOW = "/follow"
+    }
+}
+
+interface FIND {
+    companion object {
+        const val FIND_EVENT = "/event"
     }
 }
