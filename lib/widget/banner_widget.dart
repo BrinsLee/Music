@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:light_music_flutter/models/banner_result.dart';
-import 'package:light_music_flutter/net/api/api_service.dart';
+import 'package:light_music_flutter/models/banner/banner_result.dart';
 
 class BannerWidget extends StatefulWidget {
+  final BannerResult result;
+  BannerWidget(this.result);
+
   @override
   _BannerWidgetState createState() => _BannerWidgetState();
 }
 
 class _BannerWidgetState extends State<BannerWidget> {
   int _itemCount = 0;
-  BannerResult _result;
   @override
   void initState() {
     super.initState();
-    var data = ApiService(context).getBanner();
-
-    data.then((value) {
-      setState(() {
-        _result = value;
-        _itemCount = _result.banners.length;
-      });
-    });
   }
 
   @override
@@ -54,7 +47,7 @@ class _BannerWidgetState extends State<BannerWidget> {
   }
 
   Widget _swiperBuilder(BuildContext context, int index) {
-    if (_result == null) {
+    if (widget.result == null) {
       return Image.asset(
         "images/base_icon_default_cover.png",
         fit: BoxFit.cover,
@@ -64,7 +57,7 @@ class _BannerWidgetState extends State<BannerWidget> {
         borderRadius: BorderRadius.circular(16),
         child: FadeInImage.assetNetwork(
           placeholder: "images/base_icon_default_cover.png",
-          image: _result.banners[index].picUrl,
+          image: widget.result.banners[index].picUrl,
           fit: BoxFit.cover,
         ),
       ));

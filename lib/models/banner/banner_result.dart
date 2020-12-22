@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:light_music_flutter/models/banner.dart';
+
+import 'banner.dart';
 
 part 'banner_result.g.dart';
 

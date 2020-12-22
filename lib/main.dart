@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:light_music_flutter/models/themeModel.dart';
+import 'package:light_music_flutter/routes/bloc_wrapper.dart';
 import 'package:light_music_flutter/routes/find_page.dart';
 import 'package:light_music_flutter/routes/home_page.dart';
 import 'package:light_music_flutter/routes/mine_page.dart';
@@ -10,9 +11,10 @@ import 'package:provider/provider.dart';
 SystemUiOverlayStyle uiStyle = SystemUiOverlayStyle.light.copyWith(
   statusBarColor: Colors.white,
 );
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(uiStyle);
-  runApp(MyApp());
+  runApp(BlocWrapper(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -49,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 20,
           height: 20,
         ),
-        title: Text("首页")),
+        label: "首页"),
     BottomNavigationBarItem(
         icon: Image.asset(
           "images/tab_find_normal.png",
@@ -61,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 20,
           height: 20,
         ),
-        title: Text("发现")),
+        label: "发现"),
     BottomNavigationBarItem(
         icon: Image.asset(
           "images/tab_activity_normal.png",
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 20,
           height: 20,
         ),
-        title: Text("视频")),
+        label: "视频"),
     BottomNavigationBarItem(
         icon: Image.asset(
           "images/tab_my_normal.png",
@@ -85,43 +87,36 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 20,
           height: 20,
         ),
-        title: Text("我的"))
+        label: "我的")
   ];
   int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: <SingleChildCloneableWidget>[
-        ChangeNotifierProvider.value(value: ThemeModel()),
-      ],
-      child: Consumer<ThemeModel>(
-          builder: (BuildContext context, themeModel, Widget child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              primaryColor: Colors.white,
-              accentColor: Colors.black,
-              iconTheme: IconThemeData(color: Colors.lightBlue)),
-          home: Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              items: bottomNavItems,
-              currentIndex: _currentIndex,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.black,
-              selectedFontSize: 12,
-              unselectedItemColor: Colors.grey,
-              onTap: (index) {
-                setState(() {
-                  if (index != _currentIndex) {
-                    _currentIndex = index;
-                  }
-                });
-              },
-            ),
-            body: pages[_currentIndex],
-          ),
-        );
-      }),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: Colors.white,
+          accentColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.lightBlue)),
+      home: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          items: bottomNavItems,
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.black,
+          selectedFontSize: 12,
+          unselectedItemColor: Colors.grey,
+          onTap: (index) {
+            setState(() {
+              if (index != _currentIndex) {
+                _currentIndex = index;
+              }
+            });
+          },
+        ),
+        body: pages[_currentIndex],
+      ),
     );
   }
 }
