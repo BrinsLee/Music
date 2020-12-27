@@ -14,7 +14,7 @@ interface FindService {
 
     @GET(FIND.FIND_EVENT)
     fun getEvent(
-        @Query("lasttime") lastTime: Int,
+        @Query("lasttime") lastTime: Long,
         @Query("pagesize") pageSize: Int
     ): Call<EventsResult>
 }

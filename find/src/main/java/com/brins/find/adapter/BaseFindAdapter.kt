@@ -12,6 +12,7 @@ import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.title.SingleTitleData2
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
+import com.shuyu.textutillib.RichTextView
 
 /**
  * Created by lipeilin
@@ -27,6 +28,7 @@ class BaseFindAdapter(
         addItemType(ITEM_MINE_EVENT_DATA, R.layout.find_item_event)
     }
 
+
     override fun convert(helper: BaseViewHolder, item: BaseData) {
 
         when (item.itemType) {
@@ -37,22 +39,34 @@ class BaseFindAdapter(
                 )
                 helper.setText(R.id.tv_name, createNickName(item))
                 helper.setText(R.id.tv_date, getDateToString(item.eventTime))
-
                 if (item.jsonData == null) {
                     val jsonData: EventData.EventJson = GsonUtils.fromJson<EventData.EventJson>(
                         item.json,
                         EventData.EventJson::class.java
                     )
-                    helper.setText(
+                    helper.getView<RichTextView>(R.id.tv_content)
+                        .setRichText(
+                            jsonData.msg,
+                            getUserModel(jsonData.msg),
+                            getTopicModel(jsonData.msg)
+                        )
+
+/*                    helper.setText(
                         R.id.tv_content,
                         jsonData.msg
-                    )
+                    )*/
                     item.jsonData = jsonData
                 } else {
-                    helper.setText(
+                    /*helper.setText(
                         R.id.tv_content,
                         item.jsonData?.msg
-                    )
+                    )*/
+                    helper.getView<RichTextView>(R.id.tv_content)
+                        .setRichText(
+                            item.jsonData?.msg, getUserModel(item.jsonData?.msg),
+                            getTopicModel(item.jsonData?.msg)
+                        )
+
                 }
 
                 item.pics?.let {

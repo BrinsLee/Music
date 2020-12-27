@@ -41,7 +41,7 @@
             android:textColor="@color/default_btn_text"
             android:textSize="12sp" />
 
-        <TextView
+        <com.shuyu.textutillib.RichTextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,12 @@
             android:maxLines="3"
             android:text="这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的"
             android:textColor="@color/black_70"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:atColor="@color/blue_4f7daf"
+            app:linkColor="@color/blue_4f7daf"
+            app:needNumberShow="false"
+            app:needUrlShow="true"
+            app:topicColor="@color/blue_4f7daf" />
 
         <com.brins.baselib.widget.MultiImageView
             android:id="@+id/mi_event_images"

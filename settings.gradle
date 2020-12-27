@@ -14,4 +14,5 @@ include ':bridgelib'
 include ':networklib'
 include ':baselib'
 include ':app'
+include ':textUtilsLib'
 rootProject.name = "LightMusic"

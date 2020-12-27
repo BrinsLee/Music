@@ -4,6 +4,7 @@ import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.ITEM_MINE_EVENT_DATA
 import com.brins.baselib.module.UserProfile
+import com.google.gson.annotations.SerializedName
 
 /**
  * Created by lipeilin
@@ -84,7 +85,22 @@ class EventData : BaseData() {
     }
 
     class EventJson {
+
+        var actId = ""
+
+        var title = ""
+
         var msg = ""
+
+        var text: ArrayList<String>? = null
+
+        var startTime: Long = 0
+
+        var endTime: Long = 0
+
+        var coverMobileUrl = ""
+
+        var sharePicUrl = ""
 
         var song: BaseMusic? = null
     }

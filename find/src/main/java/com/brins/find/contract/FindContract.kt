@@ -20,7 +20,7 @@ interface FindContract {
     }
 
     abstract class Presenter : BasePresenter<FindModel, View>() {
-        abstract suspend fun loadEvent(lastTime: Int = -1, pageSize: Int = 30)
+        abstract suspend fun loadEvent(lastTime: Long = -1, pageSize: Int = 30)
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<FindModel>(application) {
@@ -28,7 +28,7 @@ interface FindContract {
     }
 
     interface Model : IModel {
-        suspend fun loadUserEvent(lastTime: Int, pageSize: Int): EventsResult
+        suspend fun loadUserEvent(lastTime: Long, pageSize: Int): EventsResult
 
         suspend fun loadMyFollows(uid: String): FollowResult
     }

@@ -12,7 +12,7 @@ import com.brins.networklib.model.follow.FollowResult
  */
 class FindModel : FindContract.Model {
 
-    override suspend fun loadUserEvent(lastTime: Int, pageSize: Int): EventsResult =
+    override suspend fun loadUserEvent(lastTime: Long, pageSize: Int): EventsResult =
         ApiHelper.getFindService().getEvent(lastTime, pageSize).await()
 
 
