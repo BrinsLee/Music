@@ -5,6 +5,7 @@ import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.ITEM_MINE_EVENT_DATA
 import com.brins.baselib.module.UserProfile
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * Created by lipeilin
@@ -52,7 +53,7 @@ class EventData : BaseData() {
     override val itemType: Int
         get() = ITEM_MINE_EVENT_DATA
 
-    class Image {
+    class Image : Serializable {
         var originUrl = ""
 
         var squareUrl = ""

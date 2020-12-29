@@ -1,3 +1,4 @@
+include ':picturedetaillib'
 include ':find'
 include ':searchlib'
 include ':video'

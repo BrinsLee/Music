@@ -1,12 +1,21 @@
 package com.brins.find.adapter
 
+import android.app.Activity
+import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.view.View
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import com.brins.baselib.config.KEY_EVENT_PICTURES
+import com.brins.baselib.config.KEY_EVENT_PICTURE_POS
+import com.brins.baselib.config.TRANSITION_IMAGE
 import com.brins.baselib.module.*
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.widget.CircleImageView
 import com.brins.baselib.widget.MultiImageView
+import com.brins.bridgelib.picturedetail.PictureDetailBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.find.R
 import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.title.SingleTitleData2
@@ -74,6 +83,23 @@ class BaseFindAdapter(
                     it.forEach { image ->
                         list.add(image.squareUrl)
                     }
+                    helper.getView<MultiImageView>(R.id.mi_event_images)
+                        .setOnItemClickListener(object : MultiImageView.OnItemClickListener {
+                            override fun onItemClick(view: View, position: Int) {
+                                val bundle = Bundle()
+                                bundle.putSerializable(KEY_EVENT_PICTURES, it)
+                                bundle.putInt(KEY_EVENT_PICTURE_POS, position)
+                                val optionsCompat: ActivityOptionsCompat =
+                                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        context as Activity,
+                                        view,
+                                        TRANSITION_IMAGE
+                                    )
+                                BridgeProviders.instance.getBridge(PictureDetailBridgeInterface::class.java)
+                                    .toDetailPictureActivity(bundle, optionsCompat)
+                            }
+
+                        })
                     helper.getView<MultiImageView>(R.id.mi_event_images).setList(list)
                 }
             }

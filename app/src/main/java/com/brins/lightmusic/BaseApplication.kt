@@ -23,6 +23,7 @@ import com.brins.mine.bridge.MineBridge
 import com.brins.musicdetail.bridge.MusicDetailBridge
 import com.brins.musiclistlib.bridge.MusicListBridge
 import com.brins.musicsquarelib.bridge.MusicSquareBridge
+import com.brins.picturedetaillib.bridge.PictureDetailBridge
 import com.brins.searchlib.bridge.SearchBridge
 import dagger.hilt.android.HiltAndroidApp
 
@@ -144,6 +145,7 @@ class BaseApplication : Application() {
             .register(MusicDetailBridge::class.java)
             .register(SearchBridge::class.java)
             .register(FindBridge::class.java)
+            .register(PictureDetailBridge::class.java)
     }
 
 

@@ -114,6 +114,10 @@ dependencies {
     if (addFind) {
         implementation project(':find')
     }
+    if (addPictureDetail) {
+        implementation project(':picturedetaillib')
+
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'

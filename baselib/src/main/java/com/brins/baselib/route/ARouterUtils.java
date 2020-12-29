@@ -3,6 +3,7 @@ package com.brins.baselib.route;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.Postcard;
@@ -44,6 +45,17 @@ public class ARouterUtils {
      */
     public static void go(String path, Bundle bundle) {
         build(path).with(bundle).navigation();
+    }
+
+    /**
+     * 带共享元素的跳转
+     *
+     * @param path
+     * @param bundle
+     * @param optionsCompat
+     */
+    public static void go(String path, Bundle bundle, ActivityOptionsCompat optionsCompat) {
+        build(path).with(bundle).withOptionsCompat(optionsCompat).navigation();
     }
 
     /**
