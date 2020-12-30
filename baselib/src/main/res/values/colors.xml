@@ -47,4 +47,6 @@
     <color name="common_blue_eleventh">#58BAFC</color>
     <color name="common_blue_twelfth">#377DFF</color>
     <color name="blue_4f7daf">#4f7daf</color>
+
+    <color name="color_red">#F44336</color>
 </resources>

@@ -25,4 +25,7 @@
     <string name="share_music_list">分享歌单</string>
     <string name="share_article">分享专栏文章</string>
     <string name="share_video">分享视频</string>
+    <string name="music_list">歌单</string>
+    <string name="collapseIndicator">收起</string>
+    <string name="expandIndicator">查看更多</string>
 </resources>

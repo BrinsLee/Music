@@ -3,6 +3,7 @@ package com.brins.find.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.brins.baselib.config.TYPE_EVENT
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.route.RouterHub
@@ -56,6 +57,18 @@ class FindFragment : BaseMvpFragment<FindPresenter>(), FindContract.View {
 
     override fun onUserEventLoad(result: EventsResult) {
         result.events?.let {
+            val iterator = it.iterator()
+            while (iterator.hasNext()) {
+                val eventData = iterator.next()
+                if (!TYPE_EVENT.contains(eventData.type)) {
+                    iterator.remove()
+                }
+            }
+/*            it.forEach { eventData ->
+                if (TYPE_EVENT.contains(eventData.type)) {
+                    arrayList.add(eventData)
+                }
+            }*/
             mAdapter?.addData(it)
         }
 

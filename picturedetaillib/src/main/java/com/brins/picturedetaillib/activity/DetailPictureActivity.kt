@@ -35,7 +35,7 @@ class DetailPictureActivity : BaseActivity() {
         mAdapter = PictureInfoAdapter(mPicList, supportFragmentManager)
         details_picture_vp.adapter = mAdapter
         details_picture_vp.currentItem = mPos
-        tv_pic_num.text = "$mPos/${mPicList.size}"
+        tv_pic_num.text = "${mPos + 1}/${mPicList.size}"
         details_picture_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
@@ -49,7 +49,7 @@ class DetailPictureActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                tv_pic_num.text = "$position/${mPicList.size}"
+                tv_pic_num.text = "${position + 1}/${mPicList.size}"
             }
 
         })

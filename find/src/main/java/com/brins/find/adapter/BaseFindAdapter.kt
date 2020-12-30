@@ -3,7 +3,9 @@ package com.brins.find.adapter
 import android.app.Activity
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.SparseBooleanArray
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
 import com.brins.baselib.config.KEY_EVENT_PICTURES
@@ -11,9 +13,9 @@ import com.brins.baselib.config.KEY_EVENT_PICTURE_POS
 import com.brins.baselib.config.TRANSITION_IMAGE
 import com.brins.baselib.module.*
 import com.brins.baselib.utils.*
+import com.brins.baselib.utils.SizeUtils.dp2px
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.widget.CircleImageView
-import com.brins.baselib.widget.MultiImageView
+import com.brins.baselib.widget.*
 import com.brins.bridgelib.picturedetail.PictureDetailBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.find.R
@@ -21,7 +23,6 @@ import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.title.SingleTitleData2
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
-import com.shuyu.textutillib.RichTextView
 
 /**
  * Created by lipeilin
@@ -30,6 +31,8 @@ import com.shuyu.textutillib.RichTextView
 class BaseFindAdapter(
     data: MutableList<BaseData>
 ) : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>(data) {
+
+    private val mCollapsedStatus: SparseBooleanArray = SparseBooleanArray()
 
     init {
         addItemType(ITEM_FIND_FOLLOW, R.layout.find_item_my_follow)
@@ -53,29 +56,41 @@ class BaseFindAdapter(
                         item.json,
                         EventData.EventJson::class.java
                     )
-                    helper.getView<RichTextView>(R.id.tv_content)
+                    helper.getView<ExpandableTextView>(R.id.et_root)
+                        .setText(jsonData.msg, mCollapsedStatus, helper.adapterPosition)
+                    /*helper.getView<RichTextView>(R.id.tv_content)
                         .setRichText(
                             jsonData.msg,
                             getUserModel(jsonData.msg),
                             getTopicModel(jsonData.msg)
-                        )
-
-/*                    helper.setText(
-                        R.id.tv_content,
-                        jsonData.msg
-                    )*/
+                        )*/
                     item.jsonData = jsonData
                 } else {
-                    /*helper.setText(
-                        R.id.tv_content,
-                        item.jsonData?.msg
-                    )*/
-                    helper.getView<RichTextView>(R.id.tv_content)
+                    helper.getView<ExpandableTextView>(R.id.et_root)
+                        .setText(item.jsonData?.msg, mCollapsedStatus, helper.adapterPosition)
+                    /*helper.getView<RichTextView>(R.id.tv_content)
                         .setRichText(
                             item.jsonData?.msg, getUserModel(item.jsonData?.msg),
                             getTopicModel(item.jsonData?.msg)
-                        )
+                        )*/
 
+                }
+
+                val relativeLayout = helper.getView<RelativeLayout>(R.id.rl_item_root)
+                if (relativeLayout.childCount > 5) {
+                    relativeLayout.removeViewAt(relativeLayout.childCount - 1)
+                }
+                val view = createShareContent(item)
+                view?.let {
+                    val params = RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    params.addRule(RelativeLayout.BELOW, R.id.mi_event_images)
+                    params.addRule(RelativeLayout.END_OF, R.id.iv_avatar)
+                    params.topMargin = dp2px(8f)
+                    it.layoutParams = params
+                    relativeLayout.addView(it)
                 }
 
                 item.pics?.let {
@@ -102,6 +117,16 @@ class BaseFindAdapter(
                         })
                     helper.getView<MultiImageView>(R.id.mi_event_images).setList(list)
                 }
+
+                item.info?.let {
+                    helper.getView<ImageTextView>(R.id.itv_share)
+                        .setText(convertNum(it.shareCount.toLong()))
+                    helper.getView<ImageTextView>(R.id.itv_comment)
+                        .setText(convertNum(it.commentCount.toLong()))
+                    helper.getView<ImageTextView>(R.id.itv_like)
+                        .setText(convertNum(it.likedCount.toLong()))
+
+                }
             }
             ITEM_FIND_SINGLE_TITLE -> {
                 val textView = helper.getView<TextView>(R.id.item_text_view)
@@ -109,9 +134,9 @@ class BaseFindAdapter(
                     textView.text = this.getTitle()
                 }
                 textView.setPadding(
-                    SizeUtils.dp2px(15f),
-                    SizeUtils.dp2px(15f), 0,
-                    SizeUtils.dp2px(15f)
+                    dp2px(15f),
+                    dp2px(15f), 0,
+                    dp2px(15f)
                 )
             }
         }
@@ -136,6 +161,68 @@ class BaseFindAdapter(
             .setForegroundColor(UIUtils.getColor(R.color.default_btn_text)).create()
         return strBuilder
 
+    }
+
+    private fun createShareContent(item: EventData): View? {
+        when (item.type) {
+            18 -> return createShareMusic(item)
+            35, 13 -> return createShareMusicList(item)
+            else -> return null
+        }
+        return null
+    }
+
+    /**
+     * 创建分享单曲布局
+     *
+     * @param item
+     * @return
+     */
+    private fun createShareMusic(item: EventData): ShareMusicListView? {
+        var view: ShareMusicListView? = null
+        item.jsonData?.let {
+            if (it.song != null) {
+                view = ShareMusicListView(context)
+                view!!.mName.text = "${it.song!!.artists?.get(0)?.name}"
+                view!!.mTitle.text = it.song!!.name
+                view!!.mMusicList.visibility = View.GONE
+                GlideHelper.setRoundImageResource(
+                    view!!.mCover,
+                    it.song!!.song?.picUrl,
+                    5,
+                    R.drawable.base_icon_default_cover,
+                    100,
+                    100
+                )
+            }
+        }
+        return view
+    }
+
+    /**
+     * 创建分享歌单布局
+     *
+     * @param item
+     * @return
+     */
+    private fun createShareMusicList(item: EventData): ShareMusicListView? {
+        var view: ShareMusicListView? = null
+        item.jsonData?.let {
+            if (it.playlist != null) {
+                view = ShareMusicListView(context)
+                view!!.mName.text = "by ${it.playlist?.creator?.nickname}"
+                view!!.mTitle.text = it.playlist?.name
+                GlideHelper.setRoundImageResource(
+                    view!!.mCover,
+                    it.playlist?.coverImgUrl,
+                    5,
+                    R.drawable.base_icon_default_cover,
+                    100,
+                    100
+                )
+            }
+        }
+        return view
     }
 
 }

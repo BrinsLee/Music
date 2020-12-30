@@ -31,6 +31,17 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[event]"
 )
 
+val TYPE_EVENT = arrayListOf<Int>(
+    18,
+    19,
+    17, 28,
+    22,
+    39,
+    35, 13,
+    24,
+    41, 21
+)
+
 interface RECOMMEND {
     companion object {
         const val RECOMMEND_MV = "/personalized/mv"

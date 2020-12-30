@@ -2,12 +2,14 @@ package com.shuyu.textutillib;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
@@ -36,6 +38,7 @@ import java.util.regex.Pattern;
 
 public class TextCommonUtils {
 
+    public static final String TYPE_URL = "网页链接";
 
     /**
      * 显示emoji和url高亮
@@ -287,11 +290,14 @@ public class TextCommonUtils {
             Spannable sp = (Spannable) textView.getText();
             URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
             ClickAtUserSpan[] atSpan = sp.getSpans(0, end, ClickAtUserSpan.class);
+            int difference = 0;
             if (urls.length > 0) {
                 SpannableStringBuilder style = new SpannableStringBuilder(charSequence);
-                style.clearSpans();// should clear old spans
                 for (URLSpan url : urls) {
                     String urlString = url.getURL();
+                    if (urlString.contains("。")) {
+                        urlString = urlString.split("。")[0];
+                    }
                     if (isNumeric(urlString.replace("tel:", ""))) {
                         if (!needNum && !isMobileSimple(urlString.replace("tel:", ""))) {
                             style.setSpan(new StyleSpan(Typeface.NORMAL), sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -309,26 +315,39 @@ public class TextCommonUtils {
                     } else if (needUrl && isTopURL(urlString.toLowerCase())) {
                         LinkSpan linkSpan = null;
                         if (textView != null) {
-                            linkSpan = textView.getCustomLinkSpan(context, url.getURL(), color, spanUrlCallBack);
+                            linkSpan = textView.getCustomLinkSpan(context, TYPE_URL, color, spanUrlCallBack);
                         }
                         if (linkSpan == null) {
-                            linkSpan = new LinkSpan(context, url.getURL(), color, spanUrlCallBack);
+                            linkSpan = new LinkSpan(context, TYPE_URL, color, spanUrlCallBack);
                         }
-                        style.setSpan(linkSpan, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        int start = sp.getSpanStart(url) - difference;
+                        int endStr = start + urlString.length();
+                        style.replace(start, endStr, TYPE_URL);
+                        style.setSpan(linkSpan, start, start + TYPE_URL.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        Drawable drawable = context.getResources().getDrawable(R.drawable.ic_link);
+                        drawable.setBounds(0, 0, 50, 50);
+                        ImageSpan imageSpan = new ImageSpan(drawable);
+                        style.setSpan(imageSpan, start - 1, start, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        difference = difference + (urlString.length() - TYPE_URL.length());
                     } else {
                         style.setSpan(new StyleSpan(Typeface.NORMAL), sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                     }
 
                 }
+
+                for (URLSpan span : urls) {
+                    style.removeSpan(span);
+                }
+
                 for (ClickAtUserSpan atUserSpan : atSpan) {
                     //剔除话题和at某人中的link span
-                    LinkSpan[] removeUrls = style.getSpans(sp.getSpanStart(atUserSpan), sp.getSpanEnd(atUserSpan), LinkSpan.class);
+                    LinkSpan[] removeUrls = style.getSpans(style.getSpanStart(atUserSpan), style.getSpanEnd(atUserSpan), LinkSpan.class);
                     if (removeUrls != null && removeUrls.length > 0) {
                         for (LinkSpan linkSpan : removeUrls) {
                             style.removeSpan(linkSpan);
                         }
                     }
-                    style.setSpan(atUserSpan, sp.getSpanStart(atUserSpan), sp.getSpanEnd(atUserSpan), Spanned.SPAN_MARK_POINT);
+                    style.setSpan(atUserSpan, style.getSpanStart(atUserSpan), style.getSpanEnd(atUserSpan), Spanned.SPAN_MARK_POINT);
                 }
                 textView.setAutoLinkMask(0);
                 return style;

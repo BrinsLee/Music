@@ -1,9 +1,6 @@
 package com.brins.networklib.model.event
 
-import com.brins.baselib.module.BaseData
-import com.brins.baselib.module.BaseMusic
-import com.brins.baselib.module.ITEM_MINE_EVENT_DATA
-import com.brins.baselib.module.UserProfile
+import com.brins.baselib.module.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -104,5 +101,7 @@ class EventData : BaseData() {
         var sharePicUrl = ""
 
         var song: BaseMusic? = null
+
+        var playlist: MusicList? = null
     }
 }
