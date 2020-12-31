@@ -83,3 +83,21 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/.filecache
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/app.dill
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/debug_android_application.stamp
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/flutter_assets.d
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/gen_localizations.stamp
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/kernel_snapshot.d
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/kernel_snapshot.stamp
+/.dart_tool/flutter_build/7f18b483a36b49c4b62bafb8687f539a/outputs.json
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/codeStyles/Project.xml
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_23_11_39__Default_Changelist_.xml
+/.idea/.name
+/.idea/compiler.xml
+/.idea/dbnavigator.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/searchlib/.gitignore
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_23_11_39_[Default_Changelist]/shelved.patch

@@ -7,4 +7,11 @@ import com.brins.find.contract.FindContract
  * on 2020/12/1
  */
 class FindPresenter : FindContract.Presenter() {
+
+    override suspend fun loadEvent(lastTime: Long, pageSize: Int) {
+        val result = mModel?.loadUserEvent(lastTime, pageSize)
+        result?.let {
+            mView?.onUserEventLoad(it)
+        }
+    }
 }

@@ -13,9 +13,6 @@ class SingleTitleViewHolder(itemView: View) : BaseViewHolder<SingleTitleData>(it
 
     override fun setData(data: SingleTitleData?) {
         super.setData(data)
-        data?.apply {
-            textView.text = this.getTitle()
-        }
-        textView.setPadding(dp2px(15f), dp2px(15f), 0, dp2px(15f))
+
     }
 }

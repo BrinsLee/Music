@@ -68,4 +68,6 @@ dependencies {
     implementation project(':networklib')
     implementation project(':recyclerlib')
     implementation project(':bridgelib')
+    implementation project(':textUtilsLib')
+
 }

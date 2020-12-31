@@ -11,6 +11,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.collection.SimpleArrayMap
+import com.shuyu.textutillib.model.TopicModel
+import com.shuyu.textutillib.model.UserModel
 import io.reactivex.Completable
 import io.reactivex.CompletableObserver
 import io.reactivex.Single
@@ -21,6 +23,9 @@ import io.reactivex.schedulers.Schedulers
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 /**
  * 获取当前进程名
@@ -231,4 +236,45 @@ fun Completable.subscribeDbResult(
 
 
         })
+}
+
+/**
+ *
+ * 正则 @xxx: @(\S+):
+ * @param content
+ * @return
+ */
+val REGEX_NICKNAME = "@(\\S+) "
+fun getUserModel(content: String?): ArrayList<UserModel>? {
+
+    if (content.isNullOrEmpty()) {
+        return null
+    }
+    val strs: ArrayList<UserModel> = ArrayList()
+    val r: Pattern = Pattern.compile(REGEX_NICKNAME)
+    val m: Matcher = r.matcher(content)
+    while (m.find()) {
+        strs.add(UserModel(m.group(), m.group()))
+    }
+    return strs
+}
+
+/**
+ *
+ * 正则 #xxx#: #(\S+)#
+ * @param context
+ * @return
+ */
+val REGEX_TOPIC = "#(\\S+)#"
+fun getTopicModel(content: String?): ArrayList<TopicModel>? {
+    if (content.isNullOrEmpty()) {
+        return null
+    }
+    val strs: ArrayList<TopicModel> = ArrayList()
+    val r: Pattern = Pattern.compile(REGEX_TOPIC)
+    val m: Matcher = r.matcher(content)
+    while (m.find()) {
+        strs.add(TopicModel(m.group(), m.group()))
+    }
+    return strs
 }

@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BaseAppFragment">
+    android:background="@color/black"
+    tools:context=".fragment.DetailPictureFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.brins.picturedetaillib.widget.PinchImageView
+        android:id="@+id/full_image_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_gravity="center"
+        android:transitionName="image" />
 
 </FrameLayout>

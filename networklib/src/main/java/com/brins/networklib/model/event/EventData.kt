@@ -1,9 +1,8 @@
 package com.brins.networklib.model.event
 
-import com.brins.baselib.module.BaseData
-import com.brins.baselib.module.BaseMusic
-import com.brins.baselib.module.ITEM_MINE_EVENT_DATA
-import com.brins.baselib.module.UserProfile
+import com.brins.baselib.module.*
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * Created by lipeilin
@@ -47,10 +46,11 @@ class EventData : BaseData() {
     var json: String? = null
 
     var jsonData: EventJson? = null
+
     override val itemType: Int
         get() = ITEM_MINE_EVENT_DATA
 
-    class Image {
+    class Image : Serializable {
         var originUrl = ""
 
         var squareUrl = ""
@@ -80,11 +80,29 @@ class EventData : BaseData() {
 
         var shareCount = 0
 
+        var threadId = ""
     }
 
     class EventJson {
+
+        var actId = ""
+
+        var title = ""
+
         var msg = ""
 
+        var text: ArrayList<String>? = null
+
+        var startTime: Long = 0
+
+        var endTime: Long = 0
+
+        var coverMobileUrl = ""
+
+        var sharePicUrl = ""
+
         var song: BaseMusic? = null
+
+        var playlist: MusicList? = null
     }
 }

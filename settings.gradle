@@ -1,3 +1,4 @@
+include ':picturedetaillib'
 include ':find'
 include ':searchlib'
 include ':video'
@@ -14,4 +15,5 @@ include ':bridgelib'
 include ':networklib'
 include ':baselib'
 include ':app'
+include ':textUtilsLib'
 rootProject.name = "LightMusic"

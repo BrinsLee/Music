@@ -8,11 +8,11 @@ const val UMAPPKEY = "5e33c33c4ca357e8100000fa"
 const val KEY_ID = "KEY_ID"
 const val KEY_URL = "KEY_URL"
 const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
-/*const val KEY_INTENT_FROM = "KEY_INTENT_FROM"
-const val KEY_INTENT_FROM_INTELLIGENCE = "KEY_INTENT_FROM_INTELLIGENCE"
-const val KEY_INTENT_FROM_MINE = "KEY_INTENT_FROM_MINE"*/
+const val KEY_EVENT_PICTURES = "KEY_EVENT_PICTURES"
+const val KEY_EVENT_PICTURE_POS = "KEY_EVENT_PICTURE_POS"
 
 const val TRANSITION_NAME = "TRANSITION_NAME"
+const val TRANSITION_IMAGE = "image"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
 
@@ -27,7 +27,20 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[likelist]",
     "[recommend, resource]",
     "[user, event]",
-    "[user, follows]"
+    "[user, follows]",
+    "[event]",
+    "[resource, like]"
+)
+
+val TYPE_EVENT = arrayListOf<Int>(
+    18,
+    19,
+    17, 28,
+    22,
+    39,
+    35, 13,
+    24,
+    41, 21
 )
 
 interface RECOMMEND {
@@ -213,5 +226,18 @@ interface SEARCH {
         const val SEARCH_CLOUD = "/search"
 
         const val SERACH_FOLLOW = "/follow"
+    }
+}
+
+interface FIND {
+    companion object {
+        const val FIND_EVENT = "/event"
+    }
+}
+
+interface LIKE {
+    companion object {
+        //1 点赞 ，2 取消点赞
+        const val LIKE_OR_UNLIKE = "/resource/like"
     }
 }

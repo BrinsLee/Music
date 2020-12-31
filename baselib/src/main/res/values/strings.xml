@@ -16,4 +16,16 @@
     <string name="music_not_available">音乐不可用</string>
     <string name="network_error">网络连接失败，点击重试</string>
     <string name="search">搜索</string>
+
+    <string name="share_song">分享单曲</string>
+    <string name="share_album">分享专辑</string>
+    <string name="share_radio">分享电台节目</string>
+    <string name="forward">转发</string>
+    <string name="publish_video">发布视频</string>
+    <string name="share_music_list">分享歌单</string>
+    <string name="share_article">分享专栏文章</string>
+    <string name="share_video">分享视频</string>
+    <string name="music_list">歌单</string>
+    <string name="collapseIndicator">收起</string>
+    <string name="expandIndicator">查看更多</string>
 </resources>

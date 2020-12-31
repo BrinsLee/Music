@@ -3,6 +3,8 @@ package com.brins.baselib.utils
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +38,7 @@ class AppBarZoomBehavior @JvmOverloads constructor(
 
     companion object {
 
+        private val TAG = "AppBarZoomBehavior"
         private val MAX_ZOOM_HEIGHT = 300f//放大最大高度
     }
 
@@ -138,6 +141,9 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         dy: Int
     ) {
         mTotalDy += -dy.toFloat()
+        if (mTotalDy < 50) {
+            return
+        }
         mTotalDy = mTotalDy.coerceAtMost(MAX_ZOOM_HEIGHT)
         mScaleValue = 1f.coerceAtLeast(1f + mTotalDy / MAX_ZOOM_HEIGHT)
         mImageView?.scaleX = mScaleValue

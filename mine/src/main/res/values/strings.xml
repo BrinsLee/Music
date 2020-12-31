@@ -16,12 +16,5 @@
     <string name="created_music_list">创建的歌单</string>
     <string name="submited_album">收藏的专辑</string>
     <string name="empty_event">暂无动态信息</string>
-    <string name="share_song">分享单曲</string>
-    <string name="share_album">分享专辑</string>
-    <string name="share_radio">分享电台节目</string>
-    <string name="forward">转发</string>
-    <string name="publish_video">发布视频</string>
-    <string name="share_music_list">分享歌单</string>
-    <string name="share_article">分享专栏文章</string>
-    <string name="share_video">分享视频</string>
+
 </resources>

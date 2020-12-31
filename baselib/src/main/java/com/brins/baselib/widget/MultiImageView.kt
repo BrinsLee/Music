@@ -3,12 +3,11 @@ package com.brins.baselib.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.brins.baselib.config.TRANSITION_IMAGE
 import com.brins.baselib.utils.SizeUtils.dp2px
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.chad.library.adapter.base2.listener.OnItemClickListener
 import kotlin.math.min
 
 /**
@@ -33,6 +32,13 @@ class MultiImageView(context: Context, attributeSet: AttributeSet? = null) :
     private var moreParaColumnFirst: LayoutParams? = null
     private var rowParams: LayoutParams? = null
     private var mOnItemClickListener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(
+            view: View,
+            position: Int
+        )
+    }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         mOnItemClickListener = onItemClickListener
@@ -105,6 +111,7 @@ class MultiImageView(context: Context, attributeSet: AttributeSet? = null) :
             url = imagesList!![pos]
         }
         val imageView = ImageView(context)
+        imageView.transitionName = TRANSITION_IMAGE
         if (isMuli) {
             imageView.apply {
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
@@ -124,6 +131,9 @@ class MultiImageView(context: Context, attributeSet: AttributeSet? = null) :
         GlideHelper.setImageResource(
             imageView, url
         )
+        imageView.setOnClickListener {
+            mOnItemClickListener?.onItemClick(it, pos)
+        }
         return imageView
     }
 

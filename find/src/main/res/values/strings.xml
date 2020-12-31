@@ -2,4 +2,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_follows">我的关注</string>
+    <string name="like_error">点赞失败</string>
 </resources>
