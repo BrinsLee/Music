@@ -19,6 +19,7 @@ import com.brins.baselib.widget.*
 import com.brins.bridgelib.picturedetail.PictureDetailBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.find.R
+import com.brins.find.widget.ImageTextView
 import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.title.SingleTitleData2
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
@@ -125,6 +126,22 @@ class BaseFindAdapter(
                         .setText(convertNum(it.commentCount.toLong()))
                     helper.getView<ImageTextView>(R.id.itv_like)
                         .setText(convertNum(it.likedCount.toLong()))
+                        .activate(it.liked)
+                        .setOnClickListener { view ->
+                            if (it.liked) {
+                                (view as ImageTextView).unlikeEvent(it.threadId) { result ->
+                                    it.liked = result
+                                    it.likedCount -= 1
+                                    view.setText(convertNum(it.likedCount.toLong()))
+                                }
+                            } else {
+                                (view as ImageTextView).likeEvent(it.threadId) { result ->
+                                    it.liked = result
+                                    it.likedCount += 1
+                                    view.setText(convertNum(it.likedCount.toLong()))
+                                }
+                            }
+                        }
 
                 }
             }

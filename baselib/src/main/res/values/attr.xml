@@ -48,9 +48,4 @@
         <attr name="expandCollapseToggleId" format="reference" />
         <attr name="expandToggleOnTextClick" format="boolean" />
     </declare-styleable>
-
-    <declare-styleable name="ImageTextView">
-        <attr name="itv_drawable" format="reference" />
-        <attr name="itv_text" format="reference|string" />
-    </declare-styleable>
 </resources>

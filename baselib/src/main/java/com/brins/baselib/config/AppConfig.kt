@@ -28,7 +28,8 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[recommend, resource]",
     "[user, event]",
     "[user, follows]",
-    "[event]"
+    "[event]",
+    "[resource, like]"
 )
 
 val TYPE_EVENT = arrayListOf<Int>(
@@ -231,5 +232,12 @@ interface SEARCH {
 interface FIND {
     companion object {
         const val FIND_EVENT = "/event"
+    }
+}
+
+interface LIKE {
+    companion object {
+        //1 点赞 ，2 取消点赞
+        const val LIKE_OR_UNLIKE = "/resource/like"
     }
 }

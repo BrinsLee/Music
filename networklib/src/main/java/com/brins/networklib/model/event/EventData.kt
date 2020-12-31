@@ -80,6 +80,7 @@ class EventData : BaseData() {
 
         var shareCount = 0
 
+        var threadId = ""
     }
 
     class EventJson {
