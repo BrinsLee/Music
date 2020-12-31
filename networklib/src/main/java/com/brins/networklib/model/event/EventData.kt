@@ -104,5 +104,7 @@ class EventData : BaseData() {
         var song: BaseMusic? = null
 
         var playlist: MusicList? = null
+
+        var album: BaseMusic.Album? = null
     }
 }

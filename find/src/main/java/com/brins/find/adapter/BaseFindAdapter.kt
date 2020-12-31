@@ -166,7 +166,7 @@ class BaseFindAdapter(
             17, 28 -> context.getString(R.string.share_radio)
             22 -> context.getString(R.string.forward)
             39 -> context.getString(R.string.publish_video)
-            35, 13 -> context.getString(R.string.share_music_list)
+            13 -> context.getString(R.string.share_music_list)
             24 -> context.getString(R.string.share_article)
             41, 21 -> context.getString(R.string.share_video)
             else -> ""
@@ -183,10 +183,38 @@ class BaseFindAdapter(
     private fun createShareContent(item: EventData): View? {
         when (item.type) {
             18 -> return createShareMusic(item)
-            35, 13 -> return createShareMusicList(item)
+            19 -> return createShareAlbum(item)
+            13 -> return createShareMusicList(item)
             else -> return null
         }
         return null
+    }
+
+    /**
+     * 创建分享专辑
+     *
+     * @param item
+     * @return
+     */
+    private fun createShareAlbum(item: EventData): ShareMusicListView? {
+        var view: ShareMusicListView? = null
+        item.jsonData?.let {
+            if (it.album != null) {
+                view = ShareMusicListView(context)
+                view!!.mMusicList.setText("专辑")
+                view!!.mName.text = "${it.album?.artist?.name}"
+                view!!.mTitle.text = it.album?.name
+                GlideHelper.setRoundImageResource(
+                    view!!.mCover,
+                    it.album?.picUrl,
+                    5,
+                    R.drawable.base_icon_default_cover,
+                    100,
+                    100
+                )
+            }
+        }
+        return view
     }
 
     /**
