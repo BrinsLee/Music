@@ -1,6 +1,10 @@
 package com.brins.lightmusic.ui
 
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
@@ -11,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import butterknife.OnClick
 import com.brins.baselib.activity.BaseMvpActivity
+import com.brins.baselib.config.*
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.eventbus.EventBusKey
@@ -58,6 +63,16 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
 
     }
 
+    private val playMusicReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action
+            if (action == ACTION_EXIST) {
+                System.exit(0)
+            }
+        }
+
+    }
+
     companion object {
         private val UPDATE_PROGRESS_INTERVAL: Long = 1000
         private val UPDATE_MUSIC_INTERVAL: Long = 500
@@ -71,6 +86,9 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
         super.init(savedInstanceState)
         toolbar.setPadding(0, getStatusBarHeight(this), 0, 0)
         initViewPagerAndTabLay()
+        val filter = IntentFilter()
+        filter.addAction(ACTION_EXIST)
+        registerReceiver(playMusicReceiver, filter)
         mPresenter?.bindPlaybackService()
     }
 
@@ -248,6 +266,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
 
     override fun onDestroy() {
         mPresenter?.unbindPlaybackService()
+        unregisterReceiver(playMusicReceiver)
         super.onDestroy()
         BridgeProviders.instance.clear()
         exitProcess(0)

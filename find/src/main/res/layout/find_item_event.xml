@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp">
@@ -17,7 +18,7 @@
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@drawable/mine_icon_default_avatar"
+            android:src="@drawable/base_icon_default_avatar"
             app:es_shape_type="round" />
 
         <TextView
@@ -53,6 +54,7 @@
             app:animAlphaStart="1"
             app:collapseIndicator="@string/collapseIndicator"
             app:expandIndicator="@string/expandIndicator"
+            app:expandToggleOnTextClick="false"
             app:expandToggleType="TextView"
             app:expandableTextId="@id/tv_content"
             app:maxCollapsedLines="5">

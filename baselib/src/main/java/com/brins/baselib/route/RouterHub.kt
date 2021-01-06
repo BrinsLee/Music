@@ -15,6 +15,8 @@ interface RouterHub {
         const val SEARCH = "/search"
         const val FIND = "/find"
         const val PICTURE_DETAIL = "/picturedetail"
+        const val EVENT_DETAIL = "/eventdetail"
+
 
 
         //    ****************Activity路径配置***************************
@@ -44,6 +46,9 @@ interface RouterHub {
         const val MINEINFOACTIVITY = "$MINE/MineInfoActivity"
 
         const val DETAILPICTUREACTIVITY = "$PICTURE_DETAIL/DetailPictureActivity"
+
+        const val EVENTDETAILACTIVITY = "$EVENT_DETAIL/EventDetailActivity"
+
 
 
         //    ****************Fragment路径配置***************************

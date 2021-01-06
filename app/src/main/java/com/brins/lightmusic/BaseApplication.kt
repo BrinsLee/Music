@@ -15,6 +15,7 @@ import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
 import com.brins.dailylib.bridge.DailyMusicBridge
+import com.brins.eventdetaillib.bridge.EventDetailBridge
 import com.brins.find.bridge.FindBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
@@ -146,6 +147,7 @@ class BaseApplication : Application() {
             .register(SearchBridge::class.java)
             .register(FindBridge::class.java)
             .register(PictureDetailBridge::class.java)
+            .register(EventDetailBridge::class.java)
     }
 
 

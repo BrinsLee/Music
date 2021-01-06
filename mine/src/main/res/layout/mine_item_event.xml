@@ -17,7 +17,7 @@
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@drawable/mine_icon_default_avatar"
+            android:src="@drawable/base_icon_default_avatar"
             app:es_shape_type="round" />
 
         <TextView

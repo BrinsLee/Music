@@ -10,11 +10,26 @@ const val KEY_URL = "KEY_URL"
 const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
 const val KEY_EVENT_PICTURES = "KEY_EVENT_PICTURES"
 const val KEY_EVENT_PICTURE_POS = "KEY_EVENT_PICTURE_POS"
+const val KEY_EVENT_DATA = "KEY_EVENT_DATA"
 
 const val TRANSITION_NAME = "TRANSITION_NAME"
 const val TRANSITION_IMAGE = "image"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
+
+const val CODE_MAIN = 0
+const val CODE_CLOSE = 1
+const val CODE_PRV = 2
+const val CODE_PAUSE = 3
+const val CODE_PLAY = 4
+const val CODE_NEXT = 5
+
+const val ACTION_PRV = "com.brins.lightmusic.ACTION.PLAY_LAST"
+const val ACTION_NEXT = "com.brins.lightmusic.ACTION.PLAY_NEXT"
+const val ACTION_PAUSE = "com.brins.lightmusic.ACTION.PAUSE"
+const val ACTION_PLAY = "com.brins.lightmusic.ACTION.PLAY"
+const val ACTION_EXIST = "com.brins.lightmusic.ACTION.EXIST"
+
 
 val API_NEED_COOKIE = arrayListOf<String>(
     "[recommend, songs]",

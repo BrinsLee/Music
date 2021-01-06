@@ -2,6 +2,7 @@ package com.brins.baselib.utils.glidehelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -47,6 +48,25 @@ public class GlideHelper {
             if (listener != null) {
                 requestBuilder.listener(listener);
             }
+            requestBuilder.into(imageView);
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+    public static void setImageResource(ImageView imageView, String imageUrl, int width, int height, int defaultRes, boolean isTransition, RequestListener<BitmapDrawable> listener) {
+        try {
+            if (imageView == null) return;
+            Glide.get(imageView.getContext()).setMemoryCategory(MemoryCategory.NORMAL);
+            RequestBuilder requestBuilder;
+            requestBuilder = Glide.with(imageView.getContext()).load(imageUrl);
+            requestBuilder.apply(new RequestOptions().placeholder(defaultRes));
+            if (isTransition) {
+                requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+            }
+            if (listener != null) {
+                requestBuilder.listener(listener);
+            }
+            requestBuilder.override(width, height);
             requestBuilder.into(imageView);
         } catch (IllegalArgumentException e) {
         }

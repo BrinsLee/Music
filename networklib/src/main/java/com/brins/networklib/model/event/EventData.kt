@@ -1,14 +1,13 @@
 package com.brins.networklib.model.event
 
 import com.brins.baselib.module.*
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
  * Created by lipeilin
  * on 2020/11/28
  */
-class EventData : BaseData() {
+class EventData : BaseData(), Serializable {
 
 
     var actName: String? = null
@@ -68,7 +67,7 @@ class EventData : BaseData() {
         var format = ""
     }
 
-    class Info {
+    class Info : Serializable {
 
         var liked = false
 
@@ -83,7 +82,7 @@ class EventData : BaseData() {
         var threadId = ""
     }
 
-    class EventJson {
+    class EventJson : Serializable {
 
         var actId = ""
 

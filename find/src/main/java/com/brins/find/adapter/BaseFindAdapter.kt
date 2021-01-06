@@ -7,7 +7,9 @@ import android.util.SparseBooleanArray
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityOptionsCompat
+import com.brins.baselib.config.KEY_EVENT_DATA
 import com.brins.baselib.config.KEY_EVENT_PICTURES
 import com.brins.baselib.config.KEY_EVENT_PICTURE_POS
 import com.brins.baselib.config.TRANSITION_IMAGE
@@ -16,6 +18,7 @@ import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SizeUtils.dp2px
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.widget.*
+import com.brins.bridgelib.event.EventDetailBridgeInterface
 import com.brins.bridgelib.picturedetail.PictureDetailBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.find.R
@@ -143,6 +146,13 @@ class BaseFindAdapter(
                             }
                         }
 
+                }
+
+                helper.getView<ConstraintLayout>(R.id.cl_item_root).setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable(KEY_EVENT_DATA, item)
+                    BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
+                        .toEventDetailActivity(bundle)
                 }
             }
             ITEM_FIND_SINGLE_TITLE -> {

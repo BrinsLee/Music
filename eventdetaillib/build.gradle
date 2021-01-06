@@ -31,13 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    repositories {
-        flatDir {
-            dirs 'libs'
-            dirs '../baselib/libs'
-
-        }
-    }
 }
 
 kotlin {
@@ -59,16 +52,18 @@ dependencies {
 
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
 
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    //MagicIndicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation project(':baselib')
     implementation project(':networklib')
     implementation project(':recyclerlib')
     implementation project(':bridgelib')
-    //hilt
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 }

@@ -1,8 +1,13 @@
 package com.brins.playerlib.model
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.drawable.BitmapDrawable
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -12,20 +17,30 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import android.widget.ImageView
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.brins.baselib.BaseMvpService
+import com.brins.baselib.config.*
 import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.BasePlayList
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.subscribeDbResult
+import com.brins.bridgelib.app.AppBridgeInterface
+import com.brins.bridgelib.provider.BridgeProviders
+import com.brins.playerlib.R
 import com.brins.playerlib.broadcast.HeadsetButtonReceiver
 import com.brins.playerlib.contract.IPlayback
 import com.brins.playerlib.presenter.PlayerPresenter
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ServiceScoped
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -41,6 +56,20 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
 
     private val mPlayer: Player by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { Player() }
     private val mBinder = LocalBinder()
+    private val playMusicReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action
+            if (!action.isNullOrEmpty()) {
+                when (action) {
+                    ACTION_PRV -> playLast()
+                    ACTION_NEXT -> playNext()
+                    ACTION_PAUSE -> pause()
+                    ACTION_PLAY -> play()
+                }
+            }
+        }
+
+    }
     private lateinit var mNotificationManager: NotificationManager
     private lateinit var remoteView: RemoteViews
 
@@ -57,10 +86,166 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         super.onCreate()
         HeadsetButtonReceiver(this)
         mIsServiceBound = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            cancelNotification()
+            updateNotification()
+        }
+        val filter = IntentFilter()
+        filter.addAction(ACTION_PLAY)
+        filter.addAction(ACTION_PAUSE)
+        filter.addAction(ACTION_NEXT)
+        filter.addAction(ACTION_PRV)
+        registerReceiver(playMusicReceiver, filter)
 //        EventBus.getDefault().register(this)
 
 //        MediaSessionManager(this)
 
+    }
+
+    /**
+     * 更新通知
+     *
+     */
+    private fun updateNotification() {
+        remoteView = RemoteViews(packageName, R.layout.view_notification)
+        val song = getPlayList().getCurrentSong()
+        song?.let {
+            val cover = if (it.picUrl.isEmpty()) {
+                it.song?.picUrl
+            } else {
+                it.picUrl
+            }
+
+            if (it.bitmapCover == null) {
+                GlideHelper.setImageResource(
+                    ImageView(this),
+                    cover,
+                    200,
+                    200,
+                    R.drawable.base_icon_default_cover,
+                    true,
+                    object : RequestListener<BitmapDrawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<BitmapDrawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: BitmapDrawable?,
+                            model: Any?,
+                            target: Target<BitmapDrawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            resource?.let { bitmapDrawable ->
+                                it.bitmapCover = bitmapDrawable.bitmap
+                                remoteView.setImageViewBitmap(
+                                    R.id.widget_album,
+                                    bitmapDrawable.bitmap
+                                )
+                                createNotificationChannel()
+                            }
+                            return true
+                        }
+
+                    }
+                )
+            } else {
+                remoteView.setImageViewBitmap(
+                    R.id.widget_album,
+                    it.bitmapCover
+                )
+            }
+
+            remoteView.setTextViewText(R.id.widget_title, it.name)
+
+            val artists = it.song?.artists
+            remoteView.setTextViewText(
+                R.id.widget_artist,
+                if (artists.isNullOrEmpty()) "未知" else artists[0].name
+            )
+
+            remoteView.setImageViewResource(
+                R.id.widget_play,
+                if (isPlaying()) R.drawable.base_icon_pause_white_64dp else R.drawable.base_icon_play_white_64dp
+            )
+
+        }
+        createNotificationChannel()
+    }
+
+    /**
+     * 创建通知频道
+     *
+     */
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelName = getString(R.string.app_name)
+            val importance = NotificationManager.IMPORTANCE_MIN
+            val channel = NotificationChannel(CHANNEL_ID, channelName, importance)
+            val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            val intent = BridgeProviders.instance.getBridge(AppBridgeInterface::class.java)
+                .getSplashActivity(this)
+            val intentGo = PendingIntent.getActivity(
+                this,
+                CODE_MAIN,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            remoteView.setOnClickPendingIntent(R.id.notice, intentGo)
+            val intentClose = Intent(ACTION_EXIST)
+            remoteView.setOnClickPendingIntent(
+                R.id.widget_close,
+                PendingIntent.getBroadcast(
+                    this,
+                    CODE_CLOSE,
+                    intentClose,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+            val playorpause = Intent()
+            if (isPlaying()) {
+                playorpause.action = ACTION_PAUSE
+                val intent_play = PendingIntent.getBroadcast(
+                    this,
+                    CODE_PAUSE,
+                    playorpause,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+                remoteView.setOnClickPendingIntent(R.id.widget_play, intent_play)
+            } else {
+                playorpause.action = ACTION_PLAY
+                val intent_play = PendingIntent.getBroadcast(
+                    this,
+                    CODE_PLAY,
+                    playorpause,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+                remoteView.setOnClickPendingIntent(R.id.widget_play, intent_play)
+            }
+
+            val prv = Intent(ACTION_PRV)
+            val intent_prv =
+                PendingIntent.getBroadcast(this, CODE_PRV, prv, PendingIntent.FLAG_UPDATE_CURRENT)
+            remoteView.setOnClickPendingIntent(R.id.widget_prev, intent_prv)
+
+            val next = Intent(ACTION_NEXT)
+            val intent_next =
+                PendingIntent.getBroadcast(this, CODE_NEXT, next, PendingIntent.FLAG_UPDATE_CURRENT)
+            remoteView.setOnClickPendingIntent(R.id.widget_next, intent_next)
+
+            builder.setCustomContentView(remoteView)
+                .setSmallIcon(R.drawable.base_icon_music_note_white_48dp)
+                .setContentTitle("轻籁")
+            mNotificationManager = getSystemService(NotificationManager::class.java)
+            mNotificationManager.createNotificationChannel(channel)
+            startForeground(NOTIFICATION_ID, builder.build())
+
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -71,8 +256,15 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         return super.stopService(name)
     }
 
+    private fun cancelNotification() {
+        if (::mNotificationManager.isInitialized) {
+            mNotificationManager.cancelAll() //从状态栏中移除通知
+        }
+    }
+
     override fun onDestroy() {
         releasePlayer()
+        unregisterReceiver(playMusicReceiver)
 //        EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
@@ -98,29 +290,50 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
     }
 
     override fun play(music: BaseMusic): Boolean {
-        return mPlayer.play(music)
+        val play = mPlayer.play(music)
+        if (play) {
+            updateNotification()
+        }
+        return play
     }
 
     override fun play(): Boolean {
-        return mPlayer.play()
+        val play = mPlayer.play()
+        if (play) {
+            updateNotification()
+        }
+        return play
     }
 
     override fun play(url: String): Boolean {
-        return mPlayer.play(url)
+        val play = mPlayer.play(url)
+        if (play) {
+            updateNotification()
+        }
+        return play
     }
 
     override fun playLast(): Boolean {
-        return mPlayer.playLast()
+        val play = mPlayer.playLast()
+        if (play) {
+            updateNotification()
+        }
+        return play
     }
 
     override fun playNext(): Boolean {
-        return mPlayer.playNext()
+        val play = mPlayer.playNext()
+        if (play) {
+            updateNotification()
+        }
+        return play
     }
 
     override fun resume(): Boolean {
         val resume = mPlayer.resume()
         if (resume) {
             mPresenter?.onSongPlay()
+            updateNotification()
         }
         return resume
     }
@@ -129,6 +342,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
         val paused = mPlayer.pause()
         if (paused) {
             mPresenter?.onSongPause()
+            updateNotification()
         }
         return paused
     }
@@ -139,6 +353,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
 
     override fun stop() {
         mPlayer.stop()
+        updateNotification()
     }
 
     override fun getProgress(): Int {

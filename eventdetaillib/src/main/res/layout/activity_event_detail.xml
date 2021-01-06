@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.EventDetailActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <com.brins.baselib.widget.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:src="@drawable/base_icon_default_avatar"
+                        app:es_shape_type="round" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_toRightOf="@id/iv_avatar"
+                        android:text="xxx分享单曲："
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/iv_avatar"
+                        android:text="2020/11/28 10:33"
+                        android:textColor="@color/default_btn_text"
+                        android:textSize="12sp" />
+
+                    <com.brins.baselib.widget.ExpandableTextView
+                        android:id="@+id/et_root"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_date"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toEndOf="@id/iv_avatar"
+                        app:animAlphaStart="1"
+                        app:collapseIndicator="@string/collapseIndicator"
+                        app:expandIndicator="@string/expandIndicator"
+                        app:expandToggleOnTextClick="false"
+                        app:expandToggleType="TextView"
+                        app:expandableTextId="@id/tv_content"
+                        app:maxCollapsedLines="5">
+
+                        <com.shuyu.textutillib.RichTextView
+                            android:id="@+id/tv_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的"
+                            android:textColor="@color/black_70"
+                            android:textSize="15sp"
+                            app:atColor="@color/blue_4f7daf"
+                            app:linkColor="@color/blue_4f7daf"
+                            app:needNumberShow="false"
+                            app:needUrlShow="true"
+                            app:topicColor="@color/blue_4f7daf" />
+
+                        <TextView
+                            android:id="@+id/expand_collapse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blue_4f7daf"
+                            android:textSize="15sp" />
+                    </com.brins.baselib.widget.ExpandableTextView>
+
+                    <com.brins.baselib.widget.MultiImageView
+                        android:id="@+id/mi_event_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_root"
+                        android:layout_toEndOf="@id/iv_avatar">
+
+                    </com.brins.baselib.widget.MultiImageView>
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:layout_collapseMode="pin">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/iv_return"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/base_shape_circle_halfwhite"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/base_icon_back_black" />
+
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="22dp"
+                            android:layout_toRightOf="@id/iv_return"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            tools:text="动态" />
+
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:id="@+id/magicIndicator_mine_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_event_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
