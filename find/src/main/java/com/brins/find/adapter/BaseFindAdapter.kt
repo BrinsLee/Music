@@ -148,12 +148,28 @@ class BaseFindAdapter(
 
                 }
 
+
                 helper.getView<ConstraintLayout>(R.id.cl_item_root).setOnClickListener {
                     val bundle = Bundle()
                     bundle.putSerializable(KEY_EVENT_DATA, item)
                     BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
                         .toEventDetailActivity(bundle)
                 }
+                helper.getView<ExpandableTextView>(R.id.et_root)
+                    .setOnExpandStateChangeListener(object :
+                        ExpandableTextView.OnExpandStateChangeListener {
+                        override fun onTextClick() {
+                            TODO("Not yet implemented")
+                        }
+
+                        override fun onExpandStateChanged(
+                            textView: TextView?,
+                            isExpanded: Boolean
+                        ) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
             }
             ITEM_FIND_SINGLE_TITLE -> {
                 val textView = helper.getView<TextView>(R.id.item_text_view)

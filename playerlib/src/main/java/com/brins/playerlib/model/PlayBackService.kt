@@ -162,11 +162,9 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
             }
 
             remoteView.setTextViewText(R.id.widget_title, it.name)
-
-            val artists = it.song?.artists
             remoteView.setTextViewText(
                 R.id.widget_artist,
-                if (artists.isNullOrEmpty()) "未知" else artists[0].name
+                getArtists(it)
             )
 
             remoteView.setImageViewResource(
@@ -176,6 +174,25 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
 
         }
         createNotificationChannel()
+    }
+
+    private fun getArtists(data: BaseMusic): String {
+        val builder = StringBuilder()
+        var artists = data.artists
+        if (artists.isNullOrEmpty()) {
+            artists = data.song?.artists
+        }
+        artists?.let {
+            for (i in 0 until it.size) {
+                builder.append(it[i].name)
+                if (i != it.size - 1)
+                    builder.append("，")
+            }
+        }
+        if (artists.isNullOrEmpty()) {
+            builder.append("未知")
+        }
+        return builder.toString()
     }
 
     /**
