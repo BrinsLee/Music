@@ -159,14 +159,16 @@ class BaseFindAdapter(
                     .setOnExpandStateChangeListener(object :
                         ExpandableTextView.OnExpandStateChangeListener {
                         override fun onTextClick() {
-                            TODO("Not yet implemented")
+                            val bundle = Bundle()
+                            bundle.putSerializable(KEY_EVENT_DATA, item)
+                            BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
+                                .toEventDetailActivity(bundle)
                         }
 
                         override fun onExpandStateChanged(
                             textView: TextView?,
                             isExpanded: Boolean
                         ) {
-                            TODO("Not yet implemented")
                         }
 
                     })
