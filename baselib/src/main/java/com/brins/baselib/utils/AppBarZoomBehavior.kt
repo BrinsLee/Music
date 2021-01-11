@@ -62,14 +62,17 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         mAppbarHeight = abl.height
         mImageView = abl.findViewById(R.id.cover)
         mImageBackground = abl.findViewWithTag("coverBg")
-        if (mImageView != null && mImageViewHeight == 0) {
+        if (mImageView != null) {
             mImageViewHeight = mImageView!!.height
         }
     }
 
     /**
      * 是否处理嵌套滑动
-     *
+     * 当手指按下屏幕的时候触发，用来决定是否要让Behavior处理这次滑动，true为处理，false为不处理，
+     * 如果不处理，那么Behavior的后续方法也就不会在再调用了，方法中也提供了一些辅助参数，
+     * 比如type，可以用来判断用户动作，比如是TYPE_TOUCH按住屏幕拖动，TYPE_NON_TOUCH快速拉动屏幕等。
+
      * @param parent
      * @param child
      * @param directTargetChild
@@ -141,28 +144,28 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         dy: Int
     ) {
         mTotalDy += -dy.toFloat()
-        if (mTotalDy < 50) {
-            return
-        }
-        mTotalDy = mTotalDy.coerceAtMost(MAX_ZOOM_HEIGHT)
-        mScaleValue = 1f.coerceAtLeast(1f + mTotalDy / MAX_ZOOM_HEIGHT)
+        mTotalDy = Math.min(mTotalDy, MAX_ZOOM_HEIGHT)
+        mScaleValue = Math.max(1f, 1f + mTotalDy / MAX_ZOOM_HEIGHT)
         mImageView?.scaleX = mScaleValue
         mImageView?.scaleY = mScaleValue
-        mLastBottom = mAppbarHeight + (mImageView!!.height / 2 * (mScaleValue - 1)).toInt()
+        mLastBottom = mAppbarHeight + (mImageViewHeight / 2 * (mScaleValue - 1)).toInt()
         abl.bottom = mLastBottom
-        mImageView?.layoutParams =
-            ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                min((1.5 * mImageViewHeight).toInt(), mLastBottom)
-            )
-        mImageBackground?.layoutParams =
-            ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                min((1.5 * mImageViewHeight).toInt(), mLastBottom)
-            )
+        (mImageView?.parent as? ConstraintLayout)?.apply {
+            bottom = mLastBottom
+        }
     }
 
 
+    /**
+     * 当用户快速滑动屏幕，产生惯性滑动的时候，会触发此方法，这个方法参数中提供了滑动方向与速度。
+     *
+     * @param coordinatorLayout
+     * @param child
+     * @param target
+     * @param velocityX
+     * @param velocityY
+     * @return
+     */
     override fun onNestedPreFling(
         coordinatorLayout: CoordinatorLayout,
         child: AppBarLayout,
@@ -176,6 +179,14 @@ class AppBarZoomBehavior @JvmOverloads constructor(
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY)
     }
 
+    /**
+     * 滑动停止的时候调用，如果没有发生惯性滑动，那么会直接到这个方法。
+     *
+     * @param coordinatorLayout
+     * @param child
+     * @param target
+     * @param type
+     */
     override fun onStopNestedScroll(
         coordinatorLayout: CoordinatorLayout,
         child: AppBarLayout,
@@ -199,32 +210,18 @@ class AppBarZoomBehavior @JvmOverloads constructor(
                     val bottom =
                         (mLastBottom - (mLastBottom - mAppbarHeight) * animation.animatedFraction).toInt()
                     abl.bottom = bottom
-                    mImageView?.layoutParams =
-                        ConstraintLayout.LayoutParams(
-                            ConstraintLayout.LayoutParams.MATCH_PARENT,
-                            mImageViewHeight
-                        )
-                    mImageBackground?.layoutParams =
-                        ConstraintLayout.LayoutParams(
-                            ConstraintLayout.LayoutParams.MATCH_PARENT,
-                            mImageViewHeight
-                        )
+                    (mImageView?.parent as? ConstraintLayout)?.apply {
+                        this.bottom = bottom
+                    }
                 }
                 valueAnimator?.start()
             } else {
                 mImageView?.scaleX = 1f
                 mImageView?.scaleY = 1f
                 abl.bottom = mAppbarHeight
-                mImageView?.layoutParams =
-                    ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        mImageViewHeight
-                    )
-                mImageBackground?.layoutParams =
-                    ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        mImageViewHeight
-                    )
+                (mImageView?.parent as? ConstraintLayout)?.apply {
+                    this.bottom = mAppbarHeight
+                }
             }
         }
     }

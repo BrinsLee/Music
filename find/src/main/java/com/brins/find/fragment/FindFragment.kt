@@ -3,10 +3,13 @@ package com.brins.find.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.brins.baselib.cache.login.LoginCache
 import com.brins.baselib.config.TYPE_EVENT
 import com.brins.baselib.fragment.BaseMvpFragment
 import com.brins.baselib.module.BaseData
 import com.brins.baselib.route.RouterHub
+import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.find.R
 import com.brins.find.adapter.BaseFindAdapter
 import com.brins.find.contract.FindContract
@@ -16,6 +19,8 @@ import com.brins.networklib.model.event.EventsResult
 import com.brins.networklib.model.follow.MyFollowsData
 import com.brins.networklib.model.title.SingleTitleData2
 import kotlinx.android.synthetic.main.fragment_find.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 @Route(path = RouterHub.FINDFRAGMENT)
 class FindFragment : BaseMvpFragment<FindPresenter>(), FindContract.View {
@@ -72,5 +77,17 @@ class FindFragment : BaseMvpFragment<FindPresenter>(), FindContract.View {
             mAdapter?.addData(it)
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loginSuccess(params: EventBusParams) {
+        when (params.key) {
+            EventBusKey.KEY_EVENT_LOGIN_SUCCESS -> {
+                launch({
+                    mPresenter?.loadEvent()
+                }, {})
+            }
+
+        }
     }
 }
