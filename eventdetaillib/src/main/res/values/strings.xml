@@ -1,1 +1,8 @@
-<resources></resources>
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_comment">暂无评论</string>
+    <string name="comment">评论</string>
+    <string name="forward">转发</string>
+    <string name="like">赞</string>
+</resources>

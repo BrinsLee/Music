@@ -17,7 +17,7 @@ class MusicDetailPresenter : MusicDetailContract.Presenter() {
     }
 
     override suspend fun unLikeMusic(id: String) {
-        val result = mModel?.UnLikeMusic(id)
+        val result = mModel?.unLikeMusic(id)
         result?.let {
             mView?.onDislikeMusic(it.code == 200, id)
         }

@@ -40,9 +40,9 @@ interface MusicDetailContract {
 
         suspend fun likeMusic(id: String): LikeMusicResult
 
-        suspend fun UnLikeMusic(id: String): LikeMusicResult
+        suspend fun unLikeMusic(id: String): LikeMusicResult
 
-        suspend fun likeOrunLikeComment(id: String, cid: String, t: Int, type: Int)
+        suspend fun likeOrUnLikeComment(id: String, cid: String, t: Int, type: Int)
     }
 
     abstract class ViewModel(application: Application) :

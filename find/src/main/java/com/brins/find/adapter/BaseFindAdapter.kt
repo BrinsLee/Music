@@ -1,18 +1,18 @@
 package com.brins.find.adapter
 
-import android.app.Activity
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.SparseBooleanArray
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityOptionsCompat
 import com.brins.baselib.config.KEY_EVENT_DATA
 import com.brins.baselib.config.KEY_EVENT_PICTURES
 import com.brins.baselib.config.KEY_EVENT_PICTURE_POS
-import com.brins.baselib.config.TRANSITION_IMAGE
 import com.brins.baselib.module.*
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SizeUtils.dp2px
@@ -55,36 +55,15 @@ class BaseFindAdapter(
                 )
                 helper.setText(R.id.tv_name, createNickName(item))
                 helper.setText(R.id.tv_date, getDateToString(item.eventTime))
-                if (item.jsonData == null) {
-                    val jsonData: EventData.EventJson = GsonUtils.fromJson<EventData.EventJson>(
-                        item.json,
-                        EventData.EventJson::class.java
-                    )
-                    helper.getView<ExpandableTextView>(R.id.et_root)
-                        .setText(jsonData.msg, mCollapsedStatus, helper.adapterPosition)
-                    /*helper.getView<RichTextView>(R.id.tv_content)
-                        .setRichText(
-                            jsonData.msg,
-                            getUserModel(jsonData.msg),
-                            getTopicModel(jsonData.msg)
-                        )*/
-                    item.jsonData = jsonData
-                } else {
-                    helper.getView<ExpandableTextView>(R.id.et_root)
-                        .setText(item.jsonData?.msg, mCollapsedStatus, helper.adapterPosition)
-                    /*helper.getView<RichTextView>(R.id.tv_content)
-                        .setRichText(
-                            item.jsonData?.msg, getUserModel(item.jsonData?.msg),
-                            getTopicModel(item.jsonData?.msg)
-                        )*/
-
-                }
+                dealJsonData(item)
+                helper.getView<ExpandableTextView>(R.id.et_root)
+                    .setText(item.jsonData?.msg, mCollapsedStatus, helper.adapterPosition)
 
                 val relativeLayout = helper.getView<RelativeLayout>(R.id.rl_item_root)
                 if (relativeLayout.childCount > 5) {
                     relativeLayout.removeViewAt(relativeLayout.childCount - 1)
                 }
-                val view = createShareContent(item)
+                val view = createShareContent(item, helper.adapterPosition)
                 view?.let {
                     val params = RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -105,17 +84,7 @@ class BaseFindAdapter(
                     helper.getView<MultiImageView>(R.id.mi_event_images)
                         .setOnItemClickListener(object : MultiImageView.OnItemClickListener {
                             override fun onItemClick(view: View, position: Int) {
-                                val bundle = Bundle()
-                                bundle.putSerializable(KEY_EVENT_PICTURES, it)
-                                bundle.putInt(KEY_EVENT_PICTURE_POS, position)
-                                val optionsCompat: ActivityOptionsCompat =
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                        context as Activity,
-                                        view,
-                                        TRANSITION_IMAGE
-                                    )
-                                BridgeProviders.instance.getBridge(PictureDetailBridgeInterface::class.java)
-                                    .toDetailPictureActivity(bundle, optionsCompat)
+                                toDetailPictureActivity(it, position)
                             }
 
                         })
@@ -150,19 +119,13 @@ class BaseFindAdapter(
 
 
                 helper.getView<ConstraintLayout>(R.id.cl_item_root).setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putSerializable(KEY_EVENT_DATA, item)
-                    BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
-                        .toEventDetailActivity(bundle)
+                    toEventDetailActivity(item)
                 }
                 helper.getView<ExpandableTextView>(R.id.et_root)
                     .setOnExpandStateChangeListener(object :
                         ExpandableTextView.OnExpandStateChangeListener {
                         override fun onTextClick() {
-                            val bundle = Bundle()
-                            bundle.putSerializable(KEY_EVENT_DATA, item)
-                            BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
-                                .toEventDetailActivity(bundle)
+                            toEventDetailActivity(item)
                         }
 
                         override fun onExpandStateChanged(
@@ -208,14 +171,127 @@ class BaseFindAdapter(
 
     }
 
-    private fun createShareContent(item: EventData): View? {
+    /**
+     * 处理jsonData
+     *
+     * @param item
+     */
+    private fun dealJsonData(item: EventData) {
+        if (item.jsonData == null) {
+            val jsonData: EventData.EventJson = GsonUtils.fromJson<EventData.EventJson>(
+                item.json,
+                EventData.EventJson::class.java
+            )
+            item.jsonData = jsonData
+        } else {
+            return
+        }
+    }
+
+    /**
+     * 跳转动态详情页
+     *
+     * @param item
+     */
+    private fun toEventDetailActivity(item: EventData) {
+        val bundle = Bundle()
+        bundle.putSerializable(KEY_EVENT_DATA, item)
+        BridgeProviders.instance.getBridge(EventDetailBridgeInterface::class.java)
+            .toEventDetailActivity(bundle)
+    }
+
+    /**
+     * 跳转图片展示界面
+     *
+     * @param it
+     * @param position
+     */
+    private fun toDetailPictureActivity(it: ArrayList<EventData.Image>, position: Int) {
+        val bundle = Bundle()
+        bundle.putSerializable(KEY_EVENT_PICTURES, it)
+        bundle.putInt(KEY_EVENT_PICTURE_POS, position)
+        BridgeProviders.instance.getBridge(PictureDetailBridgeInterface::class.java)
+            .toDetailPictureActivity(bundle)
+    }
+
+    private fun createShareContent(item: EventData, pos: Int): View? {
         when (item.type) {
             18 -> return createShareMusic(item)
             19 -> return createShareAlbum(item)
             13 -> return createShareMusicList(item)
+            22 -> return createForward(item.jsonData!!.event!!, pos)
             else -> return null
         }
         return null
+    }
+
+    /**
+     * 创建转发原动态
+     *
+     * @param item
+     * @return
+     */
+    private fun createForward(item: EventData, pos: Int): View? {
+        var rootview =
+            LayoutInflater.from(context).inflate(R.layout.find_item_event, null, false)
+        rootview.findViewById<RelativeLayout>(R.id.rl_item_root)
+            .background = (UIUtils.getDrawable(R.drawable.base_bg_15dp_f2f2f2))
+        rootview.findViewById<ImageView>(R.id.iv_avatar).visibility = View.GONE
+        rootview.findViewById<LinearLayout>(R.id.ll_share_root).visibility = View.GONE
+        rootview.findViewById<TextView>(R.id.tv_name).visibility = View.GONE
+        rootview.findViewById<TextView>(R.id.tv_date).visibility = View.GONE
+        dealJsonData(item)
+        rootview.findViewById<ExpandableTextView>(R.id.et_root)
+            .setText(item.jsonData?.msg, SparseBooleanArray(), pos)
+        val relativeLayout = rootview.findViewById<RelativeLayout>(R.id.rl_item_root)
+        if (relativeLayout.childCount > 5) {
+            relativeLayout.removeViewAt(relativeLayout.childCount - 1)
+        }
+        val view = createShareContent(item, pos)
+        view?.let {
+            val params = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.addRule(RelativeLayout.BELOW, R.id.mi_event_images)
+            params.addRule(RelativeLayout.END_OF, R.id.iv_avatar)
+            params.topMargin = SizeUtils.dp2px(8f)
+            it.layoutParams = params
+            relativeLayout.addView(it)
+        }
+        item.pics?.let {
+            val list = mutableListOf<String>()
+            it.forEach { image ->
+                list.add(image.squareUrl)
+            }
+            rootview.findViewById<MultiImageView>(R.id.mi_event_images)
+                .setOnItemClickListener(object : MultiImageView.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        toDetailPictureActivity(it, position)
+                    }
+
+                })
+            rootview.findViewById<MultiImageView>(R.id.mi_event_images).setList(list)
+        }
+
+        rootview.findViewById<ConstraintLayout>(R.id.cl_item_root).setOnClickListener {
+            toEventDetailActivity(item)
+        }
+        rootview.findViewById<ExpandableTextView>(R.id.et_root)
+            .setOnExpandStateChangeListener(object :
+                ExpandableTextView.OnExpandStateChangeListener {
+                override fun onTextClick() {
+                    toEventDetailActivity(item)
+                }
+
+                override fun onExpandStateChanged(
+                    textView: TextView?,
+                    isExpanded: Boolean
+                ) {
+                }
+            })
+
+        return rootview
     }
 
     /**

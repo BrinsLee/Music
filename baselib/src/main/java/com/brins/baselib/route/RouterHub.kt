@@ -1,5 +1,7 @@
 package com.brins.baselib.route
 
+import com.brins.baselib.config.EVENT
+
 interface RouterHub {
 
     companion object {
@@ -16,7 +18,6 @@ interface RouterHub {
         const val FIND = "/find"
         const val PICTURE_DETAIL = "/picturedetail"
         const val EVENT_DETAIL = "/eventdetail"
-
 
 
         //    ****************Activity路径配置***************************
@@ -50,13 +51,14 @@ interface RouterHub {
         const val EVENTDETAILACTIVITY = "$EVENT_DETAIL/EventDetailActivity"
 
 
-
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"
 
         const val MINEFRAGMENT = "$MINE/MineFragment"
 
         const val FINDFRAGMENT = "$FIND/FindFragment"
+
+        const val EVENTCOMMENTFRAGMENT = "${EVENT_DETAIL}/EventCommentFragment"
 
     }
 }

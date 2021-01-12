@@ -27,6 +27,21 @@ object ApiHelper {
     private var mSearchService: SearchService? = null
     private var mMineService: MyService? = null
     private var mFindService: FindService? = null
+    private var mEventDetailService: EventDetailService? = null
+
+
+    fun getEventDetailService(): EventDetailService {
+        if (mEventDetailService == null) {
+            synchronized(EventDetailService::class.java) {
+                if (mEventDetailService == null) {
+                    mEventDetailService = RetrofitFactory.newRetrofit(
+                        BASEURL
+                    ).create(EventDetailService::class.java)
+                }
+            }
+        }
+        return mEventDetailService!!
+    }
 
     fun getPersonalizedService(): PersonalizedService {
         if (mPersonalizedService == null) {

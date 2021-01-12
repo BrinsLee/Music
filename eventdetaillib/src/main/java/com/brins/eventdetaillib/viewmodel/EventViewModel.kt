@@ -1,12 +1,16 @@
-package com.brins.musicdetail.viewmodel
+package com.brins.eventdetaillib.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.brins.musicdetail.contract.MusicDetailContract
+import com.brins.eventdetaillib.contract.EventDetailContract
 import com.brins.networklib.model.comment.CommentResult
 
-class MusicCommentsViewModel(application: Application) :
-    MusicDetailContract.ViewModel(application) {
+/**
+ * Created by lipeilin
+ * on 2021/1/12
+ */
+class EventViewModel(application: Application) :
+    EventDetailContract.ViewModel(application) {
 
     private lateinit var mCommentData: CommentResult
     private val mHotCommentLiveData: MutableLiveData<ArrayList<CommentResult.Comment>> =
@@ -23,8 +27,8 @@ class MusicCommentsViewModel(application: Application) :
 
     fun getCommentData(): CommentResult = mCommentData
 
-    override suspend fun loadComments(path: String, id: String) {
-        val result = mModel?.loadComment(path, id)
+    override suspend fun getEventComment(id: String) {
+        val result = mModel?.getEventComment(id)
         result?.let {
             mCommentData = it
             mCommentLiveData.value = it.comments
@@ -33,7 +37,10 @@ class MusicCommentsViewModel(application: Application) :
         }
     }
 
-    override suspend fun likeOrUnLikeMusicComment(id: String, cid: String, t: Int, type: Int) {
-        mModel?.likeOrUnLikeComment(id, cid, t, type)
+    override suspend fun getEventForward(id: String) {
+    }
+
+    override suspend fun likeOrUnLikeEventComment(id: String, cid: String, t: Int, type: Int) {
+        TODO("Not yet implemented")
     }
 }

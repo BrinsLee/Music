@@ -11,6 +11,7 @@ const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
 const val KEY_EVENT_PICTURES = "KEY_EVENT_PICTURES"
 const val KEY_EVENT_PICTURE_POS = "KEY_EVENT_PICTURE_POS"
 const val KEY_EVENT_DATA = "KEY_EVENT_DATA"
+const val KEY_EVENT_THREADID = "KEY_EVENT_THREADID"
 
 const val TRANSITION_NAME = "TRANSITION_NAME"
 const val TRANSITION_IMAGE = "image"
@@ -254,5 +255,11 @@ interface LIKE {
     companion object {
         //1 点赞 ，2 取消点赞
         const val LIKE_OR_UNLIKE = "/resource/like"
+    }
+}
+
+interface EVENT {
+    companion object {
+        const val EVENT_COMMENT = "/comment/event"
     }
 }

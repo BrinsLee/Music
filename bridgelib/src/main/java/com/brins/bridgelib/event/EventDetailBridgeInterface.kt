@@ -1,6 +1,7 @@
 package com.brins.bridgelib.event
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.brins.bridgelib.BridgeInterface
 
 /**
@@ -10,4 +11,6 @@ import com.brins.bridgelib.BridgeInterface
 interface EventDetailBridgeInterface : BridgeInterface {
 
     fun toEventDetailActivity(bundle: Bundle)
+
+    fun getEventCommentFragment(bundle: Bundle): Fragment
 }

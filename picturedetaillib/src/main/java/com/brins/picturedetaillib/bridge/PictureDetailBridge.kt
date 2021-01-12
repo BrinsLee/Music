@@ -14,8 +14,7 @@ import com.brins.picturedetaillib.fragment.DetailPictureFragment
  */
 class PictureDetailBridge : PictureDetailBridgeInterface {
     override fun toDetailPictureActivity(
-        bundle: Bundle,
-        optionsCompat: ActivityOptionsCompat
+        bundle: Bundle
     ) {
         ARouterUtils.go(RouterHub.DETAILPICTUREACTIVITY, bundle)
     }
