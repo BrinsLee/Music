@@ -88,7 +88,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/base_bg_20dp_top"
+                android:background="@drawable/base_bg_20dp_top_white"
                 android:orientation="vertical">
 
                 <net.lucode.hackware.magicindicator.MagicIndicator

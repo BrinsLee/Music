@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp">
@@ -41,33 +42,109 @@
             android:textColor="@color/default_btn_text"
             android:textSize="12sp" />
 
-        <com.shuyu.textutillib.RichTextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
+        <com.brins.baselib.widget.ExpandableTextView
+            android:id="@+id/et_root"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_date"
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/iv_avatar"
-            android:ellipsize="end"
-            android:maxLines="5"
-            android:text="这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的"
-            android:textColor="@color/black_70"
-            android:textSize="15sp"
-            app:atColor="@color/blue_4f7daf"
-            app:linkColor="@color/blue_4f7daf"
-            app:needNumberShow="false"
-            app:needUrlShow="true"
-            app:topicColor="@color/blue_4f7daf" />
+            app:animAlphaStart="1"
+            app:collapseIndicator="@string/collapseIndicator"
+            app:expandIndicator="@string/expandIndicator"
+            app:expandToggleOnTextClick="false"
+            app:expandToggleType="TextView"
+            app:expandableTextId="@id/tv_content"
+            app:maxCollapsedLines="5">
+
+            <com.shuyu.textutillib.RichTextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的"
+                android:textColor="@color/black_70"
+                android:textSize="15sp"
+                app:atColor="@color/blue_4f7daf"
+                app:linkColor="@color/blue_4f7daf"
+                app:needNumberShow="false"
+                app:needUrlShow="true"
+                app:topicColor="@color/blue_4f7daf" />
+
+            <TextView
+                android:id="@+id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue_4f7daf"
+                android:textSize="15sp" />
+        </com.brins.baselib.widget.ExpandableTextView>
+
+        <!--        <com.shuyu.textutillib.RichTextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_date"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toEndOf="@id/iv_avatar"
+                    android:text="这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的这是带音乐的"
+                    android:textColor="@color/black_70"
+                    android:textSize="15sp"
+                    app:atColor="@color/blue_4f7daf"
+                    app:linkColor="@color/blue_4f7daf"
+                    app:needNumberShow="false"
+                    app:needUrlShow="true"
+                    app:topicColor="@color/blue_4f7daf" />-->
 
         <com.brins.baselib.widget.MultiImageView
             android:id="@+id/mi_event_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
+            android:layout_below="@id/et_root"
             android:layout_toEndOf="@id/iv_avatar">
 
         </com.brins.baselib.widget.MultiImageView>
+
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_share_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/rl_item_root">
+
+        <com.brins.mine.widget.ImageTextView
+            android:id="@+id/itv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:itv_drawable="@drawable/base_icon_event_share" />
+
+        <com.brins.mine.widget.ImageTextView
+            android:id="@+id/itv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            app:itv_drawable="@drawable/base_icon_event_comment" />
+
+        <com.brins.mine.widget.ImageTextView
+            android:id="@+id/itv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            app:itv_drawable="@drawable/base_icon_event_unlike" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="2dp"
+        android:background="@color/default_btn_text"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/ll_share_root" />
 </androidx.constraintlayout.widget.ConstraintLayout>

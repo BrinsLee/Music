@@ -64,7 +64,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
                     ACTION_PRV -> playLast()
                     ACTION_NEXT -> playNext()
                     ACTION_PAUSE -> pause()
-                    ACTION_PLAY -> play()
+                    ACTION_PLAY -> resume()
                 }
             }
         }

@@ -48,6 +48,9 @@ class MineInfoActivity : BaseMvpActivity<MinePresenter>() {
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
         toolbar.setContentInsetsAbsolute(0, 0)
+        iv_return.setOnClickListener {
+            finish()
+        }
         if (LoginCache.isLogin && LoginCache.userProfile != null) {
             LoginCache.userProfile?.apply {
                 GlideHelper.setImageResource(cover, this.backgroundUrl)
