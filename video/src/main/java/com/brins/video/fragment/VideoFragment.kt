@@ -109,7 +109,7 @@ class VideoFragment : BaseFragment() {
 
     override fun onDestroy() {
         mediator?.detach()
-        vp_video.unregisterOnPageChangeCallback(changeCallback)
+        vp_video?.unregisterOnPageChangeCallback(changeCallback)
         super.onDestroy()
     }
 }
