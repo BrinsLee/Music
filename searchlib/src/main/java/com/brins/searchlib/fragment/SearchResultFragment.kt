@@ -55,27 +55,7 @@ class SearchResultFragment private constructor() :
 
     companion object {
         fun getInstance(type: Int): Fragment {
-            val fragment: Fragment
-            when (type) {
-                SEARCH.TYPE_MUSIC ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_ALBUM ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_ARTIST ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_MUSIC_LIST ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_USER ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_MV ->
-                    fragment = SearchResultFragment()
-                SEARCH.TYPE_RADIO ->
-                    fragment = SearchResultFragment()
-                else -> {
-                    throw Exception("no type match")
-                }
-
-            }
+            val fragment: Fragment = SearchResultFragment()
             val bundle = Bundle()
             bundle.putInt("SEARCH_TYPE", type)
             fragment.arguments = bundle

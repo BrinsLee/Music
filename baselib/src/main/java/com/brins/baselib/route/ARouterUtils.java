@@ -72,6 +72,13 @@ public class ARouterUtils {
         return o;
     }
 
+    public static <F extends Fragment> F getFragment(String path, Bundle bundle) {
+        if (TextUtils.isEmpty(path))
+            return null;
+        F o = (F) build(path).with(bundle).navigation();
+        return o;
+    }
+
     /**
      * 获取Postcard,用于配置参数
      *

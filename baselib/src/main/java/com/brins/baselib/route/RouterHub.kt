@@ -18,6 +18,7 @@ interface RouterHub {
         const val FIND = "/find"
         const val PICTURE_DETAIL = "/picturedetail"
         const val EVENT_DETAIL = "/eventdetail"
+        const val VIDEO = "/video"
 
 
         //    ****************Activity路径配置***************************
@@ -38,7 +39,9 @@ interface RouterHub {
 
         const val LOGINSELECTACTIVITY = "$LOGIN/LoginSelectActivity"
 
-        const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
+        const val LOGINEMAILACTIVITY = "$LOGIN/LoginEmailActivity"
+
+        const val LOGINPHONEACTIVITY = "$LOGIN/LoginPhoneActivity"
 
         const val DAILYMUSICACTIVITY = "$DAILY/DailyMusicActivity"
 
@@ -49,6 +52,8 @@ interface RouterHub {
         const val DETAILPICTUREACTIVITY = "$PICTURE_DETAIL/DetailPictureActivity"
 
         const val EVENTDETAILACTIVITY = "$EVENT_DETAIL/EventDetailActivity"
+
+        const val VIDEODETAILACTIVITY = "${VIDEO}/VideoDetailActivity"
 
 
         //    ****************Fragment路径配置***************************

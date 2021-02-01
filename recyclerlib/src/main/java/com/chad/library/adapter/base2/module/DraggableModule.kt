@@ -7,7 +7,7 @@ import android.view.View.OnLongClickListener
 import android.view.View.OnTouchListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.R
+import com.brins.recyclerlib.R
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.dragswipe.DragAndSwipeCallback
 import com.chad.library.adapter.base2.listener.DraggableListenerImp

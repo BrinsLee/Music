@@ -83,6 +83,8 @@ class EventData : BaseData(), Serializable {
         var shareCount = 0
 
         var threadId = ""
+
+        var commentThread: CommentThread? = null
     }
 
     class EventJson : Serializable {
@@ -116,5 +118,15 @@ class EventData : BaseData(), Serializable {
         var markTitle = ""
 
         var markType = ""
+    }
+
+    class CommentThread : Serializable {
+        var latestLikedUsers: List<LatestLikeUsers>? = null
+    }
+
+    class LatestLikeUsers : Serializable {
+        var s = ""
+
+        var t = ""
     }
 }

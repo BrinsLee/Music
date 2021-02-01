@@ -1,6 +1,7 @@
 package com.brins.networklib.service
 
 import com.brins.baselib.config.LOGIN.Companion.LOGIN_EMAIL_LOGIN
+import com.brins.baselib.config.LOGIN.Companion.LOGIN_PHONE_LOGIN
 import com.brins.baselib.module.userlogin.UserLoginResult
 import retrofit2.Call
 import retrofit2.http.GET
@@ -18,4 +19,9 @@ interface LoginService {
         @Query("password") password: String
     ): Call<UserLoginResult>
 
+    @GET(LOGIN_PHONE_LOGIN)
+    fun loginPhone(
+        @Query("phone") phone: String,
+        @Query("password") password: String
+    ): Call<UserLoginResult>
 }

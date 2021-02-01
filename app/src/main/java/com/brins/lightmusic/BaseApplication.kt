@@ -26,6 +26,7 @@ import com.brins.musiclistlib.bridge.MusicListBridge
 import com.brins.musicsquarelib.bridge.MusicSquareBridge
 import com.brins.picturedetaillib.bridge.PictureDetailBridge
 import com.brins.searchlib.bridge.SearchBridge
+import com.brins.video.bridge.VideoBridge
 import dagger.hilt.android.HiltAndroidApp
 
 //import io.reactivex.plugins.RxJavaPlugins
@@ -148,6 +149,7 @@ class BaseApplication : Application() {
             .register(FindBridge::class.java)
             .register(PictureDetailBridge::class.java)
             .register(EventDetailBridge::class.java)
+            .register(VideoBridge::class.java)
     }
 
 

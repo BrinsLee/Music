@@ -59,6 +59,12 @@ val TYPE_EVENT = arrayListOf<Int>(
     41, 21
 )
 
+val MAINLAND = "内地"
+val HONGKONG_TAIWAN = "港台"
+val EUROPE_AMERICA = "欧美"
+val JAPAN = "日本"
+val KOREA = "韩国"
+
 interface RECOMMEND {
     companion object {
         const val RECOMMEND_MV = "/personalized/mv"
@@ -211,6 +217,8 @@ interface MINE_INFO {
 interface LOGIN {
     companion object {
         const val LOGIN_EMAIL_LOGIN = "/login"
+
+        const val LOGIN_PHONE_LOGIN = "/login/cellphone"
     }
 }
 
@@ -261,5 +269,35 @@ interface LIKE {
 interface EVENT {
     companion object {
         const val EVENT_COMMENT = "/comment/event"
+    }
+}
+
+interface VIDEO {
+    companion object {
+        /**
+         * 最新MV
+         */
+        const val LASTEST_MUSIC_VIDEO = "/mv/first"
+
+        /**
+         * MV播放地址
+         */
+        const val MVURL = "/mv/url"
+
+        /**
+         * 详情
+         */
+        const val MVDETAIL = "/mv/detail"
+
+        /**
+         * 所有MV
+         */
+        const val MVALL = "/mv/all"
+
+        /**
+         * 获取评论
+         */
+        const val MVCOMMENTS = "/comment/mv"
+
     }
 }

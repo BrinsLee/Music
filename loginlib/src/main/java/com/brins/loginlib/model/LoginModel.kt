@@ -1,6 +1,7 @@
 package com.brins.loginlib.model
 
 import com.brins.baselib.module.like.UserLikeMusicResult
+import com.brins.baselib.module.userlogin.UserLoginResult
 import com.brins.loginlib.contract.LoginContract
 import com.brins.networklib.helper.ApiHelper
 import com.brins.networklib.helper.ApiHelper.await
@@ -16,6 +17,9 @@ class LoginModel : LoginContract.Model {
 
     override suspend fun getUserLikeList(id: String): UserLikeMusicResult =
         ApiHelper.getMusicListService().getUserLikeMusicList(id).await()
+
+    override suspend fun phoneLogin(phone: String, password: String): UserLoginResult =
+        ApiHelper.getLoginService().loginPhone(phone, password).await()
 
     override fun onDestroy() {
     }

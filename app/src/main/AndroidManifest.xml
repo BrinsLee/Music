@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".BaseApplication"
@@ -25,6 +26,11 @@
         </activity>
 
         <activity android:name=".ui.SplashActivity" />
+        <activity
+            android:name="com.brins.video.activity.VideoDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ class EventModel : EventDetailContract.Model {
             .await()
 
     override suspend fun getEventForward(id: String) {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun likeOrUnLikeComment(id: String, cid: String, t: Int, type: Int) {

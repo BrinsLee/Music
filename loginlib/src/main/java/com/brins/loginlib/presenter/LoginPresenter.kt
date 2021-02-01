@@ -22,6 +22,13 @@ class LoginPresenter : LoginContract.Presenter() {
         }
     }
 
+    override suspend fun phoneLogin(phone: String, password: String) {
+        val result = mModel?.phoneLogin(phone, password)
+        result?.let {
+            storeUserInfo(it)
+        }
+    }
+
     override suspend fun getUseLikeList(loginResult: UserLoginResult) {
         val result = mModel?.getUserLikeList(loginResult.profile.userId.toString())
         result?.let {

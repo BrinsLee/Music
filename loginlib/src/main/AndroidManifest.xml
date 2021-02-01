@@ -3,8 +3,15 @@
     package="com.brins.loginlib">
 
     <application>
-        <activity android:name=".activity.LoginInputActivity"></activity>
-        <activity android:name=".activity.LoginSelectActivity" />
+        <activity
+            android:name=".activity.LoginPhoneActivity"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".activity.LoginEmailActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.LoginSelectActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

@@ -28,6 +28,7 @@ object ApiHelper {
     private var mMineService: MyService? = null
     private var mFindService: FindService? = null
     private var mEventDetailService: EventDetailService? = null
+    private var mMusicVideoService: MusicVideoService? = null
 
 
     fun getEventDetailService(): EventDetailService {
@@ -151,6 +152,18 @@ object ApiHelper {
             }
         }
         return mFindService!!
+    }
+
+    fun getMusicVideoService(): MusicVideoService {
+        if (mMusicVideoService == null) {
+            synchronized(MusicVideoService::class.java) {
+                if (mMusicVideoService == null) {
+                    mMusicVideoService = RetrofitFactory.newRetrofit(BASEURL)
+                        .create(MusicVideoService::class.java)
+                }
+            }
+        }
+        return mMusicVideoService!!
     }
 
     suspend fun <T> Call<T>.await(): T {
