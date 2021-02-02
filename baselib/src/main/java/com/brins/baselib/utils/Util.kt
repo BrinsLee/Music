@@ -160,12 +160,7 @@ fun createRadialGradientBitmap(
     bgColors[2] = Color.WHITE
     val stop = floatArrayOf(0.2f, 0.2f, 0.9f)
 
-    val bgBitmap =
-        Bitmap.createBitmap(
-            UIUtils.getScreenWidth(context),
-            UIUtils.getScreenHeight(context),
-            Bitmap.Config.RGB_565
-        )
+    val bgBitmap = Bitmap.createBitmap(UIUtils.getScreenWidth(context), UIUtils.getScreenHeight(context), Bitmap.Config.RGB_565)
     val canvas = Canvas()
     val paint = Paint()
     canvas.setBitmap(bgBitmap)

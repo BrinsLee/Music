@@ -1,22 +1,15 @@
 package com.brins.musicdetail.activity
 
 import android.animation.Animator
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
 import android.widget.LinearLayout
-import androidx.core.animation.addListener
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.RouterHub
-import com.brins.baselib.utils.SizeUtils
 import com.brins.baselib.utils.UIUtils
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
@@ -42,7 +35,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 @Route(path = RouterHub.MUSICDETAILACTIVITY)
@@ -51,7 +43,6 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
 
     private var mTitleList: ArrayList<String> = arrayListOf("歌曲", "歌词")
     private var mPlayer: PlayBackService? = null
-    private var animator: ObjectAnimator? = null
     private var mAdapter: MusicDetailAdapter? = null
 
     override fun getLayoutResId(): Int {
@@ -150,6 +141,11 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
         }
     }
 
+    override fun onPause() {
+        overridePendingTransition(R.anim.base_activity_page_down_enter, R.anim.base_activity_page_down_exit)
+        super.onPause()
+    }
+
     override fun onSongPlay() {
 
     }
@@ -175,31 +171,11 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
         when (p0.id) {
 
             R.id.back_iv -> {
-                finishWithAnimation()
+                finish()
             }
         }
     }
 
-    private fun finishWithAnimation() {
-        if (animator == null) {
-            animator = ObjectAnimator.ofFloat(
-                container,
-                "translationY",
-                0f,
-                SizeUtils.getScreenHeight(this, false).toFloat()
-            )
-            animator?.apply {
-                duration = 800
-                interpolator = AccelerateDecelerateInterpolator()
-                addListener(this@MusicDetailActivity)
-            }
-        }
-        animator!!.start()
-    }
-
-    override fun onBackPressed() {
-        finishWithAnimation()
-    }
 
     fun getPlayBackService() = mPlayer
 

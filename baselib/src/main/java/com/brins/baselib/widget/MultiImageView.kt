@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.brins.baselib.R
 import com.brins.baselib.config.TRANSITION_IMAGE
 import com.brins.baselib.utils.SizeUtils.dp2px
 import com.brins.baselib.utils.glidehelper.GlideHelper
@@ -129,7 +130,7 @@ class MultiImageView(context: Context, attributeSet: AttributeSet? = null) :
         }
         imageView.id = url.hashCode()
         GlideHelper.setImageResource(
-            imageView, url
+            imageView, url, R.drawable.base_icon_default_cover
         )
         imageView.setOnClickListener {
             mOnItemClickListener?.onItemClick(it, pos)

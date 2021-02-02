@@ -1,122 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:clipChildren="false"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:clipChildren="false"
+    app:layout_constraintBottom_toBottomOf="parent">
 
-<!--    <LinearLayout
+    <!--    <LinearLayout
+            android:id="@+id/tab_main_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>-->
+    <LinearLayout
         android:id="@+id/tab_main_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@id/tab_discovery_ll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>-->
-    <ImageButton
+        <ImageButton
             android:id="@+id/tab_main_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="centerInside"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/tab_main_selected"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toStartOf="@id/tab_discovery_btn"/>
+            android:clickable="false"
+            android:scaleType="centerInside" />
 
-
-    <TextView
+        <TextView
             android:id="@+id/tab_main_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:clickable="false"
             android:text="@string/main_tab"
             android:textColor="@drawable/tab_main_text_selected"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@id/tab_main_btn"
-            app:layout_constraintStart_toStartOf="@id/tab_main_btn"
-            app:layout_constraintTop_toBottomOf="@id/tab_main_btn" />
+            android:textSize="11dp" />
+    </LinearLayout>
 
-    <ImageButton
+    <LinearLayout
+        android:id="@+id/tab_discovery_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@id/tab_video_ll"
+        app:layout_constraintStart_toEndOf="@id/tab_main_ll"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
             android:id="@+id/tab_discovery_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="centerInside"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/tab_find_selected"
-            app:layout_constraintStart_toEndOf="@id/tab_main_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toStartOf="@id/tab_video_btn"
-            />
+            android:clickable="false"
+            android:scaleType="centerInside" />
 
-
-    <TextView
+        <TextView
             android:id="@+id/tab_discovery_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:clickable="false"
             android:text="@string/discovery_tab"
             android:textColor="@drawable/tab_main_text_selected"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@id/tab_discovery_btn"
-            app:layout_constraintStart_toStartOf="@id/tab_discovery_btn"
-            app:layout_constraintTop_toBottomOf="@id/tab_discovery_btn" />
+            android:textSize="11dp" />
 
-    <ImageButton
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/tab_video_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@id/tab_mine_ll"
+        app:layout_constraintStart_toEndOf="@id/tab_discovery_ll"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
             android:id="@+id/tab_video_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="centerInside"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/tab_activity_selected"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tab_discovery_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tab_singer_btn"
-            />
+            android:clickable="false"
+            android:scaleType="centerInside" />
 
-
-    <TextView
+        <TextView
             android:id="@+id/tab_video_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:clickable="false"
             android:text="@string/video_tab"
             android:textColor="@drawable/tab_main_text_selected"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@id/tab_video_btn"
-            app:layout_constraintStart_toStartOf="@id/tab_video_btn"
-            app:layout_constraintTop_toBottomOf="@id/tab_video_btn" />
+            android:textSize="11dp" />
+    </LinearLayout>
 
-    <ImageButton
+    <LinearLayout
+        android:id="@+id/tab_mine_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tab_video_ll"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
             android:id="@+id/tab_singer_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="centerInside"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/tab_my_selected"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tab_video_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            android:clickable="false"
+            android:scaleType="centerInside" />
 
 
-    <TextView
+        <TextView
             android:id="@+id/tab_singer_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="3dp"
             android:clickable="false"
             android:text="@string/mine"
             android:textColor="@drawable/tab_main_text_selected"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@id/tab_singer_btn"
-            app:layout_constraintStart_toStartOf="@id/tab_singer_btn"
-            app:layout_constraintTop_toBottomOf="@id/tab_singer_btn" />
+            android:textSize="11dp" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
