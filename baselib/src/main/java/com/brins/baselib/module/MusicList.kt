@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.room.*
 import com.brins.baselib.database.typeconverter.*
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "recommend_music_list")
 @TypeConverters(
@@ -14,7 +15,7 @@ import com.google.gson.annotations.SerializedName
     TracksConverter::class,
     TrackIdsConverter::class
 )
-class MusicList : BaseData() {
+class MusicList : BaseData(), Serializable {
 
     /**
      * 关注者
@@ -175,7 +176,7 @@ class MusicList : BaseData() {
     @ColumnInfo(name = "trackIds")
     var trackIds: ArrayList<TrackId> = arrayListOf()
 
-    class Subscriber {
+    class Subscriber : Serializable {
 
         var province = 0
 
@@ -215,7 +216,7 @@ class MusicList : BaseData() {
 
     }
 
-    class TrackId {
+    class TrackId : Serializable {
         var id = ""
 
         var at = ""

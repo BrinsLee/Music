@@ -1,6 +1,7 @@
 package com.brins.bridgelib.app
 
 import android.content.Context
+import android.content.Intent
 import com.brins.bridgelib.BridgeInterface
 
 interface AppBridgeInterface : BridgeInterface {
@@ -10,4 +11,6 @@ interface AppBridgeInterface : BridgeInterface {
     fun getAccessToken(): String?
 
     fun setAccessToken(accessToken: String?)
+
+    fun getSplashActivity(context: Context): Intent
 }

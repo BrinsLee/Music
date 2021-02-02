@@ -18,11 +18,11 @@ class MusicDetailModel : MusicDetailContract.Model {
     override suspend fun likeMusic(id: String): LikeMusicResult =
         ApiHelper.getMusicService().likeOrUnLikeMusic(id, true).await()
 
-    override suspend fun UnLikeMusic(id: String): LikeMusicResult =
+    override suspend fun unLikeMusic(id: String): LikeMusicResult =
         ApiHelper.getMusicService().likeOrUnLikeMusic(id, false).await()
 
 
-    override suspend fun likeOrunLikeComment(id: String, cid: String, t: Int, type: Int) {
+    override suspend fun likeOrUnLikeComment(id: String, cid: String, t: Int, type: Int) {
         ApiHelper.getMusicService().likeOrUnLikeMusicComment(id, cid, t, type).await()
     }
 

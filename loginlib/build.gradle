@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt "com.alibaba:arouter-compiler:${rootProject.ext.dependVersion.arouter_compiler}"
     implementation project(':baselib')
     implementation project(':networklib')

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.R;
+import com.brins.recyclerlib.R;
 import com.chad.library.adapter.base2.BaseQuickAdapter;
 import com.chad.library.adapter.base2.module.BaseDraggableModule;
 import com.chad.library.adapter.base2.BaseQuickAdapter;

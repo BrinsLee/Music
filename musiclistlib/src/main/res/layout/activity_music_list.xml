@@ -5,7 +5,7 @@
     android:id="@+id/container_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gery"
+    android:background="@color/black"
     tools:context=".activity.MusicListActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -37,18 +37,11 @@
                         android:id="@+id/cover"
                         android:layout_width="match_parent"
                         android:layout_height="270dp"
+                        android:foreground="@color/black_30"
                         android:scaleType="centerCrop"
                         android:src="@drawable/base_icon_default_cover"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/coverBg"
-                        android:layout_width="match_parent"
-                        android:layout_height="270dp"
-                        android:scaleType="centerCrop"
-                        android:src="@color/black_30"
-                        android:tag="coverBg"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/coverMusicList"
@@ -116,7 +109,7 @@
             android:id="@+id/musicRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="-10dp"
             android:background="@drawable/base_bg_20dp_top"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintHorizontal_bias="1.0" />

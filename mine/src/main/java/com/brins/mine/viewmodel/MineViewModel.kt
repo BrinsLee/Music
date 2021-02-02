@@ -7,6 +7,7 @@ import com.brins.baselib.cache.like.LikeCache
 import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.mine.contract.MineContract
 import com.brins.baselib.module.MusicList
+import com.brins.baselib.utils.TUtil
 import com.brins.baselib.utils.subscribeDbResult
 import com.brins.networklib.model.event.EventData
 import com.brins.networklib.model.musiclist.MusicListsResult
@@ -98,6 +99,9 @@ class MineViewModel private constructor(application: Application) :
     }
 
     override suspend fun getEventData(id: String) {
+        if (mModel == null) {
+            mModel = TUtil.getSuperT(this, 0)
+        }
         val result = mModel?.getEventData(id)
         result?.let {
             if (it.events != null) {

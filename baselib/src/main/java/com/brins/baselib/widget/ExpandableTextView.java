@@ -114,55 +114,65 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if (mToggleView.getVisibility() != View.VISIBLE) {
-            return;
-        }
 
-        mCollapsed = !mCollapsed;
-        mExpandIndicatorController.changeState(mCollapsed);
+        if (view.getId() == mTv.getId() && !mExpandToggleOnTextClick) {
+            if (mListener != null) {
+                mListener.onTextClick();
+            }
 
-        if (mCollapsedStatus != null) {
-            mCollapsedStatus.put(mPosition, mCollapsed);
-        }
-
-        // mark that the animation is in progress
-        mAnimating = true;
-
-        Animation animation;
-        if (mCollapsed) {
-            animation = new ExpandCollapseAnimation(this, getHeight(), mCollapsedHeight);
         } else {
-            animation = new ExpandCollapseAnimation(this, getHeight(), getHeight() +
-                    mTextHeightWithMaxLines - mTv.getHeight());
+            if (mToggleView.getVisibility() != View.VISIBLE) {
+                return;
+            }
+
+            mCollapsed = !mCollapsed;
+            mExpandIndicatorController.changeState(mCollapsed);
+
+            if (mCollapsedStatus != null) {
+                mCollapsedStatus.put(mPosition, mCollapsed);
+            }
+
+            // mark that the animation is in progress
+            mAnimating = true;
+
+            Animation animation;
+            if (mCollapsed) {
+                animation = new ExpandCollapseAnimation(this, getHeight(), mCollapsedHeight);
+            } else {
+                animation = new ExpandCollapseAnimation(this, getHeight(), getHeight() +
+                        mTextHeightWithMaxLines - mTv.getHeight());
+            }
+
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    applyAlphaAnimation(mTv, mAnimAlphaStart);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // clear animation here to avoid repeated applyTransformation() calls
+                    clearAnimation();
+                    // clear the animation flag
+                    mAnimating = false;
+
+                    // notify the listener
+                    if (mListener != null) {
+                        mListener.onExpandStateChanged(mTv, !mCollapsed);
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+
+            clearAnimation();
+            startAnimation(animation);
         }
 
-        animation.setFillAfter(true);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                applyAlphaAnimation(mTv, mAnimAlphaStart);
-            }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                // clear animation here to avoid repeated applyTransformation() calls
-                clearAnimation();
-                // clear the animation flag
-                mAnimating = false;
-
-                // notify the listener
-                if (mListener != null) {
-                    mListener.onExpandStateChanged(mTv, !mCollapsed);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-
-        clearAnimation();
-        startAnimation(animation);
     }
 
     @Override
@@ -282,11 +292,7 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
 
     private void findViews() {
         mTv = (RichTextView) findViewById(mExpandableTextId);
-        if (mExpandToggleOnTextClick) {
-            mTv.setOnClickListener(this);
-        } else {
-            mTv.setOnClickListener(null);
-        }
+        mTv.setOnClickListener(this);
         mToggleView = findViewById(mExpandCollapseToggleId);
         mExpandIndicatorController.setView(mToggleView);
         mExpandIndicatorController.changeState(mCollapsed);
@@ -400,6 +406,8 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
          * @param isExpanded - true if the TextView has been expanded
          */
         void onExpandStateChanged(TextView textView, boolean isExpanded);
+
+        void onTextClick();
     }
 
     interface ExpandIndicatorController {

@@ -11,7 +11,7 @@ import com.brins.bridgelib.BridgeInterface
  */
 interface PictureDetailBridgeInterface : BridgeInterface {
 
-    fun toDetailPictureActivity(bundle: Bundle, optionsCompat: ActivityOptionsCompat)
+    fun toDetailPictureActivity(bundle: Bundle)
 
     fun getDetailPictureFragment(bundle: Bundle): Fragment
 }

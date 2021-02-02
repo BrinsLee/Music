@@ -8,4 +8,6 @@
     <string name="send_code">发送验证码</string>
     <string name="use_phone">使用手机号登录</string>
     <string name="login_error">账号或密码错误</string>
+    <string name="use_email">使用邮箱登录</string>
+    <string name="input_phone">请输入手机号</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.brins.baselib.route
 
+import com.brins.baselib.config.EVENT
+
 interface RouterHub {
 
     companion object {
@@ -15,6 +17,8 @@ interface RouterHub {
         const val SEARCH = "/search"
         const val FIND = "/find"
         const val PICTURE_DETAIL = "/picturedetail"
+        const val EVENT_DETAIL = "/eventdetail"
+        const val VIDEO = "/video"
 
 
         //    ****************Activity路径配置***************************
@@ -35,7 +39,9 @@ interface RouterHub {
 
         const val LOGINSELECTACTIVITY = "$LOGIN/LoginSelectActivity"
 
-        const val LOGININPUTACTIVITY = "$LOGIN/LoginInputActivity"
+        const val LOGINEMAILACTIVITY = "$LOGIN/LoginEmailActivity"
+
+        const val LOGINPHONEACTIVITY = "$LOGIN/LoginPhoneActivity"
 
         const val DAILYMUSICACTIVITY = "$DAILY/DailyMusicActivity"
 
@@ -45,6 +51,10 @@ interface RouterHub {
 
         const val DETAILPICTUREACTIVITY = "$PICTURE_DETAIL/DetailPictureActivity"
 
+        const val EVENTDETAILACTIVITY = "$EVENT_DETAIL/EventDetailActivity"
+
+        const val VIDEODETAILACTIVITY = "${VIDEO}/VideoDetailActivity"
+
 
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"
@@ -52,6 +62,8 @@ interface RouterHub {
         const val MINEFRAGMENT = "$MINE/MineFragment"
 
         const val FINDFRAGMENT = "$FIND/FindFragment"
+
+        const val EVENTCOMMENTFRAGMENT = "${EVENT_DETAIL}/EventCommentFragment"
 
     }
 }

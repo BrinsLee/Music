@@ -116,7 +116,9 @@ dependencies {
     }
     if (addPictureDetail) {
         implementation project(':picturedetaillib')
-
+    }
+    if (addEventDetail) {
+        implementation project(':eventdetaillib')
     }
 
     // butterknife

@@ -10,11 +10,27 @@ const val KEY_URL = "KEY_URL"
 const val KEY_COMMEND_PATH = "KEY_COMMEND_PATH"
 const val KEY_EVENT_PICTURES = "KEY_EVENT_PICTURES"
 const val KEY_EVENT_PICTURE_POS = "KEY_EVENT_PICTURE_POS"
+const val KEY_EVENT_DATA = "KEY_EVENT_DATA"
+const val KEY_EVENT_THREADID = "KEY_EVENT_THREADID"
 
 const val TRANSITION_NAME = "TRANSITION_NAME"
 const val TRANSITION_IMAGE = "image"
 
 const val MAIN_PROCESS_NAME: String = "com.brins.lightmusic"
+
+const val CODE_MAIN = 0
+const val CODE_CLOSE = 1
+const val CODE_PRV = 2
+const val CODE_PAUSE = 3
+const val CODE_PLAY = 4
+const val CODE_NEXT = 5
+
+const val ACTION_PRV = "com.brins.lightmusic.ACTION.PLAY_LAST"
+const val ACTION_NEXT = "com.brins.lightmusic.ACTION.PLAY_NEXT"
+const val ACTION_PAUSE = "com.brins.lightmusic.ACTION.PAUSE"
+const val ACTION_PLAY = "com.brins.lightmusic.ACTION.PLAY"
+const val ACTION_EXIST = "com.brins.lightmusic.ACTION.EXIST"
+
 
 val API_NEED_COOKIE = arrayListOf<String>(
     "[recommend, songs]",
@@ -42,6 +58,12 @@ val TYPE_EVENT = arrayListOf<Int>(
     24,
     41, 21
 )
+
+val MAINLAND = "内地"
+val HONGKONG_TAIWAN = "港台"
+val EUROPE_AMERICA = "欧美"
+val JAPAN = "日本"
+val KOREA = "韩国"
 
 interface RECOMMEND {
     companion object {
@@ -195,6 +217,8 @@ interface MINE_INFO {
 interface LOGIN {
     companion object {
         const val LOGIN_EMAIL_LOGIN = "/login"
+
+        const val LOGIN_PHONE_LOGIN = "/login/cellphone"
     }
 }
 
@@ -239,5 +263,41 @@ interface LIKE {
     companion object {
         //1 点赞 ，2 取消点赞
         const val LIKE_OR_UNLIKE = "/resource/like"
+    }
+}
+
+interface EVENT {
+    companion object {
+        const val EVENT_COMMENT = "/comment/event"
+    }
+}
+
+interface VIDEO {
+    companion object {
+        /**
+         * 最新MV
+         */
+        const val LASTEST_MUSIC_VIDEO = "/mv/first"
+
+        /**
+         * MV播放地址
+         */
+        const val MVURL = "/mv/url"
+
+        /**
+         * 详情
+         */
+        const val MVDETAIL = "/mv/detail"
+
+        /**
+         * 所有MV
+         */
+        const val MVALL = "/mv/all"
+
+        /**
+         * 获取评论
+         */
+        const val MVCOMMENTS = "/comment/mv"
+
     }
 }

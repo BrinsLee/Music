@@ -11,6 +11,7 @@ import com.brins.baselib.config.KEY_COMMEND_PATH
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.config.MUSIC_COMMENT.Companion.MUSIC_COMMENT
 import com.brins.baselib.fragment.BaseMvpFragment
+import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
 import com.brins.baselib.route.RouterHub
@@ -69,8 +70,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         )
         music?.let {
             tv_music_name.text = it.name
-            tv_artist_name.text = it.song?.artists?.get(0)?.name ?: it.artists?.get(0)?.name
-                    ?: UIUtils.getString(R.string.unknow)
+            tv_artist_name.text = getArtists(it)
             tv_album_name.text = it.song?.album?.name ?: it.name
             var duration = it.song?.duration ?: 0
             if (duration == 0) {
@@ -113,6 +113,25 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             iv_play_list.setOnClickListener(this)
             iv_like.setOnClickListener(this)
         }
+    }
+
+    private fun getArtists(data: BaseMusic): String {
+        val builder = StringBuilder()
+        var artists = data.artists
+        if (artists.isNullOrEmpty()) {
+            artists = data.song?.artists
+        }
+        artists?.let {
+            for (i in 0 until it.size) {
+                builder.append(it[i].name)
+                if (i != it.size - 1)
+                    builder.append("，")
+            }
+        }
+        if (artists.isNullOrEmpty()) {
+            builder.append("未知")
+        }
+        return builder.toString()
     }
 
     override fun onResume() {

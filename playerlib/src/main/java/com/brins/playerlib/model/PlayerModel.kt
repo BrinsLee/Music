@@ -6,6 +6,8 @@ import com.brins.baselib.utils.UIUtils
 import com.brins.networklib.helper.ApiHelper
 import com.brins.networklib.helper.ApiHelper.await
 import com.brins.playerlib.contract.PlayerContract
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class PlayerModel : PlayerContract.Model {
 
@@ -23,16 +25,19 @@ class PlayerModel : PlayerContract.Model {
     }
 
     override suspend fun checkMusicUsable(id: String): Boolean {
-        val result = ApiHelper.getMusicService().getMusicUseable(id).await()
+        val result = withContext(Dispatchers.IO){
+            ApiHelper.getMusicService().getMusicUseable(id).await()
+        }
         return result.success
     }
 
-    override suspend fun loadMusicUrl(id: String): String {
+    override suspend fun loadMusicUrl(id: String): String = withContext(Dispatchers.IO) {
         if (checkMusicUsable(id)) {
             val result = ApiHelper.getMusicService().getMusicUrl(id).await()
-            return result.data[0].url
+            result.data[0].url
+        } else {
+            ""
         }
-        return ""
     }
 
     override suspend fun loadMusicComment(id: String) {

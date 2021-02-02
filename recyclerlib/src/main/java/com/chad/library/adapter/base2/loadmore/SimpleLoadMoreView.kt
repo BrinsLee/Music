@@ -2,7 +2,7 @@ package com.chad.library.adapter.base2.loadmore
 
 import android.view.View
 import android.view.ViewGroup
-import com.chad.library.R
+import com.brins.recyclerlib.R
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 import com.chad.library.adapter.base2.util.getItemView
 

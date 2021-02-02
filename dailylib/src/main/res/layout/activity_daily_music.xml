@@ -25,27 +25,14 @@
                 app:contentScrim="@color/translucent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_header"
+                <ImageView
+                    android:id="@+id/cover"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/cover"
-                        android:layout_width="match_parent"
-                        android:layout_height="270dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/base_icon_default_cover"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/coverBg"
-                        android:layout_width="match_parent"
-                        android:layout_height="270dp"
-                        android:scaleType="centerCrop"
-                        android:src="@color/black_30"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_height="270dp"
+                    android:foreground="@color/black_30"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/base_icon_default_cover"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"

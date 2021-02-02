@@ -1,12 +1,13 @@
 package com.brins.baselib.module
 
+import java.io.Serializable
 import java.lang.ref.WeakReference
 
 /**
  * Created by lipeilin
  * on 2020/11/17
  */
-class UserProfile : BaseData() {
+class UserProfile : BaseData(), Serializable {
 
     var province = 0
 
@@ -47,6 +48,7 @@ class UserProfile : BaseData() {
 
     var avatarDetail: AvatarDetail? = null
 
+    @Transient
     var onFollowListener: WeakReference<OnFollowListener>? = null
 
     fun setFollowListener(followListener: OnFollowListener): UserProfile {
@@ -54,7 +56,7 @@ class UserProfile : BaseData() {
         return this
     }
 
-    class AvatarDetail {
+    class AvatarDetail : Serializable {
         var userType = 0
 
         var identityIconUrl = ""

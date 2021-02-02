@@ -1,6 +1,7 @@
 package com.brins.bridgelib.app
 
 import android.content.Context
+import android.content.Intent
 import com.brins.baselib.cache.login.LoginCache
 import com.brins.baselib.utils.UIUtils
 
@@ -19,5 +20,9 @@ class DefaultAppBridge : AppBridgeInterface {
 
     override fun setAccessToken(accessToken: String?) {
         LoginCache.UserCookie = accessToken ?: ""
+    }
+
+    override fun getSplashActivity(context: Context): Intent {
+        return Intent()
     }
 }

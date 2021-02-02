@@ -1,19 +1,20 @@
 package com.brins.networklib.model.event
 
 import com.brins.baselib.module.*
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
  * Created by lipeilin
  * on 2020/11/28
  */
-class EventData : BaseData() {
+class EventData : BaseData(), Serializable {
 
 
     var actName: String? = null
 
     var forwardCount = 0
+
+    var tailMark: Mark? = null
 
     var uuid = ""
 
@@ -33,9 +34,10 @@ class EventData : BaseData() {
     17、28 分享电台节目
     22 转发
     39 发布视频
-    35、13 分享歌单
+    13 分享歌单
     24 分享专栏文章
     41、21 分享视频
+    22 转发动态
      */
     var type = 0
 
@@ -68,7 +70,7 @@ class EventData : BaseData() {
         var format = ""
     }
 
-    class Info {
+    class Info : Serializable {
 
         var liked = false
 
@@ -81,9 +83,11 @@ class EventData : BaseData() {
         var shareCount = 0
 
         var threadId = ""
+
+        var commentThread: CommentThread? = null
     }
 
-    class EventJson {
+    class EventJson : Serializable {
 
         var actId = ""
 
@@ -104,5 +108,25 @@ class EventData : BaseData() {
         var song: BaseMusic? = null
 
         var playlist: MusicList? = null
+
+        var album: BaseMusic.Album? = null
+
+        var event: EventData? = null
+    }
+
+    class Mark : Serializable {
+        var markTitle = ""
+
+        var markType = ""
+    }
+
+    class CommentThread : Serializable {
+        var latestLikedUsers: List<LatestLikeUsers>? = null
+    }
+
+    class LatestLikeUsers : Serializable {
+        var s = ""
+
+        var t = ""
     }
 }

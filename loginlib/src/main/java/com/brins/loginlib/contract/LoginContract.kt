@@ -32,13 +32,17 @@ interface LoginContract {
 
         abstract suspend fun getUseLikeList(id: UserLoginResult)
 
+        abstract suspend fun phoneLogin(phone: String, password: String)
+
     }
 
     interface Model : IModel {
 
         suspend fun emailLogin(email: String, password: String): UserLoginResult
 
-        suspend fun getUserLikeList(id : String) : UserLikeMusicResult
+        suspend fun getUserLikeList(id: String): UserLikeMusicResult
+
+        suspend fun phoneLogin(phone: String, password: String): UserLoginResult
 
     }
 

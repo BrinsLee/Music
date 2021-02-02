@@ -77,7 +77,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="30dp"
-        android:src="@drawable/mine_icon_default_avatar"
+        android:src="@drawable/base_icon_default_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

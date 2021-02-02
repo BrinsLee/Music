@@ -11,6 +11,8 @@ import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.ITEM_FIND_FOLLOW
 import com.brins.baselib.mvp.IModel
 import com.brins.baselib.mvvm.BaseViewModel
+import com.brins.baselib.utils.eventbus.EventBusKey
+import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.find.R
 import com.brins.find.viewmodel.FindViewModel
@@ -20,6 +22,8 @@ import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.BaseQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_find_follows.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class FindFollowsFragment : BaseMvvmFragment<FindViewModel>() {
 
@@ -58,6 +62,18 @@ class FindFollowsFragment : BaseMvvmFragment<FindViewModel>() {
         launch({
             mViewModel?.getMyFollows(LoginCache.userAccount?.id!!)
         }, {})
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loginSuccess(params: EventBusParams) {
+        when (params.key) {
+            EventBusKey.KEY_EVENT_LOGIN_SUCCESS -> {
+                launch({
+                    mViewModel?.getMyFollows(LoginCache.userAccount?.id!!)
+                }, {})
+            }
+
+        }
     }
 
     class FindFollowsAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {

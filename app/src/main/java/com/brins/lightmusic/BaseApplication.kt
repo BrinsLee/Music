@@ -15,6 +15,7 @@ import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
 import com.brins.dailylib.bridge.DailyMusicBridge
+import com.brins.eventdetaillib.bridge.EventDetailBridge
 import com.brins.find.bridge.FindBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
@@ -25,6 +26,7 @@ import com.brins.musiclistlib.bridge.MusicListBridge
 import com.brins.musicsquarelib.bridge.MusicSquareBridge
 import com.brins.picturedetaillib.bridge.PictureDetailBridge
 import com.brins.searchlib.bridge.SearchBridge
+import com.brins.video.bridge.VideoBridge
 import dagger.hilt.android.HiltAndroidApp
 
 //import io.reactivex.plugins.RxJavaPlugins
@@ -146,6 +148,8 @@ class BaseApplication : Application() {
             .register(SearchBridge::class.java)
             .register(FindBridge::class.java)
             .register(PictureDetailBridge::class.java)
+            .register(EventDetailBridge::class.java)
+            .register(VideoBridge::class.java)
     }
 
 

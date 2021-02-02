@@ -22,6 +22,8 @@ import com.brins.musicsquarelib.widget.PlayListPager
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.musiclist.MusicListsResult
 import kotlinx.android.synthetic.main.fragment_recommend.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.math.min
 
 class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
@@ -132,40 +134,39 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
                         it?.let {
                             when {
                                 it.getDarkVibrantColor(Color.TRANSPARENT) != Color.TRANSPARENT -> {
-                                    music.coverGradientDrawable =
-                                        createRadialGradientBitmap(
-                                            context!!,
-                                            it.getDarkVibrantColor(Color.TRANSPARENT),
-                                            it.getVibrantColor(Color.TRANSPARENT)
-                                        )
-                                    (mActivity as MusicListSquareActivity)
-                                        .setBackground(
-                                            music.coverGradientDrawable!!
-                                        )
+                                    launch({
+                                        music.coverGradientDrawable = withContext(Dispatchers.IO){
+                                            createRadialGradientBitmap(context!!,
+                                                it.getDarkVibrantColor(Color.TRANSPARENT),
+                                                it.getVibrantColor(Color.TRANSPARENT))
+                                        }
+                                        (mActivity as MusicListSquareActivity).setBackground(music.coverGradientDrawable!!)
+
+                                    },{})
                                 }
                                 it.getDarkMutedColor(Color.TRANSPARENT) != Color.TRANSPARENT -> {
-                                    music.coverGradientDrawable =
-                                        createRadialGradientBitmap(
-                                            context!!,
-                                            it.getDarkMutedColor(Color.TRANSPARENT),
-                                            it.getMutedColor(Color.TRANSPARENT)
-                                        )
-                                    (mActivity as MusicListSquareActivity)
-                                        .setBackground(
-                                            music.coverGradientDrawable!!
-                                        )
+                                    launch({
+                                        music.coverGradientDrawable = withContext(Dispatchers.IO){
+                                            createRadialGradientBitmap(
+                                                context!!,
+                                                it.getDarkMutedColor(Color.TRANSPARENT),
+                                                it.getMutedColor(Color.TRANSPARENT))
+                                        }
+                                        (mActivity as MusicListSquareActivity).setBackground(music.coverGradientDrawable!!)
+
+                                    },{})
                                 }
                                 else -> {
-                                    music.coverGradientDrawable =
-                                        createRadialGradientBitmap(
-                                            context!!,
-                                            it.getLightMutedColor(Color.TRANSPARENT),
-                                            it.getLightVibrantColor(Color.TRANSPARENT)
-                                        )
-                                    (mActivity as MusicListSquareActivity)
-                                        .setBackground(
-                                            music.coverGradientDrawable!!
-                                        )
+                                    launch({
+                                        music.coverGradientDrawable = withContext(Dispatchers.IO){
+                                            createRadialGradientBitmap(
+                                                context!!,
+                                                it.getLightMutedColor(Color.TRANSPARENT),
+                                                it.getLightVibrantColor(Color.TRANSPARENT))
+                                        }
+                                        (mActivity as MusicListSquareActivity).setBackground(music.coverGradientDrawable!!)
+
+                                    },{})
                                 }
                             }
                         }
@@ -173,10 +174,7 @@ class RecommendFragment : BaseMvpFragment<MusicListSquarePresenter>(),
                 }
 
             } else {
-                (mActivity as MusicListSquareActivity)
-                    .setBackground(
-                        it[i].coverGradientDrawable!!
-                    )
+                (mActivity as MusicListSquareActivity).setBackground(it[i].coverGradientDrawable!!)
             }
         }
 

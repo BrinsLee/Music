@@ -19,20 +19,6 @@ import kotlin.coroutines.suspendCoroutine
 
 object ApiHelper {
 
-    val LOG_TAG_NETWORK_DISCOVERY = "network_discovery"
-    val LOG_TAG_NETWORK_USER_PLAYLIST = "network_user_playlist"
-    val LOG_TAG_NETWORK_MV = "network_mv"
-    val LOG_TAG_NETWORK_ARTIST = "network_artist"
-    val LOG_TAG_NETWORK_PLAYLIST = "network_play_list"
-    val LOG_TAG_NETWORK_SEARCH = "network_search"
-    val LOG_TAG_NETWORK_LOGIN = "network_login"
-    val LOG_TAG_NETWORK_MUSIC = "network_music"
-    val LOG_TAG_NETWORK_PERSONALIZED = "network_personalized"
-
-
-    val LOG_TAG_NETWORK_USERINFO = "network_userinfo"
-    val LOG_TAG_NETWORK_API = "network_api"
-
     private var mPersonalizedService: PersonalizedService? = null
     private var mMusicService: MusicService? = null
     private var mMusicListService: MusicListService? = null
@@ -41,14 +27,29 @@ object ApiHelper {
     private var mSearchService: SearchService? = null
     private var mMineService: MyService? = null
     private var mFindService: FindService? = null
+    private var mEventDetailService: EventDetailService? = null
+    private var mMusicVideoService: MusicVideoService? = null
+
+
+    fun getEventDetailService(): EventDetailService {
+        if (mEventDetailService == null) {
+            synchronized(EventDetailService::class.java) {
+                if (mEventDetailService == null) {
+                    mEventDetailService = RetrofitFactory.newRetrofit(
+                        BASEURL
+                    ).create(EventDetailService::class.java)
+                }
+            }
+        }
+        return mEventDetailService!!
+    }
 
     fun getPersonalizedService(): PersonalizedService {
         if (mPersonalizedService == null) {
             synchronized(PersonalizedService::class.java) {
                 if (mPersonalizedService == null) {
                     mPersonalizedService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_PERSONALIZED
+                        BASEURL
                     )
                         .create(PersonalizedService::class.java)
                 }
@@ -62,8 +63,7 @@ object ApiHelper {
             synchronized(MusicService::class.java) {
                 if (mMusicService == null) {
                     mMusicService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_MUSIC
+                        BASEURL
                     )
                         .create(MusicService::class.java)
                 }
@@ -77,8 +77,7 @@ object ApiHelper {
             synchronized(MusicListService::class.java) {
                 if (mMusicListService == null) {
                     mMusicListService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_PLAYLIST
+                        BASEURL
                     )
                         .create(MusicListService::class.java)
                 }
@@ -92,8 +91,7 @@ object ApiHelper {
             synchronized(AlbumService::class.java) {
                 if (mAlbumService == null) {
                     mAlbumService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_MUSIC
+                        BASEURL
                     )
                         .create(AlbumService::class.java)
                 }
@@ -107,8 +105,7 @@ object ApiHelper {
             synchronized(LoginService::class.java) {
                 if (mLoginService == null) {
                     mLoginService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_LOGIN
+                        BASEURL
                     )
                         .create(LoginService::class.java)
                 }
@@ -122,8 +119,7 @@ object ApiHelper {
             synchronized(SearchService::class.java) {
                 if (mSearchService == null) {
                     mSearchService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_SEARCH
+                        BASEURL
                     )
                         .create(SearchService::class.java)
                 }
@@ -137,8 +133,7 @@ object ApiHelper {
             synchronized(MyService::class.java) {
                 if (mMineService == null) {
                     mMineService = RetrofitFactory.newRetrofit(
-                        BASEURL,
-                        LOG_TAG_NETWORK_PERSONALIZED
+                        BASEURL
                     )
                         .create(MyService::class.java)
                 }
@@ -151,12 +146,24 @@ object ApiHelper {
         if (mFindService == null) {
             synchronized(FindService::class.java) {
                 if (mFindService == null) {
-                    mFindService = RetrofitFactory.newRetrofit(BASEURL, LOG_TAG_NETWORK_API)
+                    mFindService = RetrofitFactory.newRetrofit(BASEURL)
                         .create(FindService::class.java)
                 }
             }
         }
         return mFindService!!
+    }
+
+    fun getMusicVideoService(): MusicVideoService {
+        if (mMusicVideoService == null) {
+            synchronized(MusicVideoService::class.java) {
+                if (mMusicVideoService == null) {
+                    mMusicVideoService = RetrofitFactory.newRetrofit(BASEURL)
+                        .create(MusicVideoService::class.java)
+                }
+            }
+        }
+        return mMusicVideoService!!
     }
 
     suspend fun <T> Call<T>.await(): T {
@@ -193,5 +200,4 @@ object ApiHelper {
             }
         }
     }
-
 }

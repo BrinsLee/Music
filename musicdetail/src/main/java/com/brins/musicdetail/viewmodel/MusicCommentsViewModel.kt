@@ -34,6 +34,6 @@ class MusicCommentsViewModel(application: Application) :
     }
 
     override suspend fun likeOrUnLikeMusicComment(id: String, cid: String, t: Int, type: Int) {
-        mModel?.likeOrunLikeComment(id, cid, t, type)
+        mModel?.likeOrUnLikeComment(id, cid, t, type)
     }
 }

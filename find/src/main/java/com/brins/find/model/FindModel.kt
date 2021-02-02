@@ -20,6 +20,5 @@ class FindModel : FindContract.Model {
         ApiHelper.getMineService().getMyFollows(uid).await()
 
     override fun onDestroy() {
-        TODO("Not yet implemented")
     }
 }

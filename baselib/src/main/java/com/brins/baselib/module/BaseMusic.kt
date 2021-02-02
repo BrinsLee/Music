@@ -1,5 +1,6 @@
 package com.brins.baselib.module
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,12 +9,13 @@ import com.brins.baselib.database.typeconverter.ArtistsConverter
 import com.brins.baselib.database.typeconverter.PlayStatusConverter
 import com.brins.baselib.database.typeconverter.SongConverter
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "recently_music")
 @TypeConverters(
     SongConverter::class, ArtistsConverter::class, PlayStatusConverter::class
 )
-open class BaseMusic : BaseData() {
+open class BaseMusic : BaseData(), Serializable {
 
     /**
      * 音乐Id
@@ -74,10 +76,17 @@ open class BaseMusic : BaseData() {
     /**
      * 播放状态
      */
+    @Transient
     @ColumnInfo(name = "PlayStatus")
     var playStatus: MusicStatus = MusicStatus.FIRST_PLAY
 
-    class Song {
+    /**
+     * 缓存封面
+     */
+    @Transient
+    var bitmapCover: Bitmap? = null
+
+    class Song : Serializable {
         var name: String = ""
 
         var duration = 0
@@ -89,7 +98,7 @@ open class BaseMusic : BaseData() {
         var album: Album? = null
     }
 
-    class Artist : BaseData() {
+    class Artist : BaseData(), Serializable {
 
         var id = ""
 
@@ -104,7 +113,7 @@ open class BaseMusic : BaseData() {
             get() = ITEM_SEARCH_ARTIST
     }
 
-    class Album : BaseData() {
+    class Album : BaseData(), Serializable {
         var name = ""
 
         var id = ""
@@ -131,7 +140,7 @@ open class BaseMusic : BaseData() {
 
     }
 
-    class Info {
+    class Info : Serializable {
 
         var commentCount = 0
         var shareCount = 0

@@ -13,6 +13,8 @@ class CommentResult {
 
     var comments: ArrayList<Comment>? = null
 
+    var more: Boolean = false
+
     class Comment : BaseData() {
         var user: User? = null
 

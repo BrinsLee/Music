@@ -48,6 +48,9 @@ class MineInfoActivity : BaseMvpActivity<MinePresenter>() {
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
         toolbar.setContentInsetsAbsolute(0, 0)
+        iv_return.setOnClickListener {
+            finish()
+        }
         if (LoginCache.isLogin && LoginCache.userProfile != null) {
             LoginCache.userProfile?.apply {
                 GlideHelper.setImageResource(cover, this.backgroundUrl)
@@ -56,28 +59,23 @@ class MineInfoActivity : BaseMvpActivity<MinePresenter>() {
                 tv_nickname.text = this.nickname
                 tv_follows.text = "关注：${this.follows}"
                 tv_fans.text = "粉丝：${this.followeds}"
+                tv_level.text = "Lv.${this.level} "
             }
         }
 
-        appbar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                val percent =
-                    abs(verticalOffset * 1.0f) / appBarLayout!!.totalScrollRange //滑动比例
+        appbar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val percent = abs(verticalOffset * 1.0f) / appBarLayout!!.totalScrollRange //滑动比例
+            if (percent > 0.8) {
+                tv_title.visibility = View.VISIBLE
+                val alpha = 1 - (1 - percent) * 5
+                tv_title.alpha = alpha
+                tv_focus.alpha = alpha
+                ll_mine_info.alpha = (1 - percent) * 5
 
-                if (percent > 0.8) {
-                    tv_title.visibility = View.VISIBLE
-                    val alpha = 1 - (1 - percent) * 5
-                    tv_title.alpha = alpha
-                    tv_focus.alpha = alpha
-                    ll_mine_info.alpha = (1 - percent) * 5
-
-                } else {
-                    tv_title.visibility = View.GONE
-                    ll_mine_info.alpha = 1f
-                }
-
+            } else {
+                tv_title.visibility = View.GONE
+                ll_mine_info.alpha = 1f
             }
-
         })
 
         val commonNavigator = CommonNavigator(this)
