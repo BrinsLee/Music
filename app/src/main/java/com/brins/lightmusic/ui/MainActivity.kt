@@ -225,32 +225,24 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
 
 
     @OnClick(
-        R.id.tab_main_btn,
-        R.id.tab_main_tv,
-        R.id.tab_discovery_btn,
-        R.id.tab_discovery_tv,
-        R.id.tab_video_btn,
-        R.id.tab_video_tv,
-        R.id.tab_singer_btn,
-        R.id.tab_singer_tv,
+        R.id.tab_main_ll,
+        R.id.tab_discovery_ll,
+        R.id.tab_video_ll,
+        R.id.tab_mine_ll,
         R.id.cover_container
     )
     fun onClick(view: View) {
         when (view.id) {
-            R.id.tab_main_btn,
-            R.id.tab_main_tv -> {
+            R.id.tab_main_ll -> {
                 changeTab(0)
             }
-            R.id.tab_discovery_btn,
-            R.id.tab_discovery_tv -> {
+            R.id.tab_discovery_ll -> {
                 changeTab(1)
             }
-            R.id.tab_video_btn,
-            R.id.tab_video_tv -> {
+            R.id.tab_video_ll -> {
                 changeTab(2)
             }
-            R.id.tab_singer_btn,
-            R.id.tab_singer_tv -> {
+            R.id.tab_mine_ll -> {
                 changeTab(3)
             }
             R.id.cover_container -> {
@@ -259,6 +251,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
                 }*/
                 BridgeProviders.instance.getBridge(MusicDetailBridgeInterface::class.java)
                     .toMusicDetailActivity()
+                overridePendingTransition(R.anim.base_activity_page_up_enter, R.anim.base_activity_page_up_exit)
                 return
             }
         }
