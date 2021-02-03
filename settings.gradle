@@ -17,4 +17,5 @@ include ':networklib'
 include ':baselib'
 include ':app'
 include ':textUtilsLib'
+include ':popuplib'
 rootProject.name = "LightMusic"

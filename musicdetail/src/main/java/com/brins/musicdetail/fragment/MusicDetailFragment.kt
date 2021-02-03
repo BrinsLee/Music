@@ -11,6 +11,7 @@ import com.brins.baselib.config.KEY_COMMEND_PATH
 import com.brins.baselib.config.KEY_ID
 import com.brins.baselib.config.MUSIC_COMMENT.Companion.MUSIC_COMMENT
 import com.brins.baselib.fragment.BaseMvpFragment
+import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.ARouterUtils
@@ -23,20 +24,24 @@ import com.brins.musicdetail.R
 import com.brins.musicdetail.activity.MusicDetailActivity
 import com.brins.musicdetail.contract.MusicDetailContract
 import com.brins.musicdetail.presenter.MusicDetailPresenter
+import com.brins.musicdetail.widget.PlayListPopup
 import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.music.MusicLrc
 import com.brins.playerlib.model.PlayBackService
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.interfaces.SimpleCallback
 import kotlinx.android.synthetic.main.fragment_music_detail.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler.IHandler,
-    View.OnClickListener, MusicDetailContract.View {
+    View.OnClickListener, MusicDetailContract.View, PlayListPopup.OnClickListener {
 
     private val mHandler: WeakHandler by lazy { WeakHandler(this) }
     private val UPDATE_PROGRESS_INTERVAL: Long = 1000
     private val MESSAGE_UPDATE_PROGRESS = 0X10
     private var mPlayer: PlayBackService? = null
+    private var mPlayListPopup: PlayListPopup? = null
 
     override fun getLayoutResID(): Int {
         return R.layout.fragment_music_detail
@@ -141,6 +146,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mPlayListPopup = null
         mHandler.removeMessages(MESSAGE_UPDATE_PROGRESS)
         mPlayer = null
     }
@@ -278,7 +284,28 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
     }
 
     private fun openPlayList() {
-        ARouterUtils.go(RouterHub.PLAYLISTACTIVITY)
+        if (mPlayListPopup == null || !mPlayListPopup!!.isShow) {
+            mPlayListPopup = showPopupList()
+        }
+//        ARouterUtils.go(RouterHub.PLAYLISTACTIVITY)
+    }
+
+    private fun showPopupList(): PlayListPopup {
+        val list = mutableListOf<BaseData>()
+        list.addAll(mPlayer!!.getPlayList().getSong())
+        val popup = PlayListPopup(context!!, list, mPlayer?.getPlayingSong()?.id ?: "")
+        XPopup.Builder(context)
+            .hasShadowBg(true)
+            .setPopupCallback(object : SimpleCallback() {
+                override fun onShow() {
+                    super.onShow()
+                    mPlayListPopup?.setPlayModel(mPlayer?.getCurrentPlayMode())
+                }
+            })
+            .asCustom(popup)
+            .show()
+        popup.setClickListener(this)
+        return popup
     }
 
     private fun changePlayMode() {
@@ -287,11 +314,23 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
                 PlayMode.LOOP -> {
                     it.changePlayMode(PlayMode.SINGLE)
                     iv_play_mode.setImageResource(R.drawable.base_icon_play_single)
+                    mPlayListPopup?.let { popup ->
+                        if (popup.isShow) {
+                            popup.setPlayModel(PlayMode.SINGLE)
+                        }
+                    }
                 }
 
                 PlayMode.SINGLE -> {
                     it.changePlayMode(PlayMode.LOOP)
                     iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle)
+                    mPlayListPopup?.let { popup ->
+                        if (popup.isShow) {
+                            popup.setPlayModel(PlayMode.LOOP)
+                        }
+                    }
+                }
+                else -> {
                 }
             }
         }
@@ -328,5 +367,37 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
     }
 
     override fun onMusicLyricsLoad(lrc: MusicLrc?) {
+    }
+
+    override fun onPlayModeClick() {
+        changePlayMode()
+    }
+
+    override fun onTrashCanClick() {
+        (mActivity as? MusicDetailActivity)?.deleteAll()
+    }
+
+    override fun onDeleteItem(item: BaseMusic, adapterPosition: Int) {
+        mPlayer?.let {
+            if (it.deleteMusic(item)) {
+                mPlayListPopup?.let { popup ->
+                    if (popup.isShow) {
+                        popup.deleteItem(adapterPosition)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onItemClick(item: BaseMusic, adapterPosition: Int) {
+        mPlayer?.let {
+            if (it.play(item)) {
+                mPlayListPopup?.let { popup ->
+                    if (popup.isShow()) {
+                        popup.updateData(item, adapterPosition)
+                    }
+                }
+            }
+        }
     }
 }
