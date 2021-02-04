@@ -109,6 +109,11 @@ class CommentsActivity : BaseMvvmActivity<MusicCommentsViewModel>() {
         }, {})
     }
 
+    override fun onPause() {
+        overridePendingTransition(R.anim.base_activity_page_up_enter, R.anim.base_activity_page_up_exit)
+        super.onPause()
+    }
+
     class CommentAdapter : BaseMultiItemQuickAdapter<BaseData, BaseViewHolder>() {
 
         private var listener: onLikeCommentListener? = null

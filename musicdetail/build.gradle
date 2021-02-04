@@ -42,6 +42,7 @@ dependencies {
     implementation project(':recyclerlib')
     implementation project(':bridgelib')
     implementation project(':playerlib')
+    implementation project(':popuplib')
     api rootProject.ext.supportLibs
     //MagicIndicator
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
