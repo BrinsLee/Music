@@ -512,6 +512,10 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
                 }
                 mPlayList.add(music)
                 if (mPlayList.prepare()) {
+                    if (music.musicUrl.isNullOrEmpty()) {
+                        mPresenter?.play(music)
+                        return true
+                    }
                     try {
                         DatabaseFactory.addRecentlyMusic(music)
                             .subscribeDbResult({}, {

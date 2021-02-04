@@ -1,6 +1,5 @@
 package com.brins.musicdetail.activity
 
-import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -39,7 +38,7 @@ import org.greenrobot.eventbus.ThreadMode
 @AndroidEntryPoint
 @Route(path = RouterHub.MUSICDETAILACTIVITY)
 class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View,
-    View.OnClickListener, Animator.AnimatorListener {
+    View.OnClickListener {
 
     private var mTitleList: ArrayList<String> = arrayListOf("歌曲", "歌词")
     private var mPlayer: PlayBackService? = null
@@ -142,7 +141,10 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
     }
 
     override fun onPause() {
-        overridePendingTransition(R.anim.base_activity_page_down_enter, R.anim.base_activity_page_down_exit)
+        overridePendingTransition(
+            R.anim.base_activity_page_down_enter,
+            R.anim.base_activity_page_down_exit
+        )
         super.onPause()
     }
 
@@ -176,20 +178,9 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
         }
     }
 
+    fun deleteAll() {
+        mPresenter?.deleteAll()
+    }
 
     fun getPlayBackService() = mPlayer
-
-    override fun onAnimationRepeat(p0: Animator?) {
-
-    }
-
-    override fun onAnimationEnd(p0: Animator?) {
-        finish()
-    }
-
-    override fun onAnimationCancel(p0: Animator?) {
-    }
-
-    override fun onAnimationStart(p0: Animator?) {
-    }
 }

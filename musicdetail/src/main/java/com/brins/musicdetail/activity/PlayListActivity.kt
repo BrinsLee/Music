@@ -198,4 +198,8 @@ class PlayListActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View
         }
     }
 
+    override fun onPause() {
+        overridePendingTransition(R.anim.base_activity_page_down_enter, R.anim.base_activity_page_down_exit)
+        super.onPause()
+    }
 }
