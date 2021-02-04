@@ -1,3 +1,4 @@
+include ':userlib'
 include ':eventdetaillib'
 include ':picturedetaillib'
 include ':find'
