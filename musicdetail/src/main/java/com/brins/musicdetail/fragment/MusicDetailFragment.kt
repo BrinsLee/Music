@@ -204,10 +204,10 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
     private fun upDateButtonStatus(isPlaying: Boolean) {
         mHandler.sendEmptyMessage(MESSAGE_UPDATE_PROGRESS)
         if (isPlaying) {
-            iv_play_pause.setImageDrawable(UIUtils.getDrawable(R.drawable.base_icon_pause_white_64dp))
+            iv_play_pause.setImageDrawable(UIUtils.getDrawable(R.drawable.base_icon_pause_black_64dp))
         } else {
             mHandler.removeMessages(MESSAGE_UPDATE_PROGRESS)
-            iv_play_pause.setImageDrawable(UIUtils.getDrawable(R.drawable.base_icon_play_white_64dp))
+            iv_play_pause.setImageDrawable(UIUtils.getDrawable(R.drawable.base_icon_play_black_64dp))
         }
         when (mPlayer?.getCurrentPlayMode()) {
             PlayMode.LOOP -> {
@@ -295,7 +295,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         list.addAll(mPlayer!!.getPlayList().getSong())
         val popup = PlayListPopup(context!!, list, mPlayer?.getPlayingSong()?.id ?: "")
         XPopup.Builder(context)
-            .hasShadowBg(true)
+            .hasShadowBg(false)
             .setPopupCallback(object : SimpleCallback() {
                 override fun onShow() {
                     super.onShow()

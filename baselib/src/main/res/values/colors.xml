@@ -15,6 +15,8 @@
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
     <color name="white_90">#E6FFFFFF</color>
+    <color name="white_F0F2F7">#F0F2F7</color>
+    <color name="white_B3F0F2F7">#B3F0F2F7</color>
 
     <color name="black">#000000</color>
     <color name="black_0">#00000000</color>
@@ -34,6 +36,7 @@
     <color name="gery">#f2f2f2</color>
     <color name="gery_FFCFCECE">#CFCECE</color>
     <color name="gery_FFE3E3E3">#E3E3E3</color>
+    <color name="gery_dadbdf">#dadbdf</color>
     <color name="translucent">#aa000000</color>
     <color name="translucent_000000">#00000000</color>
 

@@ -7,15 +7,16 @@
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/base_selector_rectangle_button_click"
         android:src="@drawable/base_icon_like_heart_black" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:text="喜欢"
         android:textColor="@color/black"
         android:textSize="15sp" />
@@ -24,7 +25,7 @@
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:text="50"
         android:textColor="@color/default_btn_text_"
         android:textSize="12sp" />

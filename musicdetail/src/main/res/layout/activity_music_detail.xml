@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@color/default_btn_text"
-        />
+        android:src="@color/white_F0F2F7" />
 
     <ImageView
         android:id="@+id/cover_mask"
@@ -21,16 +20,18 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@color/black_30"
-        />
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/back_iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_selector_rectangle_button_click"
+        android:padding="10dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/base_icon_back_down"
+        android:src="@drawable/base_icon_back_down_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/indicator_container" />
 

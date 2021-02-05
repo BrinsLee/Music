@@ -27,26 +27,25 @@
     <Button
         android:id="@+id/btn_email_login"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/login_shape_rect_r10_blue_gradient_background"
+        android:background="@drawable/base_bg_login_10dp_shadow"
         android:text="@string/email_login"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@id/btn_phone_login" />
 
     <Button
         android:id="@+id/btn_phone_login"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/login_shape_rect_r10_blue_gradient_background"
+        android:background="@drawable/base_bg_login_10dp_shadow"
         android:text="@string/phone_login"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
 

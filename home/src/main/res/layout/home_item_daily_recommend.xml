@@ -16,6 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/base_selector_rectangle_button_click"
+            android:scaleType="centerInside"
             android:src="@drawable/home_ic_daily" />
 
         <TextView
@@ -23,12 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="23dp"
+            android:text="1"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="1"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/daily_tv"
@@ -52,6 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/base_selector_rectangle_button_click"
+            android:scaleType="centerInside"
             android:src="@drawable/home_ic_heart" />
 
         <TextView
@@ -76,6 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/base_selector_rectangle_button_click"
+            android:scaleType="centerInside"
             android:src="@drawable/home_ic_rank" />
 
         <TextView
@@ -100,6 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/base_selector_rectangle_button_click"
+            android:scaleType="centerInside"
             android:src="@drawable/home_ic_fm" />
 
         <TextView
