@@ -644,6 +644,10 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
          * @return
          */
         override fun resume(): Boolean {
+            /*if (!mPlayOnAudioFocus) {
+                mPlayOnAudioFocus = requestFocus()
+                mPlayer.prepare()
+            }*/
             if (mPlayOnAudioFocus && !mPlayer.isPlaying && isPlayingBeforeLoseFocuse) {
                 mPlayer.start()
                 isPaused = false
@@ -742,7 +746,7 @@ class PlayBackService : BaseMvpService<PlayerPresenter>(), IPlayback,
                     } else {
                         mAudioManager.abandonAudioFocus(this)
                     }
-                    stop()
+                    pause()
                 }
             }
         }

@@ -301,3 +301,11 @@ interface VIDEO {
 
     }
 }
+
+interface RADIO {
+    companion object {
+        const val RECOMMEND_RADIO = "/dj/hot"
+
+        const val PERSONALIZED_RADIO = "/personalized/djprogram"
+    }
+}
