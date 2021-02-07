@@ -120,6 +120,9 @@ dependencies {
     if (addEventDetail) {
         implementation project(':eventdetaillib')
     }
+    if (addRadio) {
+        implementation project(':radiolib')
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'
