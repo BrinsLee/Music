@@ -60,7 +60,7 @@
         android:background="@drawable/base_selector_rectangle_button_click"
         android:padding="10dp"
         android:scaleType="centerInside"
-        android:src="@drawable/base_icon_unlike_heart"
+        android:src="@drawable/base_icon_unlike_heart_black"
         app:layout_constraintBottom_toBottomOf="@id/tv_album_name"
         app:layout_constraintEnd_toStartOf="@id/iv_comments"
         app:layout_constraintTop_toTopOf="@id/tv_album_name" />
@@ -149,7 +149,7 @@
             android:layout_toLeftOf="@id/iv_play_last"
             android:background="@drawable/base_selector_button_click"
             android:scaleType="centerCrop"
-            android:src="@drawable/base_icon_play_cycle" />
+            android:src="@drawable/base_icon_play_cycle_black" />
 
         <ImageView
             android:id="@+id/iv_play_last"

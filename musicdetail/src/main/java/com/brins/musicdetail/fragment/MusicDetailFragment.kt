@@ -85,7 +85,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
                 if (list.contains(it.id)) {
                     iv_like.setImageResource(R.drawable.base_icon_like_heart)
                 } else {
-                    iv_like.setImageResource(R.drawable.base_icon_unlike_heart)
+                    iv_like.setImageResource(R.drawable.base_icon_unlike_heart_black)
                 }
             }
             tvDuration.text = formatDuration(duration)
@@ -211,11 +211,11 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         }
         when (mPlayer?.getCurrentPlayMode()) {
             PlayMode.LOOP -> {
-                iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle)
+                iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle_black)
             }
 
             PlayMode.SINGLE -> {
-                iv_play_mode.setImageResource(R.drawable.base_icon_play_single)
+                iv_play_mode.setImageResource(R.drawable.base_icon_play_single_black)
             }
         }
     }
@@ -313,7 +313,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             when (it.getCurrentPlayMode()) {
                 PlayMode.LOOP -> {
                     it.changePlayMode(PlayMode.SINGLE)
-                    iv_play_mode.setImageResource(R.drawable.base_icon_play_single)
+                    iv_play_mode.setImageResource(R.drawable.base_icon_play_single_black)
                     mPlayListPopup?.let { popup ->
                         if (popup.isShow) {
                             popup.setPlayModel(PlayMode.SINGLE)
@@ -323,7 +323,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
 
                 PlayMode.SINGLE -> {
                     it.changePlayMode(PlayMode.LOOP)
-                    iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle)
+                    iv_play_mode.setImageResource(R.drawable.base_icon_play_cycle_black)
                     mPlayListPopup?.let { popup ->
                         if (popup.isShow) {
                             popup.setPlayModel(PlayMode.LOOP)
@@ -358,7 +358,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             LoginCache.likeResult?.ids?.remove(id)
             SpUtils.obtain(SpUtils.SP_USER_INFO, context)
                 .save(SpUtils.KEY_USER_LIKE, GsonUtils.toJson(LoginCache.likeResult))
-            iv_like.setImageResource(R.drawable.base_icon_unlike_heart)
+            iv_like.setImageResource(R.drawable.base_icon_unlike_heart_black)
             ToastUtils.show(getString(R.string.dislike_success), Toast.LENGTH_SHORT)
         }
     }
