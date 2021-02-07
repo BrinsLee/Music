@@ -29,6 +29,7 @@ import com.brins.bridgelib.login.LoginBridgeInterface
 import com.brins.bridgelib.musiclist.MusicListBridgeInterface
 import com.brins.bridgelib.musicsquare.MusicSquareBridgeInterface
 import com.brins.bridgelib.provider.BridgeProviders
+import com.brins.bridgelib.radio.RadioBridgeInterface
 import com.brins.networklib.model.musiclist.MusicListIntelligenceResult
 import com.brins.networklib.model.personal.PersonalizedMusicList
 import com.brins.networklib.model.personal.PersonalizedMusics
@@ -216,7 +217,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeContract.View,
     }
 
     override fun onFmClick() {
-        TODO("Not yet implemented")
+        BridgeProviders.instance.getBridge(RadioBridgeInterface::class.java).toRadioActivity()
     }
 
 }

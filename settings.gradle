@@ -1,3 +1,4 @@
+include ':radiolib'
 include ':userlib'
 include ':eventdetaillib'
 include ':picturedetaillib'

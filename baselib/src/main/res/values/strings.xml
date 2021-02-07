@@ -28,4 +28,5 @@
     <string name="music_list">歌单</string>
     <string name="collapseIndicator">收起</string>
     <string name="expandIndicator">查看更多</string>
+    <string name="gauss_like">猜你喜欢</string>
 </resources>
