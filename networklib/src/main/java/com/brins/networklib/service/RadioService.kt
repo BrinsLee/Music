@@ -28,5 +28,17 @@ interface RadioService {
      * @return
      */
     @GET(RADIO.PERSONALIZED_RADIO)
-    fun getPersonailzedRadio(): Call<DjProgramResult>
+    fun getPersonalizedRadio(): Call<DjProgramResult>
+
+    /**
+     * 获取电台歌单
+     *
+     * @return
+     */
+    @GET(RADIO.PROGRAM_RADIO)
+    fun getRadioProgram(
+        @Query("rid") rid: String,
+        @Query("limit") limit: Int
+    ): Call<DjProgramResult>
+
 }

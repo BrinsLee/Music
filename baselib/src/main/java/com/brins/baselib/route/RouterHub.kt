@@ -59,6 +59,8 @@ interface RouterHub {
 
         const val RADIOACTIVITY = "${RADIO}/RadioActivity"
 
+        const val RADIODETAILACTIVITY = "${RADIO}/RadioDetailActivity"
+
 
         //    ****************Fragment路径配置***************************
         const val HOMEFRAGMENT = "$HOME/HomeFragment"

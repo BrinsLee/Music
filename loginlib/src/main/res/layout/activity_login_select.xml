@@ -44,6 +44,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
+        android:visibility="gone"
         android:background="@drawable/login_shape_rect_r10_blue_gradient_background"
         android:text="@string/phone_login"
         android:textColor="@color/white"

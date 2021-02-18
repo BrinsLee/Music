@@ -1,76 +1,63 @@
 package com.brins.networklib.model.radio
 
+import com.brins.baselib.module.BaseData
 import com.brins.baselib.module.BaseMusic
+import com.brins.baselib.module.ITEM_RADIO_PROGRAM_DATA
 import com.brins.baselib.module.UserProfile
 
 /**
  * Created by lipeilin
  * on 2021/2/7
  */
-class DjProgram {
+class DjProgram : BaseData() {
 
-    var id = ""
 
-    var type = 0
+    var mainSong: BaseMusic? = null
+
+    var dj: UserProfile? = null
+
+    var blurCoverUrl = ""
+
+    var radio: Radio? = null
+
+    var subscribedCount = 0
+
+    var mainTrackId = ""
+
+    var serialNum = 0
+
+    var listenerCount = 0
 
     var name = ""
 
-    var copywriter = ""
+    var id = ""
 
-    var picUrl = ""
+    var createTime = ""
 
-    var canDislike = false
+    var description = ""
 
+    var userId = ""
 
-    var program: Program? = null
+    var coverUrl = ""
 
-    class Program {
+    var channels: Array<String>? = null
 
-        var mainSong: BaseMusic? = null
+    var buyed = false
 
-        var dj : UserProfile? = null
+    var adjustedPlayCount = 0
 
-        var blurCoverUrl = ""
+    var duration: Long = 0
 
-        var radio : Radio? = null
+    var shareCount = 0
 
-        var subscribedCount = 0
+    var subscribed = false
 
-        var mainTrackId = ""
+    var likedCount = 0
 
-        var serialNum = 0
+    var commentCount = 0
 
-        var listenerCount = 0
+    var isPublish = false
 
-        var name = ""
-
-        var id = ""
-
-        var createTime = ""
-
-        var description = ""
-
-        var userId = ""
-
-        var coverUrl = ""
-
-        var channels : Array<String>? = null
-
-        var buyed = false
-
-        var adjustedPlayCount = 0
-
-        var duration : Long = 0
-
-        var shareCount = 0
-
-        var subscribed = false
-
-        var likedCount = 0
-
-        var commentCount = 0
-
-        var isPublish = false
-
-    }
+    override val itemType: Int
+        get() = ITEM_RADIO_PROGRAM_DATA
 }

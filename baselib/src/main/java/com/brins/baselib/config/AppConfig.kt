@@ -307,5 +307,8 @@ interface RADIO {
         const val RECOMMEND_RADIO = "/dj/hot"
 
         const val PERSONALIZED_RADIO = "/personalized/djprogram"
+
+        const val PROGRAM_RADIO = "/dj/program"
+
     }
 }

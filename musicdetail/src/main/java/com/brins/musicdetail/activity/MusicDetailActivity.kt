@@ -2,6 +2,8 @@ package com.brins.musicdetail.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -54,6 +56,7 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
         mPresenter?.bindPlaybackService()
         initViewPager()
     }
+
 
     private fun initViewPager() {
         mAdapter = MusicDetailAdapter(supportFragmentManager)

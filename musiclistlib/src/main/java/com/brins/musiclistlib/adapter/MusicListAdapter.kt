@@ -22,6 +22,12 @@ class MusicListAdapter(data: MutableList<BaseData>) :
     }
 
     override fun convert(helper: BaseViewHolder, item: BaseData) {
+
+        if (item.itemType == ITEM_HOME_SINGLE_TITLE) {
+            helper.getView<LinearLayout>(R.id.ll_play_all).setOnClickListener {
+                playAllMusic()
+            }
+        }
         if (item.itemType == ITEM_MUSIC_LIST_TRACK_MUSIC) {
             helper.setText(R.id.tv_music_num, "${helper.adapterPosition}")
 
@@ -49,7 +55,21 @@ class MusicListAdapter(data: MutableList<BaseData>) :
 
     }
 
-    fun playTrackMusic(pos: Int) {
+    private fun playAllMusic() {
+        val musicList = mutableListOf<BaseMusic>()
+        data.forEach {
+            if (it.itemType == ITEM_MUSIC_LIST_TRACK_MUSIC) {
+                musicList.add(it as BaseMusic)
+            }
+        }
+        EventBusManager.post(
+            KEY_EVENT_PERSONALIZED_MUSIC,
+            musicList,
+            "0"
+        )
+    }
+
+    private fun playTrackMusic(pos: Int) {
         val musicList = mutableListOf<BaseMusic>()
         data.forEach {
             if (it.itemType == ITEM_MUSIC_LIST_TRACK_MUSIC) {
@@ -63,7 +83,7 @@ class MusicListAdapter(data: MutableList<BaseData>) :
         )
     }
 
-    fun playAlbumMusic(pos: Int) {
+    private fun playAlbumMusic(pos: Int) {
         val musicList = mutableListOf<BaseMusic>()
         data.forEach {
             musicList.add(it as BaseMusic)

@@ -33,6 +33,7 @@ import com.brins.networklib.helper.ApiHelper.launch
 import com.brins.networklib.model.musiclist.MoreMusicListResult
 import com.brins.baselib.module.MusicList
 import com.brins.baselib.utils.convertNumMillion
+import com.brins.baselib.widget.StickHeaderDecoration
 import com.brins.networklib.model.musiclist.MusicListResult
 import kotlinx.android.synthetic.main.activity_music_list.*
 import kotlin.math.min
@@ -121,7 +122,8 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
                                     val tv = TextView(this)
                                     tv.setTextColor(Color.WHITE)
                                     tv.textSize = 12f
-                                    tv.text = "${convertNumMillion(list.subscribedCount.toLong())} 关注"
+                                    tv.text =
+                                        "${convertNumMillion(list.subscribedCount.toLong())} 关注"
                                     tv.gravity = Gravity.CENTER_VERTICAL
                                     frameLayout.addView(tv)
                                     val params: FrameLayout.LayoutParams =
@@ -193,6 +195,7 @@ class MusicListActivity : BaseMvpActivity<MusicListPresenter>(), MusicListContra
             musicRecycler.setHasFixedSize(true)
             musicRecycler.isNestedScrollingEnabled = true
             musicRecycler.layoutManager = manager
+            musicRecycler.addItemDecoration(StickHeaderDecoration(this))
         }
     }
 
