@@ -123,6 +123,9 @@ dependencies {
     if (addRadio) {
         implementation project(':radiolib')
     }
+    if (addLocal) {
+        implementation project(':local')
+    }
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'

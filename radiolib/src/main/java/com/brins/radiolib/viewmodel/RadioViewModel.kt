@@ -2,6 +2,9 @@ package com.brins.radiolib.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.brins.baselib.utils.TUtil
+import com.brins.networklib.model.radio.DjProgram
+import com.brins.networklib.model.radio.DjProgramResult
 import com.brins.networklib.model.radio.Radio
 import com.brins.networklib.model.radio.RadioResult
 import com.brins.radiolib.contract.RadioContract
@@ -19,6 +22,12 @@ class RadioViewModel private constructor(application: Application) :
 
     fun getRadioData(): RadioResult = mRadioData
     fun getRadioLiveData(): MutableLiveData<MutableList<Radio>> = mRadioLiveData
+
+    private lateinit var mRadioProgramData: DjProgramResult
+    private val mProgramLiveData: MutableLiveData<MutableList<DjProgram>> = MutableLiveData()
+
+    fun getRadioProgramData(): DjProgramResult = mRadioProgramData
+    fun getProgramLiveData(): MutableLiveData<MutableList<DjProgram>> = mProgramLiveData
 
     companion object {
 
@@ -47,9 +56,36 @@ class RadioViewModel private constructor(application: Application) :
         }
     }
 
-    override suspend fun getPersonalizedRadio() {
-        TODO("Not yet implemented")
+    override suspend fun getRadioProgram(rid: String, limit: Int) {
+        if (mModel == null) {
+            mModel = TUtil.getSuperT(this, 0)
+        }
+        val result = mModel?.getRadioProgram(rid, limit)
+        result?.let {
+            mRadioProgramData = it
+            mProgramLiveData.value = it.programs
+        }
     }
 
+    fun getRadioByPos(pos: Int): Radio? {
+        return if (::mRadioData.isInitialized && !mRadioData.djRadios.isNullOrEmpty()) {
+            mRadioData.djRadios!![pos]
+        } else {
+            null
+        }
+    }
+
+    fun getRadioByRid(rid: String): Radio? {
+        if (::mRadioData.isInitialized && !mRadioData.djRadios.isNullOrEmpty()) {
+            mRadioData.djRadios!!.forEach { radio ->
+                if (radio.id == rid) {
+                    return radio
+                }
+            }
+
+        }
+        return null
+
+    }
 
 }

@@ -86,6 +86,12 @@ open class BaseMusic : BaseData(), Serializable {
     @Transient
     var bitmapCover: Bitmap? = null
 
+    /**
+     * 模糊封面
+     */
+    @Transient
+    var blurBitmap: Bitmap? = null
+
     class Song : Serializable {
         var name: String = ""
 
@@ -147,5 +153,5 @@ open class BaseMusic : BaseData(), Serializable {
     }
 
     override val itemType: Int
-        get() = 0
+        get() = ITEM_BASE_MUSIC
 }

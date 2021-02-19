@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_cl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gery"
+    tools:context=".activity.RadioDetailActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/translucent_000000"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layout_behavior="com.brins.baselib.utils.AppBarZoomBehavior">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gery"
+                app:contentScrim="@color/translucent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.brins.baselib.widget.ArcImageView
+                        android:id="@+id/cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:scaleType="centerCrop"
+                        app:image_arc_height="40dp"
+                        android:src="@drawable/base_icon_default_cover"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/coverMusicList"
+                        android:layout_width="120dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/base_icon_default_cover"
+                        android:transitionName="transitionImg"
+                        app:layout_collapseMode="parallax"
+                        app:layout_collapseParallaxMultiplier="0.5"
+                        app:layout_constraintDimensionRatio="900:920"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="5"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/avatar"
+                        app:layout_constraintTop_toTopOf="@id/coverMusicList" />
+
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/radio_bg_circle_30dp"
+                        android:padding="2dp"
+                        app:layout_constraintStart_toEndOf="@id/coverMusicList"
+                        app:layout_constraintTop_toTopOf="@id/coverMusicList" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="pin">
+
+                    <com.brins.baselib.widget.CommonHeaderView
+                        android:id="@+id/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:paddingTop="20dp"
+                        app:chv_icon="@drawable/base_icon_back"
+                        app:chv_text_color="@color/white"
+                        app:chv_title="@string/music_list"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </com.brins.baselib.widget.CommonHeaderView>
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/musicRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-10dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintHorizontal_bias="1.0" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

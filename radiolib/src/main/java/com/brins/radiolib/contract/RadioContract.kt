@@ -24,18 +24,18 @@ interface RadioContract {
     abstract class Presenter : BasePresenter<RadioModel, View>() {
         abstract suspend fun getRecommendRadio(limit: Int = 6)
 
-        abstract suspend fun getPersonalizedRadio()
+        abstract suspend fun getRadioProgram(rid: String, limit: Int = 40)
     }
 
     abstract class ViewModel(application: Application) : BaseViewModel<RadioModel>(application) {
         abstract suspend fun getRecommendRadio(limit: Int = 6)
 
-        abstract suspend fun getPersonalizedRadio()
+        abstract suspend fun getRadioProgram(rid: String, limit: Int = 40)
     }
 
     interface Model : IModel {
         suspend fun getRecommendRadio(limit: Int = 6): RadioResult
 
-        suspend fun getPersonalizedRadio(): DjProgramResult
+        suspend fun getRadioProgram(rid: String, limit: Int = 40): DjProgramResult
     }
 }

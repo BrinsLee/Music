@@ -4,6 +4,7 @@ package com.brins.baselib.module
  * @author lipeilin
  * @date 2020/7/13
  */
+val ITEM_BASE_MUSIC = 0
 
 val ITEM_HOME_BANNER = 0x10
 val ITEM_HOME_PERSONALIZED = 0x11
@@ -53,6 +54,8 @@ val ITEM_VIDEO_MUSIC_VIDEO_COMMENT = 0x13
 
 val ITEM_RADIO_SINGLE_TITLE = 0x12
 val ITEM_RADIO_RECOMMEND_DATA = 0x13
+val ITEM_RADIO_PROGRAM_DATA = 0x14
+
 
 
 

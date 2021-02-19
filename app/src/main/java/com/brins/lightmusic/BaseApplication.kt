@@ -19,6 +19,7 @@ import com.brins.eventdetaillib.bridge.EventDetailBridge
 import com.brins.find.bridge.FindBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
+import com.brins.loacl.bridge.LocalBridge
 import com.brins.loginlib.bridge.LoginBridge
 import com.brins.mine.bridge.MineBridge
 import com.brins.musicdetail.bridge.MusicDetailBridge
@@ -152,6 +153,7 @@ class BaseApplication : Application() {
             .register(EventDetailBridge::class.java)
             .register(VideoBridge::class.java)
             .register(RadioBridge::class.java)
+            .register(LocalBridge::class.java)
     }
 
 

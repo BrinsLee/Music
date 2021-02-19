@@ -6,11 +6,18 @@ import android.content.Context
 import android.graphics.*
 import android.icu.util.Calendar
 import android.os.Build
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
 import android.text.format.Time
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.collection.SimpleArrayMap
+import com.brins.baselib.R
 import com.shuyu.textutillib.model.TopicModel
 import com.shuyu.textutillib.model.UserModel
 import io.reactivex.Completable
@@ -160,7 +167,11 @@ fun createRadialGradientBitmap(
     bgColors[2] = Color.WHITE
     val stop = floatArrayOf(0.2f, 0.2f, 0.9f)
 
-    val bgBitmap = Bitmap.createBitmap(UIUtils.getScreenWidth(context), UIUtils.getScreenHeight(context), Bitmap.Config.RGB_565)
+    val bgBitmap = Bitmap.createBitmap(
+        UIUtils.getScreenWidth(context),
+        UIUtils.getScreenHeight(context),
+        Bitmap.Config.RGB_565
+    )
     val canvas = Canvas()
     val paint = Paint()
     canvas.setBitmap(bgBitmap)
@@ -272,4 +283,56 @@ fun getTopicModel(content: String?): ArrayList<TopicModel>? {
         strs.add(TopicModel(m.group(), m.group()))
     }
     return strs
+}
+
+fun string2Bitmap(bitmapString: String?): Bitmap? {
+    var bitmap: Bitmap? = null
+    if (bitmapString != null) {
+        try {
+            val b = Base64.decode(bitmapString, Base64.DEFAULT)
+            bitmap = BitmapFactory.decodeByteArray(
+                b, 0,
+                b.size
+            )
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+    return bitmap ?: BitmapFactory.decodeResource(
+        UIUtils.getContext().resources,
+        R.drawable.base_icon_default_cover
+    )
+}
+
+//高斯模糊
+fun rsBlur(context: Context, source: Bitmap, radius: Float): Bitmap {
+
+    var inputBmp = source
+    //(1)
+    val renderScript = RenderScript.create(context)
+
+    Log.i("Render", "scale size:" + inputBmp.width + "*" + inputBmp.height)
+
+    // Allocate memory for Renderscript to work with
+    //(2)
+    val input = Allocation.createFromBitmap(renderScript, inputBmp)
+    val output = Allocation.createTyped(renderScript, input.type)
+    //(3)
+    // Load up an instance of the specific script that we want to use.
+    val scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
+    //(4)
+    scriptIntrinsicBlur.setInput(input)
+    //(5)
+    // Set the blur radius
+    scriptIntrinsicBlur.setRadius(radius)
+    //(6)
+    // Start the ScriptIntrinisicBlur
+    scriptIntrinsicBlur.forEach(output)
+    //(7)
+    // Copy the output to the blurred bitmap
+    output.copyTo(inputBmp)
+    //(8)
+    renderScript.destroy()
+
+    return inputBmp
 }
