@@ -57,22 +57,31 @@ class PlayerPresenter : PlayerContract.Presenter() {
     }
 
     override fun play(music: BaseMusic) {
-        launch({
-            val result = mModel?.loadMusicUrl(music.id)
-            if (result != null && result.isNotEmpty()) {
-                music.musicUrl = result
-                mPlaybackService?.let {
-                    if (it.play(music)) {
-                        mView?.onSongUpdated(music)
-                    }
+        if (music.musicUrl.isNotEmpty()){
+            mPlaybackService?.let {
+                if (it.play(music)) {
+                    mView?.onSongUpdated(music)
                 }
-
-            } else {
-                ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
             }
-        }, {
-            ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
-        })
+        }else{
+            launch({
+                val result = mModel?.loadMusicUrl(music.id)
+                if (result != null && result.isNotEmpty()) {
+                    music.musicUrl = result
+                    mPlaybackService?.let {
+                        if (it.play(music)) {
+                            mView?.onSongUpdated(music)
+                        }
+                    }
+
+                } else {
+                    ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
+                }
+            }, {
+                ToastUtils.show(UIUtils.getString(R.string.music_not_available), Toast.LENGTH_SHORT)
+            })
+        }
+
     }
 
     /**

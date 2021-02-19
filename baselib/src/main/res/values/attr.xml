@@ -48,4 +48,14 @@
         <attr name="expandCollapseToggleId" format="reference" />
         <attr name="expandToggleOnTextClick" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="ArcView">
+
+        <attr name="arc_height" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ArcImageView">
+
+        <attr name="image_arc_height" format="dimension" />
+    </declare-styleable>
 </resources>

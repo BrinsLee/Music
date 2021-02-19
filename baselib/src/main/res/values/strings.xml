@@ -29,4 +29,7 @@
     <string name="collapseIndicator">收起</string>
     <string name="expandIndicator">查看更多</string>
     <string name="gauss_like">猜你喜欢</string>
+    <string name="permission_title">需要开启以下权限</string>
+    <string name="permission_subtitle">为了您能正常使用app请开启以下权限</string>
+    <string name="permission_next">下一步</string>
 </resources>

@@ -3,7 +3,8 @@
     package="com.brins.radiolib">
 
     <application>
-        <activity android:name=".activity.RadioActivity"></activity>
+        <activity android:name=".activity.RadioDetailActivity"></activity>
+        <activity android:name=".activity.RadioActivity" />
     </application>
 
 </manifest>

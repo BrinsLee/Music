@@ -15,9 +15,8 @@ class RadioModel : RadioContract.Model {
     override suspend fun getRecommendRadio(limit: Int): RadioResult =
         ApiHelper.getRadioService().getRecommendRadio(limit).await()
 
-    override suspend fun getPersonalizedRadio(): DjProgramResult {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getRadioProgram(rid: String, limit: Int): DjProgramResult =
+        ApiHelper.getRadioService().getRadioProgram(rid, limit).await()
 
     override fun onDestroy() {
 

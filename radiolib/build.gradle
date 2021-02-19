@@ -51,6 +51,9 @@ dependencies {
     implementation project(':recyclerlib')
     implementation project(':bridgelib')
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //Glide
+    implementation "com.github.bumptech.glide:glide:${rootProject.ext.dependVersion.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.dependVersion.glide}"
     // ARouter
     implementation "com.alibaba:arouter-api:${rootProject.ext.dependVersion.arouter_api}"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

@@ -4,4 +4,16 @@
         <item name="android:windowEnterAnimation">@anim/base_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/base_dialog_out</item>
     </style>
+
+    <!-- 自定义baseDialog样式 -->
+    <style name="Dialog" parent="android:Theme.Dialog">
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 自己想要的背景 -->
+        <item name="android:windowBackground">@drawable/base_bg_6dp_dialog</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 解决：原先对话框里面按钮显示和点击时的兼容性问题 -->
+        <item name="android:selectableItemBackground">@null</item>
+    </style>
 </resources>

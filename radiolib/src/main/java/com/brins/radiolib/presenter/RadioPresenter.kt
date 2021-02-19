@@ -15,8 +15,8 @@ class RadioPresenter : RadioContract.Presenter() {
         }
     }
 
-    override suspend fun getPersonalizedRadio() {
-        val result = mModel?.getPersonalizedRadio()
+    override suspend fun getRadioProgram(rid: String, limit: Int) {
+        val result = mModel?.getRadioProgram(rid, limit)
         result?.let {
             mView?.onPerRadioLoad(it)
         }
