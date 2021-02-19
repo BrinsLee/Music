@@ -6,4 +6,6 @@
         android:height="30px" />
     <solid android:color="@color/white" />
     <corners android:radius="15px" />
+    <stroke android:width="1px" android:color="@color/gery_dadbdf"/>
+
 </shape>

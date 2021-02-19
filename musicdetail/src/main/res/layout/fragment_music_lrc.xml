@@ -15,16 +15,16 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         app:lrcAnimationDuration="1000"
-        app:lrcCurrentTextColor="@color/white"
+        app:lrcCurrentTextColor="@color/black"
         app:lrcDividerHeight="20dp"
         app:lrcLabel="暂无歌词"
-        app:lrcNormalTextColor="@color/white_60"
+        app:lrcNormalTextColor="@color/default_btn_text"
         app:lrcNormalTextSize="15sp"
         app:lrcPadding="20dp"
         app:lrcTextGravity="left"
         app:lrcTextSize="20sp"
-        app:lrcTimeTextColor="@color/white_60"
+        app:lrcTimeTextColor="@color/default_btn_text"
         app:lrcTimelineColor="#80BDBDBD"
-        app:lrcTimelineTextColor="@color/white" />
+        app:lrcTimelineTextColor="@color/default_btn_text" />
 
 </FrameLayout>

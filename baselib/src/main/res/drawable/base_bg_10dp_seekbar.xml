@@ -4,7 +4,7 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="20px" />
-            <solid android:color="@color/white_60" />
+            <solid android:color="@color/gery_dadbdf" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress">
@@ -22,8 +22,8 @@
             <shape>
                 <corners android:radius="20px" />
                 <gradient
-                    android:endColor="@color/white"
-                    android:startColor="@color/white" />
+                    android:endColor="@color/black_70"
+                    android:startColor="@color/black_70" />
             </shape>
         </clip>
     </item>

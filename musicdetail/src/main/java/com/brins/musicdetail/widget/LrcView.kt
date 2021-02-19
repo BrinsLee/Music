@@ -609,6 +609,7 @@ class LrcView @JvmOverloads constructor(
                 mLrcPaint.textSize = mCurrentTextSize
                 mLrcPaint.color = mCurrentTextColor
             } else if (isShowTimeline && i == centerLine) {
+                mLrcPaint.textSize = mCurrentTextSize
                 mLrcPaint.setColor(mTimelineTextColor)
             } else {
                 mLrcPaint.textSize = mNormalTextSize

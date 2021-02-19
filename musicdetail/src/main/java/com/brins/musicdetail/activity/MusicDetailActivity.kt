@@ -69,8 +69,8 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
                     ColorTransitionPagerTitleView(context)
 
                 simplePagerTitleView.text = mTitleList[index]
-                simplePagerTitleView.normalColor = UIUtils.getColor(R.color.white_50)
-                simplePagerTitleView.selectedColor = UIUtils.getColor(R.color.white)
+                simplePagerTitleView.normalColor = UIUtils.getColor(R.color.default_btn_text)
+                simplePagerTitleView.selectedColor = UIUtils.getColor(R.color.black)
                 simplePagerTitleView.textSize = 15f
                 simplePagerTitleView.setOnClickListener {
                     vp_music_detail.currentItem = index
@@ -112,12 +112,12 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
             if (cover == null || cover.isEmpty()) {
                 cover = it.song?.picUrl
             }
-            if (cover.isNullOrEmpty() && it.blurBitmap != null) {
+            /*if (cover.isNullOrEmpty() && it.blurBitmap != null) {
                 it.blurBitmap = rsBlur(this, it.blurBitmap!!, 25f)
                 cover_bg.setImageBitmap(it.blurBitmap)
             } else {
                 GlideHelper.setBlurImageResource(cover_bg, cover, 100f)
-            }
+            }*/
         }
     }
 
@@ -131,7 +131,7 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
             if (cover == null || cover.isEmpty()) {
                 cover = it.song?.picUrl
             }
-            GlideHelper.setBlurImageResource(cover_bg, cover, 100f)
+//            GlideHelper.setBlurImageResource(cover_bg, cover, 100f)
         }
         mAdapter?.let {
             (it.getItem(0) as MusicDetailFragment).initMusicDetail()

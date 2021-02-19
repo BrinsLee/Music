@@ -2,22 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="105dp">
+    android:layout_height="wrap_content">
 
     <com.brins.baselib.widget.RoundConstraintLayout
         android:id="@+id/cl_unlogin"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginTop="15dp"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:round_corner="15dp">
+        android:background="@drawable/base_bg_login_20dp_shadow"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            android:layout_marginStart="90dp"
             android:layout_marginTop="10dp"
             android:text="@string/login_now"
             android:textColor="@color/black"
@@ -38,7 +37,7 @@
             android:id="@+id/ll_follows_fans"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="30dp"
@@ -74,8 +73,8 @@
 
     <ImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:src="@drawable/base_icon_default_avatar"
         app:layout_constraintStart_toStartOf="parent"
