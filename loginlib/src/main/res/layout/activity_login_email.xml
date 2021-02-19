@@ -108,6 +108,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/use_phone"
+        android:visibility="gone"
         android:textColor="@color/common_blue_twelfth"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"

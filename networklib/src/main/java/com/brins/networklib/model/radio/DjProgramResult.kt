@@ -1,5 +1,7 @@
 package com.brins.networklib.model.radio
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by lipeilin
  * on 2021/2/7
@@ -7,5 +9,6 @@ package com.brins.networklib.model.radio
 class DjProgramResult {
     var code: Int = 0
 
-    var result: List<DjProgram>? = null
+    @SerializedName("programs", alternate = ["result"])
+    var programs: MutableList<DjProgram>? = null
 }

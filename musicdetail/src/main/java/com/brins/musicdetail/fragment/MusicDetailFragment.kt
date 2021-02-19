@@ -3,6 +3,8 @@ package com.brins.musicdetail.fragment
 import android.os.Build
 import android.os.Bundle
 import android.os.Message
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
@@ -42,6 +44,8 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
     private val MESSAGE_UPDATE_PROGRESS = 0X10
     private var mPlayer: PlayBackService? = null
     private var mPlayListPopup: PlayListPopup? = null
+    private var mDetector: GestureDetector? = null
+
 
     override fun getLayoutResID(): Int {
         return R.layout.fragment_music_detail
@@ -53,10 +57,28 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
 
     override fun init(savedInstanceState: Bundle?) {
         if (mActivity is MusicDetailActivity) {
+            mDetector = GestureDetector(mActivity, object :
+                GestureDetector.SimpleOnGestureListener() {
+                override fun onFling(
+                    e1: MotionEvent?,
+                    e2: MotionEvent?,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+
+                    return if (velocityY > 4000) {
+                        (mActivity as MusicDetailActivity).finish()
+                        true
+                    } else {
+                        super.onFling(e1, e2, velocityX, velocityY)
+                    }
+                }
+            })
             mPlayer = (mActivity as MusicDetailActivity).getPlayBackService()
             initMusicDetail()
         }
     }
+
 
     fun initMusicDetail() {
         val music = mPlayer?.getPlayingSong()
@@ -65,14 +87,19 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         if (coverUrl == null || coverUrl.isEmpty()) {
             coverUrl = music?.song?.picUrl
         }
-        GlideHelper.setRoundImageResource(
-            cover,
-            coverUrl,
-            20,
-            R.drawable.base_icon_default_cover,
-            0,
-            0
-        )
+        if (!coverUrl.isNullOrEmpty()) {
+            GlideHelper.setRoundImageResource(
+                cover,
+                coverUrl,
+                20,
+                R.drawable.base_icon_default_cover,
+                0,
+                0
+            )
+        } else if (music?.bitmapCover != null) {
+            cover.setImageBitmap(music?.bitmapCover)
+        }
+
         music?.let {
             tv_music_name.text = it.name
             tv_artist_name.text = getArtists(it)
@@ -118,6 +145,7 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
             iv_play_list.setOnClickListener(this)
             iv_like.setOnClickListener(this)
         }
+        cl_root.setOnTouchListener { v, event -> mDetector!!.onTouchEvent(event) }
     }
 
     private fun getArtists(data: BaseMusic): String {
@@ -386,12 +414,14 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
                     }
                 }
             }
+
         }
     }
 
     override fun onItemClick(item: BaseMusic, adapterPosition: Int) {
         mPlayer?.let {
             if (it.play(item)) {
+                updateSong(EventBusParams(EventBusKey.KEY_EVENT_RESUME_MUSIC, null))
                 mPlayListPopup?.let { popup ->
                     if (popup.isShow()) {
                         popup.updateData(item, adapterPosition)

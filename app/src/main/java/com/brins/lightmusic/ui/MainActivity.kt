@@ -119,7 +119,7 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playMusic(params: EventBusParams) {
         when (params.key) {
-            EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC, EventBusKey.KEY_EVENT_INTELLIGENCE_MUSIC -> {
+            EventBusKey.KEY_EVENT_PERSONALIZED_MUSIC, EventBusKey.KEY_EVENT_INTELLIGENCE_MUSIC, EventBusKey.KEY_EVENT_LOCAL_MUSIC -> {
                 val musicList = params.`object` as MutableList<BaseMusic>
                 val position = params.extra.toInt()
                 val music = musicList[position]
@@ -251,7 +251,10 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
                 }*/
                 BridgeProviders.instance.getBridge(MusicDetailBridgeInterface::class.java)
                     .toMusicDetailActivity()
-                overridePendingTransition(R.anim.base_activity_page_up_enter, R.anim.base_activity_page_up_exit)
+                overridePendingTransition(
+                    R.anim.base_activity_page_up_enter,
+                    R.anim.base_activity_page_up_exit
+                )
                 return
             }
         }
@@ -302,7 +305,12 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
                 it.picUrl
             }
             cover_container.startRotateAnimation()
-            cover_container.setImageBitmap(cover ?: "")
+            if (cover.isNullOrEmpty()) {
+                cover_container.setImageBitmap(it.bitmapCover)
+            } else {
+                cover_container.setImageBitmap(cover)
+
+            }
             cover_container.setProgress(initProgress(mPlayer!!.getProgress()))
             mHandler.post(mProgressCallback)
 
@@ -320,7 +328,6 @@ class MainActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.View {
     }
 
     override fun updatePlayMode(playMode: PlayMode) {
-        TODO("Not yet implemented")
     }
 
     override fun onMusicDelete() {

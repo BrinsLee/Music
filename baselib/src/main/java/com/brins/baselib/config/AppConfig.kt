@@ -1,5 +1,7 @@
 package com.brins.baselib.config
 
+import android.provider.MediaStore
+
 const val BASEURL = "http://118.31.65.24/"
 
 const val PHONE_NUMBER_LENGTH = 11
@@ -30,6 +32,21 @@ const val ACTION_NEXT = "com.brins.lightmusic.ACTION.PLAY_NEXT"
 const val ACTION_PAUSE = "com.brins.lightmusic.ACTION.PAUSE"
 const val ACTION_PLAY = "com.brins.lightmusic.ACTION.PLAY"
 const val ACTION_EXIST = "com.brins.lightmusic.ACTION.EXIST"
+
+val MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+const val ORDER_BY = MediaStore.Audio.Media.DISPLAY_NAME + " ASC"
+const val FILTER_SIZE = 1 * 1024 * 1024// 1MB
+const val FILTER_DURATION = 1 * 60 * 1000// 1分钟
+val PROJECT_LOCAL = arrayOf(
+    MediaStore.Audio.Media.ALBUM_ID,
+    MediaStore.Audio.Media.DISPLAY_NAME,
+    MediaStore.Audio.Media.TITLE,
+    MediaStore.Audio.Media.DURATION,
+    MediaStore.Audio.Media.ARTIST,
+    MediaStore.Audio.Media.ALBUM,
+    MediaStore.Audio.Media.SIZE,
+    MediaStore.Audio.Media.DATA
+)
 
 
 val API_NEED_COOKIE = arrayListOf<String>(
@@ -307,5 +324,8 @@ interface RADIO {
         const val RECOMMEND_RADIO = "/dj/hot"
 
         const val PERSONALIZED_RADIO = "/personalized/djprogram"
+
+        const val PROGRAM_RADIO = "/dj/program"
+
     }
 }
