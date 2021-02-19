@@ -87,14 +87,19 @@ class MusicDetailFragment : BaseMvpFragment<MusicDetailPresenter>(), WeakHandler
         if (coverUrl == null || coverUrl.isEmpty()) {
             coverUrl = music?.song?.picUrl
         }
-        GlideHelper.setRoundImageResource(
-            cover,
-            coverUrl,
-            20,
-            R.drawable.base_icon_default_cover,
-            0,
-            0
-        )
+        if (!coverUrl.isNullOrEmpty()) {
+            GlideHelper.setRoundImageResource(
+                cover,
+                coverUrl,
+                20,
+                R.drawable.base_icon_default_cover,
+                0,
+                0
+            )
+        } else if (music?.bitmapCover != null) {
+            cover.setImageBitmap(music?.bitmapCover)
+        }
+
         music?.let {
             tv_music_name.text = it.name
             tv_artist_name.text = getArtists(it)

@@ -3,4 +3,6 @@
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="size_750_88px">42.24dp</dimen>
+    <dimen name="base_navigator_height">45dp</dimen>
+    <dimen name="base_navigator_height2">15dp</dimen>
 </resources>

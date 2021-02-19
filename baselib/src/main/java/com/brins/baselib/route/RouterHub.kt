@@ -20,6 +20,7 @@ interface RouterHub {
         const val EVENT_DETAIL = "/eventdetail"
         const val VIDEO = "/video"
         const val RADIO = "/radio"
+        const val LOCAL = "/local"
 
 
 
@@ -60,6 +61,8 @@ interface RouterHub {
         const val RADIOACTIVITY = "${RADIO}/RadioActivity"
 
         const val RADIODETAILACTIVITY = "${RADIO}/RadioDetailActivity"
+
+        const val LOCALMUSICACTIVITY = "${LOCAL}/LocalMusicActivity"
 
 
         //    ****************Fragment路径配置***************************

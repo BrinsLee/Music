@@ -16,6 +16,7 @@ import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
 import com.brins.baselib.utils.hideStatusBar
+import com.brins.baselib.utils.rsBlur
 import com.brins.musicdetail.R
 import com.brins.musicdetail.adapter.MusicDetailAdapter
 import com.brins.musicdetail.fragment.MusicDetailFragment
@@ -111,7 +112,12 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
             if (cover == null || cover.isEmpty()) {
                 cover = it.song?.picUrl
             }
-            GlideHelper.setBlurImageResource(cover_bg, cover, 100f)
+            if (cover.isNullOrEmpty() && it.blurBitmap != null) {
+                it.blurBitmap = rsBlur(this, it.blurBitmap!!, 25f)
+                cover_bg.setImageBitmap(it.blurBitmap)
+            } else {
+                GlideHelper.setBlurImageResource(cover_bg, cover, 100f)
+            }
         }
     }
 

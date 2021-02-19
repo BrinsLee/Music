@@ -13,6 +13,7 @@ public class EventBusKey {
     public static final String SETTING_WX_SUCCEED = "mine_setting_wx_succeed";
     public static final String REFRESH_POPUP = "refresh_popup";
     public static final String KEY_JSBRIDGE_DATA_SHAREJSAPI_ACTIVITYRESULT = "key_jsbridge_data_sharejsapi_activityresult";
+    public static final String KEY_EVENT_LOCAL_MUSIC = "KEY_EVENT_LOCAL_MUSIC";
     public static final String KEY_EVENT_PERSONALIZED_MUSIC = "KEY_EVENT_PERSONALIZED_MUSIC";
     public static final String KEY_EVENT_UPDATE_MUSIC = "KEY_EVENT_UPDATE_MUSIC";
     public static final String KEY_EVENT_TOP_MUSIC = "KEY_EVENT_TOP_MUSIC";

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.jzvd.Jzvd
 import cn.jzvd.JzvdStd
@@ -27,8 +26,6 @@ import com.brins.video.presenter.VideoPresenter
 import com.chad.library.adapter.base2.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base2.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.activity_video_detail.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @Route(path = VIDEODETAILACTIVITY)
 class VideoDetailActivity : BaseMvpActivity<VideoPresenter>(),
