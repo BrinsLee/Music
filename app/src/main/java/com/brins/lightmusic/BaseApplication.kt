@@ -6,14 +6,14 @@ import android.content.Context
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
 import com.brins.baselib.cache.login.LoginCache
-import com.brins.bridgelib.BridgeInterface
-import com.brins.bridgelib.factory.Factory
-import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.baselib.config.MAIN_PROCESS_NAME
 import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
+import com.brins.bridgelib.BridgeInterface
+import com.brins.bridgelib.factory.Factory
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.dailylib.bridge.DailyMusicBridge
 import com.brins.eventdetaillib.bridge.EventDetailBridge
 import com.brins.find.bridge.FindBridge
@@ -29,7 +29,10 @@ import com.brins.picturedetaillib.bridge.PictureDetailBridge
 import com.brins.radiolib.bridge.RadioBridge
 import com.brins.searchlib.bridge.SearchBridge
 import com.brins.video.bridge.VideoBridge
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import dagger.hilt.android.HiltAndroidApp
+
 
 //import io.reactivex.plugins.RxJavaPlugins
 
@@ -61,8 +64,18 @@ class BaseApplication : Application() {
             AppUtils.init(this)
             initUserData()
             initArouter()
+            initBugly()
             registerBridge()
         }
+    }
+
+    private fun initBugly() {
+        val strategy = UserStrategy(this).also {
+            it.setAppChannel("1001")
+            it.setAppVersion(BuildConfig.VERSION_NAME)
+        }
+        CrashReport.initCrashReport(this, "f6502c9d26", true, strategy)
+//        Bugly.init(this, "f6502c9d26", true)
     }
 
     private fun initUserData() {
