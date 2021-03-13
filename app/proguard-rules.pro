@@ -192,6 +192,11 @@
 -keep class com.google.gson.stream.** { *; }
 -keepattributes EnclosingMethod
 
-#bugly
+# bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+# tinker
+-keep class android.support.**{*;}
+-dontwarn com.tencent.tinker.**
+-keep class com.tencent.tinker.** { *; }
+-keep public class android.support.v4.content.FileProvider {*;}
