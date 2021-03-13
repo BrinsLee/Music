@@ -369,7 +369,7 @@ public class TextCommonUtils {
      */
     private static boolean isTopURL(String str) {
         String ss[] = str.split("\\.");
-        if (ss.length < 3)
+        if (ss.length < 2)
             return false;
 
         return true;

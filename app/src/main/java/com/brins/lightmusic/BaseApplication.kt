@@ -4,21 +4,23 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.os.Environment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.brins.baselib.cache.login.LoginCache
-import com.brins.bridgelib.BridgeInterface
-import com.brins.bridgelib.factory.Factory
-import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.baselib.config.MAIN_PROCESS_NAME
 import com.brins.baselib.database.factory.DatabaseFactory
 import com.brins.baselib.module.like.UserLikeMusicResult
 import com.brins.baselib.utils.*
 import com.brins.baselib.utils.SpUtils.*
+import com.brins.bridgelib.BridgeInterface
+import com.brins.bridgelib.factory.Factory
+import com.brins.bridgelib.provider.BridgeProviders
 import com.brins.dailylib.bridge.DailyMusicBridge
 import com.brins.eventdetaillib.bridge.EventDetailBridge
 import com.brins.find.bridge.FindBridge
 import com.brins.home.bridge.HomeBridge
 import com.brins.lightmusic.bridge.AppBridge
+import com.brins.lightmusic.ui.MainActivity
 import com.brins.loacl.bridge.LocalBridge
 import com.brins.loginlib.bridge.LoginBridge
 import com.brins.mine.bridge.MineBridge
@@ -29,7 +31,11 @@ import com.brins.picturedetaillib.bridge.PictureDetailBridge
 import com.brins.radiolib.bridge.RadioBridge
 import com.brins.searchlib.bridge.SearchBridge
 import com.brins.video.bridge.VideoBridge
+import com.tencent.bugly.Bugly
+import com.tencent.bugly.beta.Beta
+import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import dagger.hilt.android.HiltAndroidApp
+
 
 //import io.reactivex.plugins.RxJavaPlugins
 
@@ -61,8 +67,38 @@ class BaseApplication : Application() {
             AppUtils.init(this)
             initUserData()
             initArouter()
+            initBeta()
+            initBugly()
             registerBridge()
         }
+    }
+
+    private fun initBeta() {
+        Beta.autoInit = true
+        Beta.autoCheckUpgrade = true
+        Beta.upgradeCheckPeriod = 24 * 3600 * 1000
+        Beta.initDelay = 3 * 1000
+        Beta.largeIconId = R.mipmap.ic_launcher
+        Beta.smallIconId = R.mipmap.ic_launcher
+        Beta.defaultBannerId = R.mipmap.ic_launcher
+        Beta.storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        Beta.canShowUpgradeActs.add(MainActivity::class.java)
+        Beta.canAutoDownloadPatch = true
+        // 设置是否提示用户重启
+        Beta.canNotifyUserRestart = true
+        Beta.upgradeDialogLayoutId = R.layout.dialog_update
+        Beta.installTinker()
+    }
+
+    private fun initBugly() {
+        val strategy = UserStrategy(this).also {
+            it.setAppChannel("1001")
+            it.setAppVersion(BuildConfig.VERSION_NAME)
+        }
+//        CrashReport.initCrashReport(this, "f6502c9d26", true, strategy)
+        Bugly.init(this, "f6502c9d26", true, strategy)
+
     }
 
     private fun initUserData() {
@@ -179,5 +215,8 @@ class BaseApplication : Application() {
         }
     }*/
 
-
+    override fun onTerminate() {
+        super.onTerminate()
+        Beta.unInit()
+    }
 }

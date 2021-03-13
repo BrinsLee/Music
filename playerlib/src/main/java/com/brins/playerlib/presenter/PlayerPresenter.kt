@@ -57,7 +57,7 @@ class PlayerPresenter : PlayerContract.Presenter() {
     }
 
     override fun play(music: BaseMusic) {
-        if (music.musicUrl.isNotEmpty()){
+        if (!music.musicUrl.isNullOrEmpty()){
             mPlaybackService?.let {
                 if (it.play(music)) {
                     mView?.onSongUpdated(music)
