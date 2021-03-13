@@ -22,8 +22,8 @@
 
 ## 播放
 
-<img src="/images/Screenshot_play.jpg" width="260">&emsp;<img src="/images/Screenshot_lyrics.jpg" width="260">
+<img src="/images/Screensho_play.jpg" width="260">&emsp;<img src="/images/Screenshot_lyrics.jpg" width="260">
 
 ## 歌单广场
 
-<img src="/images/Screenshot_musicsquare.jpg" width="260">
+<img src="/images/Screenshot_square.jpg" width="260">
