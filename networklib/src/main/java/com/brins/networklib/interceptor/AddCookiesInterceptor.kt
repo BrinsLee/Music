@@ -12,7 +12,7 @@ class AddCookiesInterceptor : Interceptor {
         val builder = chain.request().newBuilder()
         Log.d("addCookie:", UserCookie)
         val path = chain.request().url().pathSegments().toString()
-        if (API_NEED_COOKIE.contains(path) && !TextUtils.isEmpty(UserCookie)) {
+        if (!TextUtils.isEmpty(UserCookie)) {
             builder.addHeader("Cookie", UserCookie)
         }
         return chain.proceed(builder.build())

@@ -11,11 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <ImageView
+    <com.brins.baselib.widget.RealtimeBlurView
+        android:id="@+id/iv_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@color/white_70"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:realtimeBlurRadius="10dp"
+        app:realtimeOverlayColor="@color/white_50"
+        />
 
     <com.brins.baselib.widget.CommonHeaderView
         android:id="@+id/header"

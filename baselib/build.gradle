@@ -13,7 +13,8 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         consumerProguardFiles "consumer-rules.pro"
-
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [ moduleName : project.getName() ]

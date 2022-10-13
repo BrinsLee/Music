@@ -21,7 +21,7 @@ class ReceivedCookiesInterceptor : Interceptor {
         val path = response.request().url().pathSegments()
         if (path[0] == "login" && cookies.isNotEmpty()) {
             cookies.forEach {
-                if (it.contains("MUSIC_U=") || it.startsWith("_"))
+                if (it.contains("MUSIC_U="))
                 stringBuilder.append(it)
             }
             UserCookie = stringBuilder.toString()

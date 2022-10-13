@@ -33,6 +33,9 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (hideToolBar()) {
+            setStatusBar()
+        }
         ActivityManager.INSTANCE.addActivity(this)
         setContentView(R.layout.base_activity_base)
         mContext = this
@@ -60,8 +63,6 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun onResume() {
         super.onResume()
-        if (hideToolBar())
-            setStatusBar()
         Log.d("BaseActivity", "onStart")
     }
 

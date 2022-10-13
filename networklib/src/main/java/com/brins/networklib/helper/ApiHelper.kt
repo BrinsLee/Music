@@ -190,6 +190,8 @@ object ApiHelper {
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
+                    LogUtils.d("await url", call.request().url())
+
                     LogUtils.d(
                         "await",
                         "message: ${response.message()}**** response: ${GsonUtils.toJson(body)}"

@@ -11,12 +11,10 @@ import com.brins.baselib.activity.BaseMvpActivity
 import com.brins.baselib.module.BaseMusic
 import com.brins.baselib.module.PlayMode
 import com.brins.baselib.route.RouterHub
-import com.brins.baselib.utils.UIUtils
+import com.brins.baselib.utils.*
 import com.brins.baselib.utils.eventbus.EventBusKey
 import com.brins.baselib.utils.eventbus.EventBusParams
 import com.brins.baselib.utils.glidehelper.GlideHelper
-import com.brins.baselib.utils.hideStatusBar
-import com.brins.baselib.utils.rsBlur
 import com.brins.musicdetail.R
 import com.brins.musicdetail.adapter.MusicDetailAdapter
 import com.brins.musicdetail.fragment.MusicDetailFragment
@@ -102,7 +100,7 @@ class MusicDetailActivity : BaseMvpActivity<PlayerPresenter>(), PlayerContract.V
     }
 
     override fun setStatusBar() {
-        hideStatusBar(this)
+        setTranslucent(this)
     }
 
     override fun onPlaybackServiceBound(service: PlayBackService) {

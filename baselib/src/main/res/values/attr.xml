@@ -11,6 +11,12 @@
         <attr name="round_corner" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="RealtimeBlurView">
+        <attr name="realtimeBlurRadius" format="dimension"/>
+        <attr name="realtimeDownsampleFactor" format="float"/>
+        <attr name="realtimeOverlayColor" format="color"/>
+    </declare-styleable>
+
     <declare-styleable name="TagFlowLayout">
         <attr name="max_show" format="integer"></attr>
         <attr name="tag_gravity">

@@ -2,8 +2,8 @@ package com.brins.baselib.config
 
 import android.provider.MediaStore
 
-const val BASEURL = "http://118.31.65.24/"
-
+//const val BASEURL = "http://118.31.65.24/"
+const val BASEURL = "http://cloud-music.pl-fe.cn/"
 const val PHONE_NUMBER_LENGTH = 11
 const val UMAPPKEY = "5e33c33c4ca357e8100000fa"
 
@@ -62,7 +62,8 @@ val API_NEED_COOKIE = arrayListOf<String>(
     "[user, event]",
     "[user, follows]",
     "[event]",
-    "[resource, like]"
+    "[resource, like]",
+    "[playlist, detail]"
 )
 
 val TYPE_EVENT = arrayListOf<Int>(
